@@ -61,7 +61,7 @@ nav ul li {
 .nav-link {
     text-decoration: none;
     color: #564654;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease;
 }
 
 .nav-link:hover {
@@ -76,20 +76,22 @@ nav ul li {
 .dropdown-content {
     display: none;
     position: absolute;
-    padding: 5px 0;
     background-color: #d8d8d8;
     min-width: 160px;
     z-index: 1;
     margin-left: 15%;
-    text-transform: uppercase;
+    text-transform: capitalize;
     font-weight: 500;
+    border-top: 2px solid #756a01;
 }
 
 .dropdown-content a {
     display: block;
-    padding: 3px 5px;
+    padding: 5px;
     color: #564654;
     transition: all 0.2s ease;
+    border-bottom: 1px solid #cacaca;
+    font-size: 14px;
 }
 
 .dropdown-content a:hover {
@@ -104,4 +106,59 @@ nav ul li {
 
 .dropdown:hover .dropdown-btn {
     color: #756a01;
+}
+
+/*----------Mobile Navbar----------*/
+
+.menu-btn {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 6vh;
+    cursor: pointer;
+    transition: all .5s ease-in-out;
+}
+
+.burger-btn {
+    width: 35px;
+    height: 5px;
+    background-color: #564654;
+    border-radius: 5px;
+    transition: all .5s ease-in-out;
+}
+
+.burger-btn::before,
+.burger-btn::after {
+    content: '';
+    position: absolute;
+    width: 35px;
+    height: 5px;
+    background-color: #564654;
+    border-radius: 5px;
+    transition: all .5s ease-in-out;
+}
+
+.burger-btn::before {
+    transform: translateY(-10px);
+}
+
+.burger-btn::after {
+    transform: translateY(10px);
+}
+
+/*menu button animation*/
+
+.menu-btn.open .burger-btn {
+    transform: translateX(-50px);
+    background: transparent;
+}
+
+.menu-btn.open .burger-btn::before {
+    transform: rotate(45deg) translate3d(35px, -35px);
+}
+
+.menu-btn.open .burger-btn::after {
+    transform: rotate(-45deg) translate3d(35px, 35px);
 }

@@ -64,10 +64,12 @@
             </nav>
         </div>
 
-        <!--mobile Navbar-->
+        <!--Mobile Navbar-->
         <div class="nav-container d-block d-lg-none">
             <nav class="light-shadow mobile-nav">
-                Test
+                <div class="menu-btn">
+                    <div class="burger-btn"></div>
+                </div>
             </nav>
         </div>
 
@@ -112,6 +114,18 @@
                         } else {
                             $(".nav-container").removeClass("fixed-top");
                             $("#nav-spacer").addClass("d-none");
+                        }
+                    });
+
+                    const menuBtn = $(".menu-btn");
+                    let menuOpen = false;
+                    menuBtn.click(function() {
+                        if (!menuOpen) {
+                            menuBtn.addClass("open");
+                            menuOpen = true;
+                        } else {
+                            menuBtn.removeClass("open");
+                            menuOpen = false;
                         }
                     });
                 });
