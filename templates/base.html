@@ -38,13 +38,22 @@
         {% block page_header %}
         {% endblock %}
 
-        <!-- Desktop Navbar -->
         <header id="base-header"><a href="{% url 'home' %}"><img src="{{ MEDIA_URL }}APC-Logo.jpeg" alt="APC Website Logo" class="main-logo"></a></header>
         <div id="nav-spacer" class="d-none"></div>
-        <div class="nav-container">
+
+        <!-- Desktop Navbar -->
+        <div class="nav-container d-none d-lg-block">
             <nav class="light-shadow">
                 <ul>
-                    <li><a class="nav-link" href="#">About Us</a></li>
+                    <div class="dropdown">
+                        <li><a class="nav-link dropdown-btn" href="#">About</a></li>
+                        <div class="dropdown-content">
+                            <a href="#">About Us</a>
+                            <a href="#">Facilities</a>
+                            <a href="#">The Team</a>
+                            <a href="#">Finance Options</a>
+                        </div>
+                    </div>
                     <li><a class="nav-link" href="#">Services</a></li>
                     <li><a class="nav-link" href="#">Testimonials</a></li>
                     <li><a class="nav-link" href="#">Pricing</a></li>
@@ -56,7 +65,11 @@
         </div>
 
         <!--mobile Navbar-->
-        <nav></nav>
+        <div class="nav-container d-block d-lg-none">
+            <nav class="light-shadow mobile-nav">
+                Test
+            </nav>
+        </div>
 
         <div class="container">
             {% block content %}
@@ -102,7 +115,6 @@
                         }
                     });
                 });
-                
             </script>
         {% endblock %}
 
