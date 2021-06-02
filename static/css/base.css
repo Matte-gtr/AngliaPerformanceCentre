@@ -122,8 +122,8 @@ nav ul li {
 }
 
 .burger-btn {
-    width: 35px;
-    height: 5px;
+    width: 27px;
+    height: 4px;
     background-color: #564654;
     border-radius: 5px;
     transition: all .5s ease-in-out;
@@ -133,32 +133,31 @@ nav ul li {
 .burger-btn::after {
     content: '';
     position: absolute;
-    width: 35px;
-    height: 5px;
+    width: 27px;
+    height: 4px;
     background-color: #564654;
     border-radius: 5px;
     transition: all .5s ease-in-out;
 }
 
 .burger-btn::before {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
 }
 
 .burger-btn::after {
-    transform: translateY(10px);
+    transform: translateY(8px);
 }
 
 /*menu button animation*/
 
 .menu-btn.open .burger-btn {
-    transform: translateX(-50px);
     background: transparent;
 }
 
 .menu-btn.open .burger-btn::before {
-    transform: rotate(45deg) translate3d(35px, -35px);
+    transform: rotate(225deg);
 }
 
 .menu-btn.open .burger-btn::after {
-    transform: rotate(-45deg) translate3d(35px, 35px);
+    transform: rotate(-225deg);
 }
