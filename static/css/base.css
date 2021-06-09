@@ -30,10 +30,10 @@ body {
 }
 
 #nav-spacer {
-    height: 6vh;
+    height: 55px;
 }
 
-nav ul {
+.desktop-menu {
     text-decoration: none;
     list-style: none;
     display: flex;
@@ -62,6 +62,7 @@ nav ul li {
     text-decoration: none;
     color: #564654;
     transition: color 0.2s ease;
+    cursor: pointer;
 }
 
 .nav-link:hover {
@@ -116,7 +117,7 @@ nav ul li {
     justify-content: center;
     align-items: center;
     width: 80px;
-    height: 6vh;
+    height: 55px;
     cursor: pointer;
     transition: all .5s ease-in-out;
 }
@@ -160,4 +161,24 @@ nav ul li {
 
 .menu-btn.open .burger-btn::after {
     transform: rotate(-225deg);
+}
+
+.menu-container {
+    width: 100%;
+    background-color: #d8d8d8;
+    box-shadow: 2px 5px 6px rgb(0 0 0 / 40%);
+    text-align: center;
+    display: none;
+}
+
+.mobile-menu {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.mobile-nav-dropdown {
+    list-style: none;
+    padding: 0;
+    display: none;
 }

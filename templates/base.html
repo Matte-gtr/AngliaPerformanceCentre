@@ -44,20 +44,38 @@
         <!-- Desktop Navbar -->
         <div class="nav-container d-none d-lg-block">
             <nav class="light-shadow">
-                <ul>
+                <ul class="desktop-menu">
                     <div class="dropdown">
-                        <li><a class="nav-link dropdown-btn" href="#">About</a></li>
+                        <li><span class="nav-link dropdown-btn">About</span></li>
                         <div class="dropdown-content light-shadow">
                             <a href="#">About Us</a>
-                            <a href="#">Facilities</a>
                             <a href="#">The Team</a>
                             <a href="#">Finance Options</a>
+                            <a href="#">Terms & Conditions</a>
                         </div>
                     </div>
-                    <li><a class="nav-link" href="#">Services</a></li>
+                    <div class="dropdown">
+                        <li><span class="nav-link dropdown-btn">Services</span></li>
+                        <div class="dropdown-content light-shadow">
+                            <a href="#">Chip tuning</a>
+                            <a href="#">Engine Rebuilds</a>
+                            <a href="#">Servicing and Repairs</a>
+                            <a href="#">Diagnostics</a>
+                            <a href="#">Custom Exhausts</a>
+                            <a href="#">Wheel Repair</a>
+                            <a href="#">Corner Weight Setup</a>
+                            <a href="#">Track/Drift Preparation</a>
+                        </div>
+                    </div>
                     <li><a class="nav-link" href="#">Testimonials</a></li>
                     <li><a class="nav-link" href="#">Pricing</a></li>
-                    <li><a class="nav-link" href="#">Shop</a></li>
+                    <div class="dropdown">
+                        <li><span class="nav-link dropdown-btn">Shop</span></li>
+                        <div class="dropdown-content light-shadow">
+                            <a href="#">Cars</a>
+                            <a href="#">Parts</a>
+                        </div>
+                    </div>
                     <li><a class="nav-link" href="#">Blog</a></li>
                     <li><a class="nav-link" href="#">Contact</a></li>
                 </ul>
@@ -70,8 +88,47 @@
                 <div class="menu-btn">
                     <div class="burger-btn"></div>
                 </div>
+                <div class="menu-container d-lg-none hidden">
+                    <ul class="mobile-menu">
+                        <div class="mobile-dropdown-btn">
+                            <li><a class="nav-link" href="#">About</a></li>
+                            <ul class="mobile-nav-dropdown">
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">The Team</a></li>
+                                <li><a href="#">Finance Options</a></li>
+                                <li><a href="#">Terms & Conditions</a></li>
+                            </ul>
+                        </div>
+                        <div class="mobile-dropdown-btn">
+                            <li><a class="nav-link" href="#">Services</a></li>
+                            <ul class="mobile-nav-dropdown">
+                                <li><a href="#">Chip tuning</a></li>
+                                <li><a href="#">Engine Rebuilds</a></li>
+                                <li><a href="#">Servicing and Repairs</a></li>
+                                <li><a href="#">Diagnostics</a></li>
+                                <li><a href="#">Custom Exhausts</a></li>
+                                <li><a href="#">Wheel Repair</a></li>
+                                <li><a href="#">Corner Weight Setup</a></li>
+                                <li><a href="#">Track/Drift Preparation</a></li>
+                            </ul>
+                        </div>
+                        <li><a class="nav-link" href="#">Testimonials</a></li>
+                        <li><a class="nav-link" href="#">Pricing</a></li>
+                        <div class="mobile-dropdown-btn">
+                            <li><a class="nav-link" href="#">Shop</a></li>
+                            <ul class="mobile-nav-dropdown">
+                                <li><a href="#">Cars</a></li>
+                                <li><a href="#">Parts</a></li>
+                            </ul>
+                        </div>
+                        <li><a class="nav-link" href="#">Blog</a></li>
+                        <li><a class="nav-link" href="#">Contact</a></li>
+                    </ul>
+                </div>
             </nav>
+            
         </div>
+        
 
             {% block content %}
             {% endblock %}
@@ -118,14 +175,18 @@
                     const menuBtn = $(".menu-btn");
                     let menuOpen = false;
                     menuBtn.click(function() {
+                        $(".menu-container").slideToggle();
                         if (!menuOpen) {
                             menuBtn.addClass("open");
                             menuOpen = true;
                         } else {
                             menuBtn.removeClass("open");
                             menuOpen = false;
-                            console.log("farted")
                         }
+                    });
+
+                    $(".mobile-dropdown-btn").click(function() {
+                        $(this).children().last().slideToggle();
                     });
                 });
             </script>
