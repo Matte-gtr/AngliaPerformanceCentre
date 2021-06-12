@@ -169,6 +169,8 @@ nav ul li {
     box-shadow: 2px 5px 6px rgb(0 0 0 / 40%);
     text-align: center;
     display: none;
+    max-height: 100vh;
+    overflow: scroll;
 }
 
 .mobile-menu {
@@ -181,4 +183,13 @@ nav ul li {
     list-style: none;
     padding: 0;
     display: none;
+}
+
+.mobile-nav-dropdown li {
+    background-color: #bababf;
+    border: 1px solid grey;
+}
+
+.mobile-nav-dropdown li a {
+    color: #424242;
 }
