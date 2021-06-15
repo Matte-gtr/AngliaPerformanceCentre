@@ -8,5 +8,6 @@ def home(request):
     messages.success(request, "The messages are working if you can see this")
     context = {
         'title': 'home',
+        'section': 'home',
     }
     return render(request, template, context)

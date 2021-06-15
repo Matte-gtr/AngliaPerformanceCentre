@@ -109,6 +109,11 @@ nav ul li {
     color: #756a01;
 }
 
+.active {
+    color: #756a01;
+    transform: scale(1.2);
+}
+
 /*----------Mobile Navbar----------*/
 
 .menu-btn {

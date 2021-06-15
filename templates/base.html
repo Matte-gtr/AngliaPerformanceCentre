@@ -46,7 +46,7 @@
             <nav class="light-shadow">
                 <ul class="desktop-menu">
                     <div class="dropdown">
-                        <li><span class="nav-link dropdown-btn">About</span></li>
+                        <li><span class="nav-link dropdown-btn {% if section == 'about' %}active{% endif %}">About</span></li>
                         <div class="dropdown-content light-shadow">
                             <a href="#">About Us</a>
                             <a href="#">The Team</a>
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                     <div class="dropdown">
-                        <li><span class="nav-link dropdown-btn">Services</span></li>
+                        <li><span class="nav-link dropdown-btn {% if section == 'services' %}active{% endif %}">Services</span></li>
                         <div class="dropdown-content light-shadow">
                             <a href="#">Chip tuning</a>
                             <a href="#">Engine Rebuilds</a>
@@ -67,17 +67,17 @@
                             <a href="#">Track/Drift Preparation</a>
                         </div>
                     </div>
-                    <li><a class="nav-link" href="#">Testimonials</a></li>
-                    <li><a class="nav-link" href="#">Pricing</a></li>
+                    <li><a class="nav-link {% if section == 'testimonials' %}active{% endif %}" href="#">Testimonials</a></li>
+                    <li><a class="nav-link {% if section == 'pricing' %}active{% endif %}" href="#">Pricing</a></li>
                     <div class="dropdown">
-                        <li><span class="nav-link dropdown-btn">Shop</span></li>
+                        <li><span class="nav-link dropdown-btn {% if section == 'shop' %}active{% endif %}">Shop</span></li>
                         <div class="dropdown-content light-shadow">
                             <a href="#">Cars</a>
                             <a href="#">Parts</a>
                         </div>
                     </div>
-                    <li><a class="nav-link" href="#">Blog</a></li>
-                    <li><a class="nav-link" href="#">Contact</a></li>
+                    <li><a class="nav-link {% if section == 'blog' %}active{% endif %}" href="#">Blog</a></li>
+                    <li><a class="nav-link {% if section == 'contact' %}active{% endif %}" href="#">Contact</a></li>
                 </ul>
             </nav>
         </div>
@@ -90,8 +90,9 @@
                 </div>
                 <div class="menu-container d-lg-none hidden">
                     <ul class="mobile-menu">
+                        <li><a class="nav-link {% if section == 'home' %}active{% endif %}" href="{% url 'home' %}">Home</a></li>
                         <div class="mobile-dropdown-btn">
-                            <li><span class="nav-link">About</span></li>
+                            <li><span class="nav-link {% if section == 'about' %}active{% endif %}">About</span></li>
                             <ul class="mobile-nav-dropdown">
                                 <li><a href="#">About Us</a></li>
                                 <li><a href="#">The Team</a></li>
@@ -100,7 +101,7 @@
                             </ul>
                         </div>
                         <div class="mobile-dropdown-btn">
-                            <li><span class="nav-link">Services</span></li>
+                            <li><span class="nav-link {% if section == 'services' %}active{% endif %}">Services</span></li>
                             <ul class="mobile-nav-dropdown">
                                 <li><a href="#">Chip tuning</a></li>
                                 <li><a href="#">Engine Rebuilds</a></li>
@@ -112,17 +113,17 @@
                                 <li><a href="#">Track/Drift Preparation</a></li>
                             </ul>
                         </div>
-                        <li><a class="nav-link" href="#">Testimonials</a></li>
-                        <li><a class="nav-link" href="#">Pricing</a></li>
+                        <li><a class="nav-link {% if section == 'testimonials' %}active{% endif %}" href="#">Testimonials</a></li>
+                        <li><a class="nav-link {% if section == 'pricing' %}active{% endif %}" href="#">Pricing</a></li>
                         <div class="mobile-dropdown-btn">
-                            <li><span class="nav-link" href="#">Shop</span></li>
+                            <li><span class="nav-link {% if section == 'shop' %}active{% endif %}" href="#">Shop</span></li>
                             <ul class="mobile-nav-dropdown">
                                 <li><a href="#">Cars</a></li>
                                 <li><a href="#">Parts</a></li>
                             </ul>
                         </div>
-                        <li><a class="nav-link" href="#">Blog</a></li>
-                        <li><a class="nav-link" href="#">Contact</a></li>
+                        <li><a class="nav-link {% if section == 'blog' %}active{% endif %}" href="#">Blog</a></li>
+                        <li><a class="nav-link {% if section == 'contact' %}active{% endif %}" href="#">Contact</a></li>
                     </ul>
                 </div>
             </nav>
