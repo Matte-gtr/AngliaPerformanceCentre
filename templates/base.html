@@ -84,7 +84,7 @@
 
         <!--Mobile Navbar-->
         <div class="nav-container d-block d-lg-none">
-            <nav class="light-shadow mobile-nav">
+            <nav class="light-shadow" id="mobile-nav">
                 <div class="menu-btn">
                     <div class="burger-btn"></div>
                 </div>
@@ -179,10 +179,14 @@
                         if (!menuOpen) {
                             menuBtn.addClass("open");
                             menuOpen = true;
+                            let navSection = document.getElementById("mobile-nav");
+                            navSection.scrollIntoView({behavior: "auto"});
+                            document.body.style.overflow = 'hidden';
                         } else {
                             menuBtn.removeClass("open");
                             menuOpen = false;
-                        }
+                            document.body.style.overflow = 'scroll';
+                        };
                     });
 
                     $(".mobile-dropdown-btn").click(function() {
