@@ -2,204 +2,260 @@
 
 <!Doctype html>
 <html lang="en">
-  <head>
+
+<head>
     {% block core_meta %}
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     {% endblock %}
 
     {% block extra_meta %}
     {% endblock %}
 
     {% block core_css %}
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins&display=swap">
-        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins&display=swap">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% endblock %}
 
     {% block extra_css %}
     {% endblock %}
 
     {% block core_js %}
-        <script src="https://kit.fontawesome.com/e9c73d7092.js" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/e9c73d7092.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
     {% endblock %}
 
     {% block extra_js %}
     {% endblock %}
 
     <title>{% block extra_title %}{% endblock %}{% if title %}{{ title|title }} | APC{% else %}APC{% endif %}</title>
-  </head>
-  <body>
+</head>
 
-        {% block page_header %}
-        {% endblock %}
+<body>
 
-        <header id="base-header"><a href="{% url 'home' %}"><img src="{{ MEDIA_URL }}APC-Logo.jpeg" alt="APC Website Logo" class="main-logo"></a></header>
-        <div id="nav-spacer" class="d-none"></div>
+    {% block page_header %}
+    {% endblock %}
 
-        <!-- Desktop Navbar -->
-        <div class="nav-container d-none d-lg-block">
-            <nav class="light-shadow">
-                <ul class="desktop-menu">
-                    <li class="dropdown">
-                        <span class="nav-link dropdown-btn {% if section == 'about' %}active{% endif %}">About</span>
-                        <div class="dropdown-content light-shadow">
-                            <a href="#">About Us</a>
-                            <a href="#">The Team</a>
-                            <a href="#">Finance Options</a>
-                            <a href="#">Terms & Conditions</a>
+    <header id="base-header"><a href="{% url 'home' %}"><img src="{{ MEDIA_URL }}APC-Logo.jpeg" alt="APC Website Logo"
+                class="main-logo"></a></header>
+    <div id="nav-spacer" class="d-none"></div>
+
+    <!-- Desktop Navbar -->
+    <div class="nav-container d-none d-lg-block">
+        <nav class="light-shadow">
+            <ul class="desktop-menu">
+                <li class="dropdown">
+                    <span class="nav-link dropdown-btn {% if section == 'about' %}active{% endif %}">About</span>
+                    <div class="dropdown-content light-shadow">
+                        <a href="#">About Us</a>
+                        <a href="#">The Team</a>
+                        <a href="#">Finance Options</a>
+                        <a href="#">Terms & Conditions</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <span class="nav-link dropdown-btn {% if section == 'services' %}active{% endif %}">Services</span>
+                    <div class="dropdown-content light-shadow">
+                        <a href="#">Chip tuning</a>
+                        <a href="#">Engine Rebuilds</a>
+                        <a href="#">Servicing and Repairs</a>
+                        <a href="#">Diagnostics</a>
+                        <a href="#">Custom Exhausts</a>
+                        <a href="#">Wheel Repair</a>
+                        <a href="#">Corner Weight Setup</a>
+                        <a href="#">Track/Drift Preparation</a>
+                    </div>
+                </li>
+                <li><a class="nav-link {% if section == 'testimonials' %}active{% endif %}" href="#">Testimonials</a>
+                </li>
+                <li><a class="nav-link {% if section == 'pricing' %}active{% endif %}" href="#">Pricing</a></li>
+                <li class="dropdown">
+                    <span class="nav-link dropdown-btn {% if section == 'shop' %}active{% endif %}">Shop</span>
+                    <div class="dropdown-content light-shadow">
+                        <a href="#">Cars</a>
+                        <a href="#">Parts</a>
+                    </div>
+                </li>
+                <li><a class="nav-link {% if section == 'blog' %}active{% endif %}" href="#">Blog</a></li>
+                <li><a class="nav-link {% if section == 'contact' %}active{% endif %}" href="#">Contact</a></li>
+
+                <!--User options/cart button-->
+                <div class="btn-group">
+                    <div class="btn-group dropleft" role="group">
+                        <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split apc-border"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user"></i>
+                            <span class="sr-only">Toggle Dropleft</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <button class="dropdown-item" type="button">Action</button>
                         </div>
-                    </li>
-                    <li class="dropdown">
-                        <span class="nav-link dropdown-btn {% if section == 'services' %}active{% endif %}">Services</span>
-                        <div class="dropdown-content light-shadow">
-                            <a href="#">Chip tuning</a>
-                            <a href="#">Engine Rebuilds</a>
-                            <a href="#">Servicing and Repairs</a>
-                            <a href="#">Diagnostics</a>
-                            <a href="#">Custom Exhausts</a>
-                            <a href="#">Wheel Repair</a>
-                            <a href="#">Corner Weight Setup</a>
-                            <a href="#">Track/Drift Preparation</a>
-                        </div>
-                    </li>
-                    <li><a class="nav-link {% if section == 'testimonials' %}active{% endif %}" href="#">Testimonials</a></li>
-                    <li><a class="nav-link {% if section == 'pricing' %}active{% endif %}" href="#">Pricing</a></li>
-                    <li class="dropdown">
-                        <span class="nav-link dropdown-btn {% if section == 'shop' %}active{% endif %}">Shop</span>
-                        <div class="dropdown-content light-shadow">
-                            <a href="#">Cars</a>
-                            <a href="#">Parts</a>
-                        </div>
-                    </li>
-                    <li><a class="nav-link {% if section == 'blog' %}active{% endif %}" href="#">Blog</a></li>
-                    <li><a class="nav-link {% if section == 'contact' %}active{% endif %}" href="#">Contact</a></li>
-                    <li class="user-options">
-                        <a href="#"><i class="fas fa-user"></i></a>
-                        <a href="#"><i class="fas fa-shopping-cart"></i></a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary apc-border">
+                        <i class="fas fa-shopping-cart"></i><span class="red-text"> £0.00</span>
+                    </button>
+                </div>
 
-        <!--Mobile Navbar-->
-        <div class="nav-container d-block d-lg-none">
-            <nav class="light-shadow" id="mobile-nav">
+            </ul>
+        </nav>
+    </div>
+
+    <!--Mobile Navbar-->
+    <div class="nav-container max-55 d-block d-lg-none">
+        <nav class="light-shadow" id="mobile-nav">
+            <ul class="nav-bar-top">
+                <li class="p-0">
                 <div class="menu-btn">
                     <div class="burger-btn"></div>
                 </div>
-                <div class="menu-container d-lg-none hidden">
-                    <ul class="mobile-menu">
-                        <li><a class="nav-link {% if section == 'home' %}active{% endif %}" href="{% url 'home' %}">Home</a></li>
-                        <li class="mobile-dropdown-btn">
-                            <span class="nav-link {% if section == 'about' %}active{% endif %}">About</span>
-                            <ul class="mobile-nav-dropdown">
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">The Team</a></li>
-                                <li><a href="#">Finance Options</a></li>
-                                <li><a href="#">Terms & Conditions</a></li>
-                            </ul>
-                        </li>
-                        <li class="mobile-dropdown-btn">
-                            <span class="nav-link {% if section == 'services' %}active{% endif %}">Services</span>
-                            <ul class="mobile-nav-dropdown">
-                                <li><a href="#">Chip tuning</a></li>
-                                <li><a href="#">Engine Rebuilds</a></li>
-                                <li><a href="#">Servicing and Repairs</a></li>
-                                <li><a href="#">Diagnostics</a></li>
-                                <li><a href="#">Custom Exhausts</a></li>
-                                <li><a href="#">Wheel Repair</a></li>
-                                <li><a href="#">Corner Weight Setup</a></li>
-                                <li><a href="#">Track/Drift Preparation</a></li>
-                            </ul>
-                        </li>
-                        <li><a class="nav-link {% if section == 'testimonials' %}active{% endif %}" href="#">Testimonials</a></li>
-                        <li><a class="nav-link {% if section == 'pricing' %}active{% endif %}" href="#">Pricing</a></li>
-                        <li class="mobile-dropdown-btn">
-                            <span class="nav-link {% if section == 'shop' %}active{% endif %}" href="#">Shop</span>
-                            <ul class="mobile-nav-dropdown">
-                                <li><a href="#">Cars</a></li>
-                                <li><a href="#">Parts</a></li>
-                            </ul>
-                        </li>
-                        <li><a class="nav-link {% if section == 'blog' %}active{% endif %}" href="#">Blog</a></li>
-                        <li><a class="nav-link {% if section == 'contact' %}active{% endif %}" href="#">Contact</a></li>
-                    </ul>
-                </div>
-            </nav>
-            
-        </div>
-        
+                </li>
 
-            {% block content %}
-            {% endblock %}
+                <!--User options/cart button-->
+                <li class="p-0 ml-auto">
+                    <div class="btn-group mobile-float">
+                        <div class="btn-group dropleft" role="group">
+                            <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split apc-border"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user"></i>
+                                <span class="sr-only">Toggle Dropleft</span>
+                            </button>
+                            <div class="dropdown-menu">
+                                <button class="dropdown-item" type="button">Action</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary apc-border">
+                            <i class="fas fa-shopping-cart"></i><span class="red-text"> £0.00</span>
+                        </button>
+                    </div>
+                </li>
+            </ul>
 
-        {% if messages %}
-            <div class="message-container">
-                {% for message in messages %}
-                    {% with message.level as level %}
-                        {% if level == 40 %} <!--error-->
-                            {% include 'includes/toasts/toast_error.html' %}
-                        {% elif level == 30 %} <!--warning-->
-                            {% include 'includes/toasts/toast_warning.html' %}
-                        {% elif level == 25 %} <!--success-->
-                            {% include 'includes/toasts/toast_success.html' %}
-                        {% else %} <!--info-->
-                            {% include 'includes/toasts/toast_info.html' %}
-                        {% endif %}
-                    {% endwith %}
-                {% endfor %}
+            <div class="menu-container d-lg-none hidden">
+                <ul class="mobile-menu">
+                    <li><a class="nav-link {% if section == 'home' %}active{% endif %}" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="mobile-dropdown-btn">
+                        <span class="nav-link {% if section == 'about' %}active{% endif %}">About</span>
+                        <ul class="mobile-nav-dropdown">
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">The Team</a></li>
+                            <li><a href="#">Finance Options</a></li>
+                            <li><a href="#">Terms & Conditions</a></li>
+                        </ul>
+                    </li>
+                    <li class="mobile-dropdown-btn">
+                        <span class="nav-link {% if section == 'services' %}active{% endif %}">Services</span>
+                        <ul class="mobile-nav-dropdown">
+                            <li><a href="#">Chip tuning</a></li>
+                            <li><a href="#">Engine Rebuilds</a></li>
+                            <li><a href="#">Servicing and Repairs</a></li>
+                            <li><a href="#">Diagnostics</a></li>
+                            <li><a href="#">Custom Exhausts</a></li>
+                            <li><a href="#">Wheel Repair</a></li>
+                            <li><a href="#">Corner Weight Setup</a></li>
+                            <li><a href="#">Track/Drift Preparation</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="nav-link {% if section == 'testimonials' %}active{% endif %}"
+                            href="#">Testimonials</a></li>
+                    <li><a class="nav-link {% if section == 'pricing' %}active{% endif %}" href="#">Pricing</a></li>
+                    <li class="mobile-dropdown-btn">
+                        <span class="nav-link {% if section == 'shop' %}active{% endif %}">Shop</span>
+                        <ul class="mobile-nav-dropdown">
+                            <li><a href="#">Cars</a></li>
+                            <li><a href="#">Parts</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="nav-link {% if section == 'blog' %}active{% endif %}" href="#">Blog</a></li>
+                    <li><a class="nav-link {% if section == 'contact' %}active{% endif %}" href="#">Contact</a></li>
+                </ul>
             </div>
+        </nav>
+    </div>
+
+
+    {% block content %}
+    {% endblock %}
+
+    {% if messages %}
+    <div class="message-container">
+        {% for message in messages %}
+        {% with message.level as level %}
+        {% if level == 40 %}
+        <!--error-->
+        {% include 'includes/toasts/toast_error.html' %}
+        {% elif level == 30 %}
+        <!--warning-->
+        {% include 'includes/toasts/toast_warning.html' %}
+        {% elif level == 25 %}
+        <!--success-->
+        {% include 'includes/toasts/toast_success.html' %}
+        {% else %}
+        <!--info-->
+        {% include 'includes/toasts/toast_info.html' %}
         {% endif %}
+        {% endwith %}
+        {% endfor %}
+    </div>
+    {% endif %}
 
-        {% block postload_js %}
-            <script>
-                $(document).ready(function() {
-                    $('.toast').toast('show');
+    {% block postload_js %}
+    <script>
+        $(document).ready(function () {
+            $('.toast').toast('show');
 
-                    $(window).on('scroll', function() {
-                        let headerHeight = document.getElementById("base-header").offsetHeight;
-                        let bannerHeight = 0;
-                        if ($("#banner").length > 0) {
-                            bannerHeight = document.getElementById("banner").offsetHeight;
-                        };
-                        let height = headerHeight + bannerHeight;
-                        if ($(window).scrollTop() >= height) {
-                            $(".nav-container").addClass("fixed-top");
-                            $("#nav-spacer").removeClass("d-none");
-                        } else {
-                            $(".nav-container").removeClass("fixed-top");
-                            $("#nav-spacer").addClass("d-none");
-                        }
+            $(window).on('scroll', function () {
+                let headerHeight = document.getElementById("base-header").offsetHeight;
+                let bannerHeight = 0;
+                if ($("#banner").length > 0) {
+                    bannerHeight = document.getElementById("banner").offsetHeight;
+                };
+                let height = headerHeight + bannerHeight;
+                if ($(window).scrollTop() >= height) {
+                    $(".nav-container").addClass("fixed-top");
+                    $("#nav-spacer").removeClass("d-none");
+                } else {
+                    $(".nav-container").removeClass("fixed-top");
+                    $("#nav-spacer").addClass("d-none");
+                }
+            });
+
+            const menuBtn = $(".menu-btn");
+            let menuOpen = false;
+            menuBtn.click(function () {
+                $(".menu-container").slideToggle();
+                if (!menuOpen) {
+                    menuBtn.addClass("open");
+                    menuOpen = true;
+                    let navSection = document.getElementById("mobile-nav");
+                    navSection.scrollIntoView({
+                        behavior: "auto"
                     });
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    menuBtn.removeClass("open");
+                    menuOpen = false;
+                    document.body.style.overflow = 'scroll';
+                };
+            });
 
-                    const menuBtn = $(".menu-btn");
-                    let menuOpen = false;
-                    menuBtn.click(function() {
-                        $(".menu-container").slideToggle();
-                        if (!menuOpen) {
-                            menuBtn.addClass("open");
-                            menuOpen = true;
-                            let navSection = document.getElementById("mobile-nav");
-                            navSection.scrollIntoView({behavior: "auto"});
-                            document.body.style.overflow = 'hidden';
-                        } else {
-                            menuBtn.removeClass("open");
-                            menuOpen = false;
-                            document.body.style.overflow = 'scroll';
-                        };
-                    });
+            $(".mobile-dropdown-btn").click(function () {
+                $(this).children().last().slideToggle();
+            });
+        });
+    </script>
+    {% endblock %}
 
-                    $(".mobile-dropdown-btn").click(function() {
-                        $(this).children().last().slideToggle();
-                    });
-                });
-            </script>
-        {% endblock %}
+</body>
 
-  </body>
 </html>
