@@ -3,32 +3,20 @@
 
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
-    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    {% for advert in adverts %}
+        <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter|add:'-1' }}" {% if forloop.counter == 1 %}class="active"{% endif %}></li>
+    {% endfor %}
   </ol>
   <div class="carousel-inner">
-    <div class="carousel-item active">
-        <div class="ad-container">
-            <a href="#">
-                <img src="{{ MEDIA_URL }}adverts/dima-black-7FmfKNniptM-unsplash.jpg" alt="First slide" class="ad-image">
-            </a>
+    {% for advert in adverts %}
+        <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
+            <div class="ad-container">
+                <a href="{% url advert.url.page_link %}">
+                    <img src="{{ advert.image.url }}" alt="{{ advert.name }}" class="ad-image">
+                </a>
+            </div>
         </div>
-    </div>
-    <div class="carousel-item">
-        <div class="ad-container">
-            <a href="#">
-                <img src="{{ MEDIA_URL }}adverts/aachal-mgSrMMCnFKE-unsplash.jpg" alt="Second slide" class="ad-image">
-            </a>
-        </div>
-    </div>
-    <div class="carousel-item">
-        <div class="ad-container">
-            <a href="#">
-                <img src="{{ MEDIA_URL }}adverts/dima-black-7FmfKNniptM-unsplash.jpg" alt="Third slide" class="ad-image">
-            </a>
-        </div>
-    </div>
+    {% endfor %}
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
