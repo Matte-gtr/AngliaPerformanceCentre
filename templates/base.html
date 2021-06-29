@@ -57,10 +57,10 @@
                 <li class="dropdown">
                     <span class="nav-link dropdown-btn {% if section == 'about' %}active{% endif %}">About</span>
                     <div class="dropdown-content light-shadow">
-                        <a href="#">About Us</a>
-                        <a href="#">The Team</a>
-                        <a href="#">Finance Options</a>
-                        <a href="#">Terms & Conditions</a>
+                        <a href="{% url 'about_us' %}">About Us</a>
+                        <a href="{% url 'the_team' %}">The Team</a>
+                        <a href="{% url 'finance_options' %}">Finance Options</a>
+                        <a href="{% url 'terms_and_conditions' %}">Terms & Conditions</a>
                     </div>
                 </li>
                 <li class="dropdown">
@@ -147,10 +147,10 @@
                     <li class="mobile-dropdown-btn">
                         <span class="nav-link {% if section == 'about' %}active{% endif %}">About</span>
                         <ul class="mobile-nav-dropdown">
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">The Team</a></li>
-                            <li><a href="#">Finance Options</a></li>
-                            <li><a href="#">Terms & Conditions</a></li>
+                            <li><a href="{% url 'about_us' %}">About Us</a></li>
+                            <li><a href="{% url 'the_team' %}">The Team</a></li>
+                            <li><a href="{% url 'finance_options' %}">Finance Options</a></li>
+                            <li><a href="{% url 'terms_and_conditions' %}">Terms & Conditions</a></li>
                         </ul>
                     </li>
                     <li class="mobile-dropdown-btn">
