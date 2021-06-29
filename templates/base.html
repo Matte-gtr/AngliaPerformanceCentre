@@ -66,14 +66,14 @@
                 <li class="dropdown">
                     <span class="nav-link dropdown-btn {% if section == 'services' %}active{% endif %}">Services</span>
                     <div class="dropdown-content light-shadow">
-                        <a href="#">Chip tuning</a>
-                        <a href="#">Engine Rebuilds</a>
-                        <a href="#">Servicing and Repairs</a>
-                        <a href="#">Diagnostics</a>
-                        <a href="#">Custom Exhausts</a>
-                        <a href="#">Wheel Repair</a>
-                        <a href="#">Corner Weight Setup</a>
-                        <a href="#">Track/Drift Preparation</a>
+                        <a href="{% url 'chip_tuning' %}">Chip tuning</a>
+                        <a href="{% url 'engine_rebuilds' %}">Engine Rebuilds</a>
+                        <a href="{% url 'servicing_and_repairs' %}">Servicing and Repairs</a>
+                        <a href="{% url 'diagnostics' %}">Diagnostics</a>
+                        <a href="{% url 'custom_exhausts' %}">Custom Exhausts</a>
+                        <a href="{% url 'wheel_repair' %}">Wheel Repair</a>
+                        <a href="{% url 'corner_weight_setup' %}">Corner Weight Setup</a>
+                        <a href="{% url 'track_drift_preparation' %}">Track/Drift Preparation</a>
                     </div>
                 </li>
                 <li><a class="nav-link {% if section == 'testimonials' %}active{% endif %}" href="#">Testimonials</a>
@@ -156,14 +156,14 @@
                     <li class="mobile-dropdown-btn">
                         <span class="nav-link {% if section == 'services' %}active{% endif %}">Services</span>
                         <ul class="mobile-nav-dropdown">
-                            <li><a href="#">Chip tuning</a></li>
-                            <li><a href="#">Engine Rebuilds</a></li>
-                            <li><a href="#">Servicing and Repairs</a></li>
-                            <li><a href="#">Diagnostics</a></li>
-                            <li><a href="#">Custom Exhausts</a></li>
-                            <li><a href="#">Wheel Repair</a></li>
-                            <li><a href="#">Corner Weight Setup</a></li>
-                            <li><a href="#">Track/Drift Preparation</a></li>
+                            <li><a href="{% url 'chip_tuning' %}">Chip tuning</a></li>
+                            <li><a href="{% url 'engine_rebuilds' %}">Engine Rebuilds</a></li>
+                            <li><a href="{% url 'servicing_and_repairs' %}">Servicing and Repairs</a></li>
+                            <li><a href="{% url 'diagnostics' %}">Diagnostics</a></li>
+                            <li><a href="{% url 'custom_exhausts' %}">Custom Exhausts</a></li>
+                            <li><a href="{% url 'wheel_repair' %}">Wheel Repair</a></li>
+                            <li><a href="{% url 'corner_weight_setup' %}">Corner Weight Setup</a></li>
+                            <li><a href="{% url 'track_drift_preparation' %}">Track/Drift Preparation</a></li>
                         </ul>
                     </li>
                     <li><a class="nav-link {% if section == 'testimonials' %}active{% endif %}"

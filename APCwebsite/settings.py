@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.google',
     'home',
     'about_us',
+    'services',
 ]
 
 # Provider specific settings
