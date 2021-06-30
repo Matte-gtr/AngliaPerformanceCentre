@@ -76,18 +76,18 @@
                         <a href="{% url 'track_drift_preparation' %}">Track/Drift Preparation</a>
                     </div>
                 </li>
-                <li><a class="nav-link {% if section == 'testimonials' %}active{% endif %}" href="#">Testimonials</a>
+                <li><a class="nav-link {% if section == 'testimonials' %}active{% endif %}" href="{% url 'testimonials' %}">Testimonials</a>
                 </li>
-                <li><a class="nav-link {% if section == 'pricing' %}active{% endif %}" href="#">Pricing</a></li>
+                <li><a class="nav-link {% if section == 'pricing' %}active{% endif %}" href="{% url 'pricing' %}">Pricing</a></li>
                 <li class="dropdown">
                     <span class="nav-link dropdown-btn {% if section == 'shop' %}active{% endif %}">Shop</span>
                     <div class="dropdown-content light-shadow">
-                        <a href="#">Cars</a>
-                        <a href="#">Parts</a>
+                        <a href="{% url 'cars' %}">Cars</a>
+                        <a href="{% url 'parts' %}">Parts</a>
                     </div>
                 </li>
-                <li><a class="nav-link {% if section == 'blog' %}active{% endif %}" href="#">Blog</a></li>
-                <li><a class="nav-link {% if section == 'contact' %}active{% endif %}" href="#">Contact</a></li>
+                <li><a class="nav-link {% if section == 'blog' %}active{% endif %}" href="{% url 'blog' %}">Blog</a></li>
+                <li><a class="nav-link {% if section == 'contact' %}active{% endif %}" href="{% url 'contact' %}">Contact</a></li>
 
                 <!--User options/cart button-->
                 <div class="btn-group">
@@ -166,18 +166,17 @@
                             <li><a href="{% url 'track_drift_preparation' %}">Track/Drift Preparation</a></li>
                         </ul>
                     </li>
-                    <li><a class="nav-link {% if section == 'testimonials' %}active{% endif %}"
-                            href="#">Testimonials</a></li>
-                    <li><a class="nav-link {% if section == 'pricing' %}active{% endif %}" href="#">Pricing</a></li>
+                    <li><a class="nav-link {% if section == 'testimonials' %}active{% endif %}" href="{% url 'testimonials' %}">Testimonials</a></li>
+                    <li><a class="nav-link {% if section == 'pricing' %}active{% endif %}" href="{% url 'pricing' %}">Pricing</a></li>
                     <li class="mobile-dropdown-btn">
                         <span class="nav-link {% if section == 'shop' %}active{% endif %}">Shop</span>
                         <ul class="mobile-nav-dropdown">
-                            <li><a href="#">Cars</a></li>
-                            <li><a href="#">Parts</a></li>
+                            <li><a href="{% url 'cars' %}">Cars</a></li>
+                            <li><a href="{% url 'parts' %}">Parts</a></li>
                         </ul>
                     </li>
-                    <li><a class="nav-link {% if section == 'blog' %}active{% endif %}" href="#">Blog</a></li>
-                    <li><a class="nav-link {% if section == 'contact' %}active{% endif %}" href="#">Contact</a></li>
+                    <li><a class="nav-link {% if section == 'blog' %}active{% endif %}" href="{% url 'blog' %}">Blog</a></li>
+                    <li><a class="nav-link {% if section == 'contact' %}active{% endif %}" href="{% url 'contact' %}">Contact</a></li>
                 </ul>
             </div>
         </nav>

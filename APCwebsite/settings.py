@@ -63,6 +63,13 @@ INSTALLED_APPS = [
     'home',
     'about_us',
     'services',
+    'shop',
+    'testimonials',
+    'pricing',
+    'blog',
+    'contact',
+    'cart',
+    'user_management',
 ]
 
 # Provider specific settings
