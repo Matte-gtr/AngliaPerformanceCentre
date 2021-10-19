@@ -1,12 +1,13 @@
 /*----------General----------*/
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow&display=swap');
 
 html {
   scroll-behavior: smooth;
 }
 
 body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Archivo Narrow', sans-serif;
 }
 
 #base-header {
@@ -35,10 +36,23 @@ body {
     border: 1px solid #635a03;
 }
 
+.section {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.section-header {
+    text-align: center;
+}
+
 /*----------Navbar----------*/
 
 .nav-container {
-    background-color: #d8d8d8;
+    background: linear-gradient(
+        180deg,
+        rgba(51,51,51,1) 0%, 
+        rgba(115,113,106,1) 30%,
+        rgba(216,216,216,1) 100%);
 }
 
 #nav-spacer {
@@ -57,7 +71,7 @@ body {
     justify-content: space-between;
     padding-left: 1%;
     padding-right: 1%;
-    background-color: #d8d8d8;
+    background-color: transparent;
 }
 
 nav ul li {
@@ -72,7 +86,7 @@ nav ul li {
 
 .nav-link {
     text-decoration: none;
-    color: #564654;
+    color: #3e3e3d;
     transition: color 0.2s ease;
     cursor: pointer;
 }
@@ -123,7 +137,7 @@ nav ul li {
 
 .active {
     color: #756a01;
-    font-size: 22px;
+    font-size: 20px;
 }
 
 .user-options {
@@ -267,4 +281,65 @@ nav ul li {
     height: auto;
     max-height: 70vh;
     object-fit: cover;
+}
+
+.ad-description {
+    position: absolute;
+    margin: auto;
+    width: auto;
+    padding: 5px 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.ad-name {
+    color: #fafafa;
+    font-size: 8vw;
+    text-shadow: 3px 3px black;
+}
+
+.ad-divider {
+    border-color: #fafafa;
+    border-width: 3px;
+    width: 15vw;
+    margin: 0 auto;
+    padding-bottom: 2vw;
+}
+
+.ad-btn {
+    color: #fafafa;
+    border: 2px solid #5e4906;
+    border-radius: 15px;
+    transition: background-color 0.5s ease-in-out;
+    background-color: rgb(69, 52, 4);
+}
+
+.ad-btn:hover {
+    color: #1a1a18;
+    font-weight: 600;
+    background-color: #9f8057;
+}
+
+.bg-darker {
+    background-color: #1a1a18;
+}
+
+.img-overlay {
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    background-color: rgba(0,0,0,0.6);
+}
+
+/*----------Media Queries----------*/
+
+@media (min-width: 1197px) {
+    .ad-name {
+        font-size: 96px;
+    }
 }

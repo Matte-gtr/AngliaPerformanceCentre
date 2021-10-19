@@ -98,7 +98,12 @@
                             <span class="sr-only">Toggle Dropleft</span>
                         </button>
                         <div class="dropdown-menu">
-                            <button class="dropdown-item" type="button">Action</button>
+                            {% if user.is_authenticated %}
+                                <button class="dropdown-item" type="button">Logout</button>
+                            {% else %}
+                                <button class="dropdown-item" type="button">Sign Up</button>
+                                <button class="dropdown-item" type="button">Login</button>
+                            {% endif %}
                         </div>
                     </div>
                     <button type="button" class="btn btn-secondary apc-border">

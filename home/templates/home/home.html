@@ -1,32 +1,71 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+<div id="carouselIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     {% for advert in adverts %}
-        <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter|add:'-1' }}" {% if forloop.counter == 1 %}class="active"{% endif %}></li>
+        <li data-target="#carouselIndicators" data-slide-to="{{ forloop.counter|add:'-1' }}" {% if forloop.counter == 1 %}class="active"{% endif %}></li>
     {% endfor %}
   </ol>
   <div class="carousel-inner">
     {% for advert in adverts %}
         <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
             <div class="ad-container">
-                <a href="{% url advert.url.page_link %}">
-                    <img src="{{ advert.image.url }}" alt="{{ advert.name }}" class="ad-image">
-                </a>
+              <img src="{{ advert.image.url }}" alt="{{ advert.name }}" class="ad-image">
+              <div class="img-overlay"></div>
+              <div class="ad-description">
+                <div class="row">
+                  <div class="col">
+                    <div class="ad-name">{{ advert.name }}</div>
+                  </div>
+                </div>
+                <hr class="ad-divider">
+                <div class="row">
+                  <div class="col">
+                    <a class="btn ad-btn" href="{% url advert.url.page_link %}">View ></a>
+                  </div>
+                </div>
+              </div>
             </div>
         </div>
     {% endfor %}
   </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+  <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="sr-only">Previous</span>
   </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+  <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>
 </div>
 
+<div class="container-fluid bg-darker">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <section class="section">
+          <h2 class="section-header text-white">Welcome to Anglia Performance Centre</h2>
+        </section>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        
+      </div>
+    </div>
+  </div>
+</div>
 <div class="big-div"></div>
+
+{% endblock %}
+
+{% block postload_js %}
+{{ block.super }}
+  <script>
+    $(document).ready(
+      function() {
+        $('.ad-description').slideDown();
+      });
+  </script>
 {% endblock %}
