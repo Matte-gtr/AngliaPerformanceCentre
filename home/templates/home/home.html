@@ -2,7 +2,7 @@
 {% block content %}
 
 <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
+  <ol class="carousel-indicators d-none d-md-flex">
     {% for advert in adverts %}
         <li data-target="#carouselIndicators" data-slide-to="{{ forloop.counter|add:'-1' }}" {% if forloop.counter == 1 %}class="active"{% endif %}></li>
     {% endfor %}
@@ -41,22 +41,51 @@
 </div>
 
 <div class="container-fluid bg-darker">
-  <div class="container">
+  <section class="container">
     <div class="row">
       <div class="col">
-        <section class="section">
+        <div>
           <h2 class="section-header text-white">Welcome to Anglia Performance Centre</h2>
-        </section>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col-12 col-lg-6">
+        <h3 class="dark-content">About us</h4>
+        <hr class="hr-gold">
+        <p class="dark-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi laudantium fugiat eius eaque rem qui hic similique quae commodi incidunt! A blanditiis officiis dolorem inventore et dicta exercitationem quam. Provident, maiores incidunt!</p>
+      </div>
+      <div class="col-12 col-lg-6">
+        <h3 class="dark-content">Servicing</h4>
+        <hr class="hr-gold">
+        <p class="dark-content">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque ullam quisquam quod in asperiores. A iusto architecto, nisi quibusdam blanditiis distinctio at beatae quia quis corrupti, optio vel deserunt reiciendis, veniam debitis!</p>
       </div>
     </div>
     <div class="row">
-      <div class="col-6">
+      <div class="col-12 col-lg-6">
+        <h3 class="dark-content">Diagnostics and Repairs</h4>
+        <hr class="hr-gold">
+        <p class="dark-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi laudantium fugiat eius eaque rem qui hic similique quae commodi incidunt! A blanditiis officiis dolorem inventore et dicta exercitationem quam. Provident, maiores incidunt!</p>
+      </div>
+      <div class="col-12 col-lg-6">
+        <h3 class="dark-content">Motorsport/Track Preparation</h4>
+        <hr class="hr-gold">
+        <p class="dark-content">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque ullam quisquam quod in asperiores. A iusto architecto, nisi quibusdam blanditiis distinctio at beatae quia quis corrupti, optio vel deserunt reiciendis, veniam debitis!</p>
+      </div>
+    </div>
+  </section>
+  <section class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div>
+          <h2 class="section-header text-white">Services We offer</h2>
+        </div>
         
       </div>
     </div>
-  </div>
+  </section>
 </div>
-<div class="big-div"></div>
+
 
 {% endblock %}
 
