@@ -60,6 +60,28 @@ body {
     margin-left: 0;
 }
 
+.bg-header {
+    background-color: #756a01;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-blend-mode: color-burn;
+    height: 35vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-header {
+    font-size: 96px;
+    color: #000000;
+    text-shadow: 3px 3px 3px #756a01, 
+                 -3px -3px 3px #756a01, 
+                 -3px 3px 3px #756a01, 
+                 3px -3px 3px #756a01;
+}
+
 /*----------Navbar----------*/
 
 .nav-container {
@@ -355,6 +377,12 @@ nav ul li {
 
 .dark-content {
     color: #fafafa;
+}
+
+/*----------The Team page----------*/
+
+.team-header {
+    background-image: url(/media/IMG-20211107-WA0009.jpg);
 }
 
 /*----------Media Queries----------*/
