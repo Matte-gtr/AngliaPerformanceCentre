@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
 
 html {
   scroll-behavior: smooth;
@@ -26,7 +27,7 @@ body {
 }
 
 .main-logo {
-    height: 180px;
+    height: 155px;
     width: auto;
 }
 
@@ -55,31 +56,43 @@ body {
 }
 
 .hr-gold {
-    border:1px solid #635a03;
+    border:1px solid #c6a76c;
     width: 70%;
     margin-left: 0;
 }
 
 .bg-header {
-    background-color: #756a01;
+    background-color: #817346;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-blend-mode: color-burn;
-    height: 35vh;
+    height: 100%;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+.header-container {
+    height: 25vw;
+    width: 100%;
+    max-height: 300px;
+}
+
 .page-header {
-    font-size: 96px;
-    color: #000000;
-    text-shadow: 3px 3px 3px #756a01, 
+    font-family: 'Dancing Script', sans-serif;
+    font-size: 65px;
+    color: #fafafa;
+    text-shadow: 3px 3px 3px #000000, 
                  -3px -3px 3px #756a01, 
                  -3px 3px 3px #756a01, 
                  3px -3px 3px #756a01;
+                 margin-bottom: 0;
+}
+
+.section-padding {
+    padding: 10px 0 63px 0
 }
 
 /*----------Navbar----------*/
@@ -130,7 +143,7 @@ nav ul li {
 }
 
 .nav-link:hover {
-    color: #756a01;
+    color: #c6a76c;
 }
 
 .dropdown {
@@ -160,7 +173,7 @@ nav ul li {
 }
 
 .dropdown-content a:hover {
-    background-color: rgba(117,106,1,0.7);
+    background-color: #c6a76c;
     color: #fafafa;
     text-decoration: none;
 }
@@ -170,11 +183,11 @@ nav ul li {
 }
 
 .dropdown:hover .dropdown-btn {
-    color: #756a01;
+    color: #c6a76c;
 }
 
 .active {
-    color: #756a01;
+    color: #704b03;
     font-size: 20px;
 }
 
@@ -336,7 +349,7 @@ nav ul li {
     color: #fafafa;
     font-size: 8vw;
     text-shadow: 3px 3px black;
-    font-family: 'Archivo Narrow', sans-serif;
+    font-family: 'Dancing Script', sans-serif;
 }
 
 .ad-divider {
@@ -379,16 +392,40 @@ nav ul li {
     color: #fafafa;
 }
 
+.photo-card {
+    height: 100%;
+    width: 100%;
+    padding-bottom: 15px;
+}
+
+.box-image {
+    height: 100%;
+    width: 100%;
+}
+
 /*----------The Team page----------*/
 
 .team-header {
-    background-image: url(/media/IMG-20211107-WA0009.jpg);
+    background-image: url(/media/engine-components.jpg);
 }
 
 /*----------Media Queries----------*/
 
+@media (min-width: 435px) {
+    .page-header {
+        font-size: 96px;
+    }
+}
+
 @media (min-width: 1197px) {
     .ad-name {
         font-size: 96px;
+    }
+}
+
+@media (min-width: 1500px) {
+    .lg-expand {
+        margin-left: -90px;
+        margin-right: -90px;
     }
 }
