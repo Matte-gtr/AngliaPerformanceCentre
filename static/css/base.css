@@ -72,12 +72,19 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 10vw 0;
+    text-align: center;
+    max-height: 250px;
 }
 
 .header-container {
-    height: 25vw;
+    display: flex;
+    height: auto;
     width: 100%;
-    max-height: 300px;
+    max-height: 250px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
 .page-header {
@@ -427,5 +434,6 @@ nav ul li {
     .lg-expand {
         margin-left: -90px;
         margin-right: -90px;
+        margin-top: 55px;
     }
 }
