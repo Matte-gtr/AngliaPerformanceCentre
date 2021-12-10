@@ -186,9 +186,70 @@
         </nav>
     </div>
 
-
     {% block content %}
     {% endblock %}
+
+    <!--Footer-->
+    {% now "D" as dayofweek %}
+    <footer>
+        <div class="container-fluid bg-darker text-white pb-3 pt-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-4 p-2 mt-2 mb-2">
+                        <h3 class="uppercase">Opening hours</h3>
+                        <hr class="footer-hr">
+                        <div class="footer-content">
+                            <ul class="opening-times uppercase">
+                                <li {% if dayofweek == 'Mon' %}class="footer-active"{% endif %}>
+                                    <div>
+                                        <strong>Monday</strong><span class="align-right {% if dayofweek == 'Mon' %}font-weight-bold{% endif %}">09:00 - 17:00</span>
+                                    </div>
+                                </li>
+                                <li {% if dayofweek == 'Tue' %}class="footer-active"{% endif %}>
+                                    <div>
+                                        <strong>Tuesday</strong><span class="align-right {% if dayofweek == 'Tue' %}font-weight-bold{% endif %}">09:00 - 17:00</span>
+                                    </div>
+                                </li>
+                                <li {% if dayofweek == 'Wed' %}class="footer-active"{% endif %}>
+                                    <div>
+                                        <strong>Wednesday</strong><span class="align-right {% if dayofweek == 'Wed' %}font-weight-bold{% endif %}">09:00 - 17:00</span>
+                                    </div>
+                                </li>
+                                <li {% if dayofweek == 'Thu' %}class="footer-active"{% endif %}>
+                                    <div>
+                                        <strong>Thursday</strong><span class="align-right {% if dayofweek == 'Thu' %}font-weight-bold{% endif %}">09:00 - 17:00</span>
+                                    </div>
+                                </li>
+                                <li {% if dayofweek == 'Fri' %}class="footer-active"{% endif %}>
+                                    <div>
+                                        <strong>Friday</strong><span class="align-right {% if dayofweek == 'Fri' %}font-weight-bold{% endif %}">09:00 - 17:00</span>
+                                    </div>
+                                </li>
+                                <li {% if dayofweek == 'Sat' %}class="footer-active"{% endif %}>
+                                    <div>
+                                        <strong>Saturday</strong><span class="align-right {% if dayofweek == 'Sat' %}font-weight-bold{% endif %}">09:00 - 17:00</span>
+                                    </div>
+                                </li>
+                                <li {% if dayofweek == 'Sun' %}class="footer-active"{% endif %}>
+                                    <div>
+                                        <strong>Sunday</strong><span class="align-right {% if dayofweek == 'Sun' %}font-weight-bold{% endif %}">Closed</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 p-2 mt-2 mb-2">
+                        <h3 class="uppercase">Contact</h3>
+                        <hr class="footer-hr">
+                    </div>
+                    <div class="col-12 col-lg-4 p-2 mt-2 mb-2">
+                        <h3 class="uppercase">Soacial Media</h3>
+                        <hr class="footer-hr">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     {% if messages %}
     <div class="message-container">

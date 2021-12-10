@@ -1,7 +1,7 @@
 /*----------General----------*/
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Marck+Script&family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
 
 html {
@@ -18,7 +18,7 @@ h6 {
 }
 
 body {
-    font-family: Montserrat, sans-serif;
+    font-family: Roboto, sans-serif;
 }
 
 #base-header {
@@ -104,6 +104,46 @@ body {
 
 .text-gold {
     color: #6c5b3a;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+/*----------Footer----------*/
+
+.footer-hr {
+    border-color: #c6a76c;
+    border-width: 2px;
+    width: 135px;
+    margin-left: 0;
+    margin-top: 0;
+}
+
+.align-right {
+    text-align: right;
+    display: table-cell;
+    float: right;
+}
+
+.opening-times {
+    padding: 0;
+    margin: 0;
+}
+
+.opening-times li {
+    list-style: none;
+    padding: 3px 5px;
+}
+
+.footer-active {
+    background-color: #c6a76c;
+    color: #000000;
+    border-radius: 4px;
+}
+
+.footer-content {
+    padding: 0 5px;
 }
 
 /*----------Navbar----------*/
@@ -452,6 +492,13 @@ nav ul li {
 
 
 /*----------SERVICES (GENERAL)----------*/
+
+/*----------contact-----------*/
+
+.maps-iframe {
+    width: 100%;
+    height: 450px;
+}
 
 .services-header {
     background-image: url(/media/engine-components.jpg);
