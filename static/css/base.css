@@ -150,13 +150,19 @@ body {
     padding: 0 5px;
 }
 
-.contact-method a {
+.footer-content a {
     color: #c6a76c;
+    transition: color .2s linear;
 }
 
-.contact-method a:hover {
-    color: #fafafa;
+.footer-content a:hover {
+    color: #555adf;
     text-decoration: none;
+}
+
+.social-link {
+    font-size: 30px;
+    margin-right: 3px;
 }
 
 /*----------Navbar----------*/
