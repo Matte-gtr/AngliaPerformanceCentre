@@ -136,6 +136,10 @@ body {
     padding: 3px 5px;
 }
 
+.footer-container {
+    padding: 3px 5px;
+}
+
 .footer-active {
     background-color: #c6a76c;
     color: #000000;
@@ -144,6 +148,15 @@ body {
 
 .footer-content {
     padding: 0 5px;
+}
+
+.contact-method a {
+    color: #c6a76c;
+}
+
+.contact-method a:hover {
+    color: #fafafa;
+    text-decoration: none;
 }
 
 /*----------Navbar----------*/

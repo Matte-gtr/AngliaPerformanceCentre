@@ -194,7 +194,7 @@
     <footer>
         <div class="container-fluid bg-darker text-white pb-3 pt-3">
             <div class="container">
-                <div class="row">
+                <div class="row lg-expand">
                     <div class="col-12 col-lg-4 p-2 mt-2 mb-2">
                         <h3 class="uppercase">Opening hours</h3>
                         <hr class="footer-hr">
@@ -241,10 +241,34 @@
                     <div class="col-12 col-lg-4 p-2 mt-2 mb-2">
                         <h3 class="uppercase">Contact</h3>
                         <hr class="footer-hr">
+                        <div class="footer-content">
+                            <address class="footer-container mb-1">
+                                <span class="uppercase">Anglia Performance Centre</span><br/>
+                                Unit 26<br/>
+                                Mancetter Square<br/>
+                                Lincoln Road<br/>
+                                Werrington<br/>
+                                PE4 6BX
+                            </address>
+                            <address class="footer-container pt-2 mb-0">
+                                <div class="contact-method">
+                                    <i class="fas fa-phone"></i><a target="_blank" href="tel:07919094120"> 07919 094120</a><br/>
+                                </div>
+                                <div class="contact-method">
+                                    <i class="far fa-envelope"></i><a target="_blank" href="mailto:contact@apcperformance.co.uk"> contact@apcperformance.co.uk</a>
+                                </div>
+                                <div class="contact-method">
+                                    <i class="fas fa-route"></i><a href="https://maps.google.com/maps/dir//PE4+6BX+Mancetter+Square+Peterborough/@52.6067088,-0.2753039,16z/data=!4m5!4m4!1m0!1m2!1m1!1s0x4877f14f53fda31d:0xcc763535023825a6" target="_blank"> Directions</a>
+                                </div>
+                            </address>
+                        </div>
                     </div>
                     <div class="col-12 col-lg-4 p-2 mt-2 mb-2">
-                        <h3 class="uppercase">Soacial Media</h3>
+                        <h3 class="uppercase">Social Media</h3>
                         <hr class="footer-hr">
+                        <div class="footer-content">
+                            
+                        </div>
                     </div>
                 </div>
             </div>
@@ -284,7 +308,8 @@
                 if ($("#banner").length > 0) {
                     bannerHeight = document.getElementById("banner").offsetHeight;
                 };
-                let height = headerHeight + bannerHeight;
+                let height = headerHeight + bannerHeight - 1;
+                console.log(height);
                 return height;
             }
 
