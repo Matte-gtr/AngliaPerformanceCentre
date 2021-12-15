@@ -13,7 +13,7 @@
             <div class="ad-container">
               <img src="{{ advert.image.url }}" alt="{{ advert.name }}" class="ad-image">
               <div class="img-overlay"></div>
-              <div class="ad-description">
+              <div class="ad-description fade-in">
                 <div class="row">
                   <div class="col">
                     <div class="ad-name">{{ advert.name }}</div>
@@ -21,7 +21,7 @@
                 </div>
                 <hr class="ad-divider">
                 <div class="row">
-                  <div class="col">
+                  <div class="col fade-in">
                     <a class="btn ad-btn" href="{% url advert.url.page_link %}">View ></a>
                   </div>
                 </div>
@@ -45,7 +45,7 @@
     <div class="row">
       <div class="col">
         <div>
-          <h2 class="section-header text-white">Welcome to Anglia Performance Centre</h2>
+          <h2 class="section-header text-grey">Welcome to Anglia Performance Centre</h2>
         </div>
       </div>
     </div>

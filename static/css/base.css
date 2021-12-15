@@ -110,6 +110,10 @@ body {
     text-transform: uppercase;
 }
 
+.text-grey {
+    color: #898781;
+}
+
 /*----------Footer----------*/
 
 .footer-hr {
@@ -524,6 +528,19 @@ nav ul li {
     100% {
         transform: scale(1.1);
     }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fade-in 1.5s linear;
 }
 
 /*----------Media Queries----------*/

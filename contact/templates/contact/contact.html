@@ -20,7 +20,10 @@
             </iframe>
         </div>
         <div class="row">
-            {{form}}
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form}}
+            </form>
         </div>
     </div>
 {% endblock %}
