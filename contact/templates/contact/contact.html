@@ -20,10 +20,19 @@
             </iframe>
         </div>
         <div class="row">
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{form}}
-            </form>
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <h3 class="dark-content mt-3 uppercase">Send us a message</h3>
+                        <form class="w-100 mt-3" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{form|crispy}}
+                            <button type="submit" class="btn send-btn">SEND</button>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
         </div>
     </div>
 {% endblock %}

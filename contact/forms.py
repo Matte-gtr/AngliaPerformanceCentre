@@ -24,4 +24,4 @@ class MessageForm(forms.ModelForm):
             self.fields[field].label = ''
             placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
-            self.fields[field].widget.attrs['class'] = 'form-control'
+            self.fields[field].widget.attrs['class'] = 'form-control mb-1'

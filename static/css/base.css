@@ -505,6 +505,16 @@ nav ul li {
 
 
 
+/*----------Contact----------*/
+
+.send-btn {
+    background-color: #c6a76c;
+    border: 1px solid #5a5959;
+    color: #202020;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
 /*----------SERVICES (GENERAL)----------*/
 
 /*----------contact-----------*/
