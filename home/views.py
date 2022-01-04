@@ -7,7 +7,6 @@ def home(request):
     """ a view for the home page """
     adverts = Advert.objects.all()
     template = 'home/home.html'
-    messages.success(request, "The messages are working if you can see this")
     context = {
         'title': 'home',
         'section': 'home',

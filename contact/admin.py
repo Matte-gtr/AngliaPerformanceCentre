@@ -7,6 +7,7 @@ class MessageAdmin(admin.ModelAdmin):
         'name',
         'email',
         'message',
+        'received_on',
     ]
 
 

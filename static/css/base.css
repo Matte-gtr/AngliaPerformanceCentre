@@ -55,9 +55,12 @@ body {
     text-shadow: 2px 1px 3px black;
 }
 
-.hr-gold {
+.hr-gold-70 {
     border:1px solid #c6a76c;
     width: 70%;
+}
+
+.hr-left {
     margin-left: 0;
 }
 
@@ -114,6 +117,62 @@ body {
     color: #898781;
 }
 
+.toast-position {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 10000;
+}
+
+.p-1vw {
+    padding: 1vw;
+}
+
+.allauth-page {
+    max-width: 480px;
+    padding: 20px 0;
+}
+
+.account-bg {
+    padding: 0;
+    min-height: 77.5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.account-container {
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+.alert-block {
+    margin: 0;
+}
+
+.alert-block ul {
+    padding: 0;
+}
+
+.alert-block ul li {
+    color: #e97373;
+    list-style: none;
+}
+
+.controls {
+    margin-bottom: 10px;
+}
+
+.controls .textinput {
+    min-width: 250px;
+    width: 60%;
+}
+
+.control-group label {
+    margin-bottom: 0;
+}
+
 /*----------Footer----------*/
 
 .footer-hr {
@@ -154,12 +213,13 @@ body {
     padding: 0 5px;
 }
 
-.footer-content a {
+.standard-link {
+    overflow-wrap: break-word;
     color: #c6a76c;
     transition: color .2s linear;
 }
 
-.footer-content a:hover {
+.standard-link:hover {
     color: #555adf;
     text-decoration: none;
 }
@@ -453,8 +513,16 @@ nav ul li {
     background-color: #9f8057;
 }
 
+.bg-grey {
+    background-color: #262624;
+}
+
 .bg-darker {
     background-color: #1a1a18;
+}
+
+.bg-darkest {
+    background-color: #121212;
 }
 
 .img-overlay {
@@ -505,7 +573,9 @@ nav ul li {
 
 
 
-/*----------Contact----------*/
+/*----------SERVICES (GENERAL)----------*/
+
+/*----------contact-----------*/
 
 .send-btn {
     background-color: #c6a76c;
@@ -515,18 +585,27 @@ nav ul li {
     margin-top: 5px;
 }
 
-/*----------SERVICES (GENERAL)----------*/
-
-/*----------contact-----------*/
-
 .maps-iframe {
     width: 100%;
     height: 450px;
+    max-width: 1110px;
+    margin: 10px 5px;
+    border: 3px solid #856934;
 }
 
 .services-header {
     background-image: url(/media/engine-components.jpg);
     background-blend-mode: color-burn;
+}
+
+.contact-container {
+    text-align: left;
+}
+
+.contact-item {
+    padding: 10px;
+    height: 100%;
+    border-radius: 5px;
 }
 
 /*----------Keyframes----------*/
@@ -561,11 +640,18 @@ nav ul li {
     }
 }
 
+@media (min-width: 500px) {
+    .account-container {
+        background-color: rgba(255,255,255,0.1);
+        padding: 20px 10px;
+    }
+}
+
 @media (min-width: 992px) {
     .lg-text-center {
         text-align: center;
     }
-    .hr-center {
+    .hr-lg-center {
         margin-left: auto;
         width: 35%;
     }
@@ -583,3 +669,6 @@ nav ul li {
         margin-right: -90px;
     }
 }
+
+/*----------Testing----------*/
+

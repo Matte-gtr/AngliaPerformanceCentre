@@ -98,10 +98,10 @@
                         </button>
                         <div class="dropdown-menu">
                             {% if user.is_authenticated %}
-                                <button class="dropdown-item" type="button">Logout</button>
+                                <a href="{% url 'account_logout' %}"><button class="dropdown-item" type="button">Sign Out</button></a>
                             {% else %}
-                                <button class="dropdown-item" type="button">Sign Up</button>
-                                <button class="dropdown-item" type="button">Login</button>
+                                <a href="{% url 'account_login' %}"><button class="dropdown-item" type="button">Sign In</button></a>
+                                <a href="{% url 'account_signup' %}"><button class="dropdown-item" type="button">Sign Up</button></a>
                             {% endif %}
                         </div>
                     </div>
@@ -134,7 +134,12 @@
                                 <span class="sr-only">Toggle Dropleft</span>
                             </button>
                             <div class="dropdown-menu">
-                                <button class="dropdown-item" type="button">Action</button>
+                                {% if user.is_authenticated %}
+                                    <a href="{% url 'account_logout' %}"><button class="dropdown-item" type="button">Sign Out</button></a>
+                                {% else %}
+                                    <a href="{% url 'account_login' %}"><button class="dropdown-item" type="button">Sign In</button></a>
+                                    <a href="{% url 'account_signup' %}"><button class="dropdown-item" type="button">Sign Up</button></a>
+                                {% endif %}
                             </div>
                         </div>
                         <button type="button" class="btn btn-secondary apc-border">
@@ -192,7 +197,7 @@
     <!--Footer-->
     {% now "D" as dayofweek %}
     <footer>
-        <div class="container-fluid bg-darker text-grey pb-3 pt-3">
+        <div class="container-fluid bg-darkest text-grey pb-3 pt-3">
             <div class="container">
                 <div class="row lg-expand">
                     <div class="col-12 col-lg-4 p-2 mt-2 mb-2">
@@ -208,14 +213,14 @@
                                 PE4 6BX
                             </address>
                             <address class="footer-container pt-2 mb-0">
-                                <div class="contact-method">
-                                    <i class="fas fa-phone"></i><a href="tel:07919094120"> 07919 094120</a><br/>
+                                <div>
+                                    <i class="fas fa-phone"></i><a class="standard-link" href="tel:07919094120"> 07919 094120</a><br/>
                                 </div>
-                                <div class="contact-method">
-                                    <i class="far fa-envelope"></i><a target="_blank" href="mailto:contact@apcperformance.co.uk"> contact@apcperformance.co.uk</a>
+                                <div>
+                                    <i class="far fa-envelope"></i><a class="standard-link" target="_blank" href="mailto:contact@apcperformance.co.uk"> contact@apcperformance.co.uk</a>
                                 </div>
-                                <div class="contact-method">
-                                    <i class="fas fa-route"></i><a href="https://maps.google.com/maps/dir//PE4+6BX+Mancetter+Square+Peterborough/@52.6067088,-0.2753039,16z/data=!4m5!4m4!1m0!1m2!1m1!1s0x4877f14f53fda31d:0xcc763535023825a6" target="_blank"> Directions</a>
+                                <div>
+                                    <i class="fas fa-route"></i><a class="standard-link" href="https://maps.google.com/maps/dir//PE4+6BX+Mancetter+Square+Peterborough/@52.6067088,-0.2753039,16z/data=!4m5!4m4!1m0!1m2!1m1!1s0x4877f14f53fda31d:0xcc763535023825a6" target="_blank"> Directions</a>
                                 </div>
                             </address>
                         </div>
@@ -269,7 +274,7 @@
                                 <h3 class="uppercase">Ts & Cs</h3>
                                 <hr class="footer-hr">
                                 <div class="footer-content">
-                                    <p>View our <a class="" href="{% url 'terms_and_conditions' %}">Terms and Conditions</a> page for details.</p>
+                                    <p>View our <a class="standard-link" href="{% url 'terms_and_conditions' %}">Terms and Conditions</a> page for details.</p>
                                 </div>
                             </div>
                         </div>
@@ -278,8 +283,8 @@
                                 <h3 class="uppercase">Social Media</h3>
                                 <hr class="footer-hr mb-2">
                                 <div class="footer-content">
-                                    <a class="social-link" href="https://www.instagram.com/anglia_performance_centre/?hl=en" target="_blank"><i class="fab fa-instagram-square"></i></a>
-                                    <a class="social-link" href="https://www.facebook.com/anglia_performance_centre-105018164979685" target="_blank"><i class="fab fa-facebook-square"></i></a>
+                                    <a class="social-link standard-link" href="https://www.instagram.com/anglia_performance_centre/?hl=en" target="_blank"><i class="fab fa-instagram-square"></i></a>
+                                    <a class="social-link standard-link" href="https://www.facebook.com/anglia_performance_centre-105018164979685" target="_blank"><i class="fab fa-facebook-square"></i></a>
                                 </div>
                             </div>
                         </div>

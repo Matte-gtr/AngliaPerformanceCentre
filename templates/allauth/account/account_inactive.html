@@ -5,7 +5,14 @@
 {% block head_title %}{% trans "Account Inactive" %}{% endblock %}
 
 {% block content %}
-<h1>{% trans "Account Inactive" %}</h1>
+<div class="container-fluid bg-darker account-bg">
+    <div class="container dark-content allauth-page">
+        <div class="account-container">
+            <h1>{% trans "Account Inactive" %}</h1>
 
-<p>{% trans "This account is inactive." %}</p>
+            <p>{% trans "This account is inactive." %}</p>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

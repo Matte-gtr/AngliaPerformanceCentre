@@ -15,10 +15,10 @@ class MessageForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         placeholders = {
-            'name': 'Name',
+            'name': 'Name *',
             'phone': 'Contact Number',
-            'email': 'Email Address',
-            'message': 'Message',
+            'email': 'Email Address *',
+            'message': 'Message *',
         }
         for field in self.fields:
             self.fields[field].label = ''
