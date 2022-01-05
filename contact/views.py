@@ -1,6 +1,6 @@
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render, HttpResponse, redirect, reverse
-from .forms import MessageForm
+from .forms import MessageForm, CallbackForm
 
 from django.contrib import messages
 from django.http import HttpResponseRedirect
@@ -9,11 +9,13 @@ from django.http import HttpResponseRedirect
 def contact(request):
     """ a view to display the contact page """
     form = MessageForm(request.POST or None)
+    miniform = CallbackForm(request.POST or None)
     template = "contact/contact.html"
     context = {
         'title': 'contact',
         'section': 'contact',
         'form': form,
+        'miniform': miniform,
     }
     return render(request, template, context)
 
@@ -21,7 +23,7 @@ def contact(request):
 def send_message(request):
     """ a view for sending a message to the garage """
     if request.method == "POST":
-        next = request.POST.get('next', '/')
+        page_location = request.POST.get('next', '/')
         form = MessageForm(request.POST or None)
         if form.is_valid():
             form.save()
@@ -35,9 +37,27 @@ def send_message(request):
                 HttpResponse('Bad Header Found')
             messages.success(request, 'Thanks for your message, \
                 we will get back to you shortly')
-            return HttpResponseRedirect(next)
+            return HttpResponseRedirect(page_location)
         else:
             messages.error(request, "Message failed, please check \
                 the form and resend")
-            return HttpResponseRedirect(next)
+            return HttpResponseRedirect(page_location)
     return redirect(reverse('home'))
+
+
+def send_callback(request):
+    """ a view for sending a callback request to the garage """
+    if request.method == "POST":
+        page_location = request.POST.get('next', '/')
+        form = CallbackForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            # possibly send a text message from here at some point
+            messages.success(request, "Message Received, We will be \
+                in touch shortly")
+            return HttpResponseRedirect(page_location)
+        else:
+            messages.error(request, "Error, please check the form \
+            and resend")
+            return HttpResponseRedirect(page_location)
+    return HttpResponseRedirect(page_location)

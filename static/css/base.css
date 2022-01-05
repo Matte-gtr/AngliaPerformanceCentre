@@ -607,6 +607,10 @@ nav ul li {
     background-color: #fafafa;
 }
 
+.callback-padding {
+    padding: 0 0 60px 0;
+}
+
 /*----------ABOUT (GENERAL)----------*/
 
 .about-header {
@@ -646,6 +650,17 @@ nav ul li {
 .send-btn:hover {
     background-color: #555adf;
     color: white;
+}
+
+.request-btn {
+    border: 1px solid #767676;
+    background-color: #1a1a18;
+    color: #fafafa;
+    transition: all .2s linear;
+}
+
+.request-btn:hover {
+    background-color: #555adf;
 }
 
 .maps-iframe {

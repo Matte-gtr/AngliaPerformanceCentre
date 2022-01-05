@@ -11,7 +11,7 @@ class Message(models.Model):
     responded = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class Callback(models.Model):
@@ -22,4 +22,4 @@ class Callback(models.Model):
     responded = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
