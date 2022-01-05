@@ -119,8 +119,8 @@ body {
 
 .toast-position {
     position: fixed;
-    top: 0;
-    right: 0;
+    top: 5px;
+    right: 5px;
     z-index: 10000;
 }
 
@@ -160,17 +160,52 @@ body {
     list-style: none;
 }
 
+/*----------Forms----------*/
+
 .controls {
     margin-bottom: 10px;
 }
 
-.controls .textinput {
+.controls .textinput,
+.controls .emailinput,
+.controls .textarea {
     min-width: 250px;
-    width: 60%;
+    max-width: 650px;
+    margin: 0 auto;
 }
 
 .control-group label {
     margin-bottom: 0;
+}
+
+.dark-form input,
+.dark-form textarea{
+    color: #fafafa;
+    background-color: #1a1a18;
+}
+
+.dark-form input:focus,
+.dark-form textarea:focus{
+    color: #fafafa;
+    background-color: #1a1a18;
+    border-color: #c6a76c;
+    box-shadow: 0 0 0 0.2rem rgb(198 167 108 / 70%);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+border: 1px solid #c6a76c;
+-webkit-text-fill-color: #c6a76c;
+box-shadow: 0 0 0px 1000px #1a1a19 inset;
+-webkit-box-shadow: 0 0 0px 1000px ##1a1a19 inset;
+transition: background-color 5000s ease-in-out 0s;
 }
 
 /*----------Footer----------*/
@@ -550,6 +585,28 @@ nav ul li {
     width: 100%;
 }
 
+.bg-transition-container {
+    height: 7vh;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.bg-transition {
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(0 0, 50% 100%, 100% 0, 100% 100%, 0 100%);
+    transform: translateY(1px);
+}
+
+.bg-gold {
+    background-color: #c6a76c;
+}
+
+.bg-white {
+    background-color: #fafafa;
+}
+
 /*----------ABOUT (GENERAL)----------*/
 
 .about-header {
@@ -583,6 +640,12 @@ nav ul li {
     color: #202020;
     font-weight: 600;
     margin-top: 5px;
+    transition: all .2s linear;
+}
+
+.send-btn:hover {
+    background-color: #555adf;
+    color: white;
 }
 
 .maps-iframe {
