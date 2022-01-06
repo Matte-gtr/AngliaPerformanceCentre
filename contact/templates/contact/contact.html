@@ -51,4 +51,34 @@
             </div>
         </div>
     </div>
+    <div class="bg-transition-container bg-darker">
+        <div class="bg-transition bg-gold"></div>
+    </div>
+    <section class="container-fluid callback-padding bg-gold">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <h2 class="section-header text-gold">Request a Callback</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <form action="{% url 'send_callback' %}" method="POST" class="text-center">
+                {% csrf_token %}
+                <div class="row">
+                  {% for field in miniform %}
+                  <div class="col-12 col-md-5">
+                    {{ field }}
+                  </div>
+                  {% endfor %}
+                  <div class="col-12 col-md-2">
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button type="submit" class="btn request-btn mt-0">REQUEST</button>
+                  </div>
+                </div>          
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
 {% endblock %}

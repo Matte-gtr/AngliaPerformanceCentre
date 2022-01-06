@@ -192,15 +192,15 @@ body {
     box-shadow: 0 0 0 0.2rem rgb(198 167 108 / 70%);
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
+.dark-form input:-webkit-autofill,
+.dark-form input:-webkit-autofill:hover,
+.dark-form input:-webkit-autofill:focus,
+.dark-form textarea:-webkit-autofill,
+.dark-form textarea:-webkit-autofill:hover,
+.dark-form textarea:-webkit-autofill:focus,
+.dark-form select:-webkit-autofill,
+.dark-form select:-webkit-autofill:hover,
+.dark-form select:-webkit-autofill:focus {
 border: 1px solid #c6a76c;
 -webkit-text-fill-color: #c6a76c;
 box-shadow: 0 0 0px 1000px #1a1a19 inset;
@@ -548,18 +548,6 @@ nav ul li {
     background-color: #9f8057;
 }
 
-.bg-grey {
-    background-color: #262624;
-}
-
-.bg-darker {
-    background-color: #1a1a18;
-}
-
-.bg-darkest {
-    background-color: #121212;
-}
-
 .img-overlay {
     height: 100%;
     position: absolute;
@@ -605,6 +593,18 @@ nav ul li {
 
 .bg-white {
     background-color: #fafafa;
+}
+
+.bg-grey {
+    background-color: #262624;
+}
+
+.bg-darker {
+    background-color: #1a1a18;
+}
+
+.bg-darkest {
+    background-color: #121212;
 }
 
 .callback-padding {
