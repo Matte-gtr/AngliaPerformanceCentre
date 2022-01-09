@@ -39,7 +39,7 @@ class CallbackForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         placeholders = {
             'name': 'Name *',
-            'phone': 'Contact Number',
+            'phone': 'Contact Number *',
         }
         for field in self.fields:
             self.fields[field].label = ''

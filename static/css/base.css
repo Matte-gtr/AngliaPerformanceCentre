@@ -201,11 +201,11 @@ body {
 .dark-form select:-webkit-autofill,
 .dark-form select:-webkit-autofill:hover,
 .dark-form select:-webkit-autofill:focus {
-border: 1px solid #c6a76c;
--webkit-text-fill-color: #c6a76c;
-box-shadow: 0 0 0px 1000px #1a1a19 inset;
--webkit-box-shadow: 0 0 0px 1000px ##1a1a19 inset;
-transition: background-color 5000s ease-in-out 0s;
+    border: 1px solid #c6a76c;
+    -webkit-text-fill-color: #c6a76c;
+    box-shadow: 0 0 0px 1000px #1a1a19 inset;
+    -webkit-box-shadow: 0 0 0px 1000px #1a1a19 inset;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 /*----------Footer----------*/
@@ -635,6 +635,44 @@ nav ul li {
 
 
 /*----------SERVICES (GENERAL)----------*/
+
+
+
+/*----------Testimonials----------*/
+
+.testimonials-header {
+    background-image: url(/media/stars.jpg);
+    background-blend-mode: color-burn;
+}
+
+/*----------Pricing----------*/
+
+.pricing-header {
+    background-image: url(/media/accounting.jpg);
+    background-blend-mode: color-burn;
+}
+
+/*----------SHOP (GENERAL)----------*/
+
+.shop-header {
+    background-image: url(/media/car-sales.jpg);
+    background-blend-mode: multiply;
+}
+
+
+/*----------Pricing----------*/
+
+.blog-header {
+    background-image: url(/media/blog.jpg);
+    background-blend-mode: multiply;
+}
+
+/*----------Contact----------*/
+
+.contact-header {
+    background-image: url(/media/old-phone.jpg);
+    background-blend-mode: multiply;
+}
 
 /*----------contact-----------*/
 

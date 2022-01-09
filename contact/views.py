@@ -27,12 +27,20 @@ def send_message(request):
         form = MessageForm(request.POST or None)
         if form.is_valid():
             form.save()
+            new_line = '\n'
             subject = form.cleaned_data['name']
             from_email = form.cleaned_data['email']
+            phone = form.cleaned_data['phone']
             message = form.cleaned_data['message']
+            if phone:
+                final_message = f'Message from: {subject} ({from_email})\
+                    {new_line}Phone: {phone}{new_line}{message}'
+            else:
+                final_message = f'Message from: {subject} ({from_email})\
+                    {new_line}{message}'
             try:
-                send_mail(subject, message, from_email,
-                          ['matt.snell.00@hotmail.co.uk'])
+                send_mail(subject, final_message, from_email,
+                          ['contact@apcperformance.co.uk'])
             except BadHeaderError:
                 HttpResponse('Bad Header Found')
             messages.success(request, 'Thanks for your message, \
