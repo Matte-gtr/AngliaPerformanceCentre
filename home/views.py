@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.contrib import messages
 from contact.forms import MessageForm, CallbackForm
 from .models import Advert
 

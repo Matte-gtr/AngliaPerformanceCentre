@@ -8,5 +8,15 @@
                 </header>
             </div>
         </div>
+        <div class="row">
+            <div class="col">
+                <form method="POST" action="#" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ review_form|crispy }}
+                    {{ review_images_form|crispy }}
+                    <button type="submit" class="btn request-btn mt-0">POST</button>
+                </form>
+            </div>
+        </div>
     </div>
 {% endblock %}

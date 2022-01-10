@@ -18,6 +18,7 @@ defusedxml==0.7.1
 distlib==0.3.1
 Django==3.2.3
 django-allauth==0.44.0
+django-cleanup==5.2.0
 django-crispy-forms==1.13.0
 docutils==0.17
 entrypoints==0.3
