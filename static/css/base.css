@@ -168,7 +168,9 @@ body {
 
 .controls .textinput,
 .controls .emailinput,
-.controls .textarea {
+.controls .textarea,
+.controls .select,
+.contols .clearablefileinput {
     min-width: 250px;
     max-width: 650px;
     margin: 0 auto;
@@ -643,6 +645,80 @@ nav ul li {
 .testimonials-header {
     background-image: url(/media/stars.jpg);
     background-blend-mode: color-burn;
+}
+
+.review {
+    background-color: #fafafa;
+    max-width: 950px;
+    padding: 10px;
+    margin: 10px auto;
+    border-radius: 3px;
+    color: #1a1a18;
+}
+
+.text-orange {
+    color: #ff7600;
+}
+
+.thumbnail-container {
+    width: 100%;
+    height: auto;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.img-container {
+    width: auto;
+    height: 130px;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.thumbnail {
+    height: 100%;
+}
+
+.user-star {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.star-checked {
+    color: #ff7600; 
+}
+
+.rank {
+    transform:rotate(180deg);
+    -ms-transform:rotate(180deg);
+    -webkit-transform:rotate(180deg);
+}
+
+.rank > .user-star {
+    position: relative;
+    margin: 0;
+    height: 30px;
+    color: #ccc;
+    transition: color 350ms;
+    transform: rotate(180deg);
+}
+
+.rank > .user-star + .user-star {
+    margin-top: 10px;
+}
+
+.rank > .user-star:hover,
+.rank > .user-star:hover ~ .user-star {
+    color: #ff7600;
+}
+
+.rank > .user-star:after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    right: 0;
+    height: 10px;
 }
 
 /*----------Pricing----------*/

@@ -8,14 +8,77 @@
                 </header>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <form method="POST" action="#" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ review_form|crispy }}
-                    {{ review_images_form|crispy }}
-                    <button type="submit" class="btn request-btn mt-0">POST</button>
-                </form>
+    </div>
+    <div class="container-fluid p-0 bg-darker text-white">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12">
+                    <h1>Customer Testimonials</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h2>{{ review_count }} Reviews{% if review_count > 0 %} | {{ average_rating }} Average Rating{% else %}{% endif %}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    {% for review in reviews %}
+                        <div class="review">
+                            {% if review.anon == False %}
+                                <h5 class="font-weight-bold">{{ review.user }}</h5>
+                            {% else %}
+                            <h5 class="font-weight-bold">Anonymous</h5>
+                            {% endif %}
+                            <p class="m-0">
+                                <span class="fa fa-star{% if review.stars >= 1 %} text-orange{% endif %}"></span>
+                                <span class="fa fa-star{% if review.stars >= 2 %} text-orange{% endif %}"></span>
+                                <span class="fa fa-star{% if review.stars >= 3 %} text-orange{% endif %}"></span>
+                                <span class="fa fa-star{% if review.stars >= 4 %} text-orange{% endif %}"></span>
+                                <span class="fa fa-star{% if review.stars >= 5 %} text-orange{% endif %}"></span>
+                            </p>
+                            <hr class="mt-1">
+                            <p>{{ review.review }}</p>
+                            {% with counter=forloop.counter %}
+                                {% if review.image.count > 0 %}
+                                    <div class="row m-0">
+                                        <div class="thumbnail-container">
+                                            {% for img in review.image.all %}
+                                                <div class="img-container">
+                                                    <a data-fancybox="group-{{ counter }}" href="{{ img.image.url }}">
+                                                        <img class="thumbnail" src="{{ img.image.url }}" alt="">
+                                                    </a>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endwith %}
+                            <p class="mb-0"><small>{{ review.created_on }}</small></p>
+                        </div>
+                        
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <form method="POST" action="{% url 'post_review' %}" enctype="multipart/form-data" class="">
+                        {% csrf_token %}
+                        <div class="row p-0">
+                            <div class="col-12 text-center">
+                                <p class="mt-3 mb-3 rank">
+                                    <span class="fa fa-star user-star" data-value="1"></span>
+                                    <span class="fa fa-star user-star" data-value="2"></span>
+                                    <span class="fa fa-star user-star" data-value="3"></span>
+                                    <span class="fa fa-star user-star" data-value="4"></span>
+                                    <span class="fa fa-star user-star" data-value="5"></span>
+                                </p>
+                            </div>
+                        </div>
+                        {{ review_form|crispy }}
+                        <button type="submit" class="btn request-btn mt-0">POST</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

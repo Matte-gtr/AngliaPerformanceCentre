@@ -71,6 +71,8 @@ INSTALLED_APPS = [
     'contact',
     'cart',
     'user_management',
+
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 # Provider specific settings

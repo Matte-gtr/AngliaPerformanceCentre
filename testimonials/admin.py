@@ -1,13 +1,10 @@
 from django.contrib import admin
-from .models import ReviewImages, Review
-
-
-class ReviewImagesInline(admin.StackedInline):
-    model = ReviewImages
+from .models import ReviewImage, Review
 
 
 class ReviewAdmin(admin.ModelAdmin):
-    inlines = [ReviewImagesInline]
+    pass
 
 
 admin.site.register(Review, ReviewAdmin)
+admin.site.register(ReviewImage)

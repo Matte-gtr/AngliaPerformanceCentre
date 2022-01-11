@@ -15,6 +15,7 @@ class Review(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     stars = models.IntegerField(default=3, choices=STAR_CHOICES)
     review = models.TextField(blank=False)
+    image = models.ManyToManyField('ReviewImage', blank=True)
     anon = models.BooleanField(default=False)
     authorised = models.BooleanField(default=False)
 
@@ -22,9 +23,8 @@ class Review(models.Model):
         return str(self.pk)
 
 
-class ReviewImages(models.Model):
-    image = models.ImageField(blank=True, null=True)
-    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+class ReviewImage(models.Model):
+    image = models.ImageField(upload_to="reviews", blank=True, null=True)
 
     def __str__(self):
         return str(self.pk)
