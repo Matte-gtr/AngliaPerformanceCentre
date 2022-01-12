@@ -1,15 +1,18 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
+from django.db.models import Avg
+from django.contrib.auth.decorators import login_required
+
 from .forms import ReviewForm
 from .models import ReviewImage, Review
-from django.db.models import Avg
+
 
 
 def testimonials(request):
     """ a view for the testimonials page """
-    auth_reviews = Review.objects.filter(authorised=False)
-    review_count = Review.objects.filter(authorised=False).count()
-    average = Review.objects.filter(authorised=False).\
+    auth_reviews = Review.objects.filter(authorised=True)
+    review_count = Review.objects.filter(authorised=True).count()
+    average = Review.objects.filter(authorised=True).\
         aggregate(Avg('stars'))['stars__avg']
     if review_count > 0:
         average_rating = round(average, 1)
@@ -28,6 +31,7 @@ def testimonials(request):
     return render(request, template, context)
 
 
+@login_required
 def post_review(request):
     """ a view for posting a review on the testimonials page """
     if request.method == "POST":
@@ -52,3 +56,8 @@ def post_review(request):
         else:
             messages.warning(request, "Please log in to post a review")
             return redirect(reverse("account_login"))
+
+
+@login_required
+class delete_review(request, review_id):
+

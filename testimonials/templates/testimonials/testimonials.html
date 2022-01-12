@@ -11,14 +11,18 @@
     </div>
     <div class="container-fluid p-0 bg-darker text-white">
         <div class="container">
-            <div class="row text-center">
+            <div class="row">
                 <div class="col-12">
-                    <h1>Customer Testimonials</h1>
+                    <h1 class="mt-5">Customer Testimonials</h1>
+                    <hr class="hr-gold-70 hr-left mb-5">
                 </div>
             </div>
             <div class="row">
-                <div class="col-12">
-                    <h2>{{ review_count }} Reviews{% if review_count > 0 %} | {{ average_rating }} Average Rating{% else %}{% endif %}</h2>
+                <div class="col-12 col-md-6">
+                    <h3><span class="text-light-gold">{{ review_count }}</span> Reviews{% if review_count > 0 %}</h3>
+                </div>
+                <div class="col-12 col-md-6">
+                    <h3 class="float-md-right"><span class="text-light-gold">{{ average_rating }}</span> Average Rating{% else %}{% endif %}</h2>
                 </div>
             </div>
             <div class="row">
@@ -38,7 +42,7 @@
                                 <span class="fa fa-star{% if review.stars >= 5 %} text-orange{% endif %}"></span>
                             </p>
                             <hr class="mt-1">
-                            <p>{{ review.review }}</p>
+                            <p>{{ review.review|linebreaks }}</p>
                             {% with counter=forloop.counter %}
                                 {% if review.image.count > 0 %}
                                     <div class="row m-0">
@@ -62,24 +66,61 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <form method="POST" action="{% url 'post_review' %}" enctype="multipart/form-data" class="">
-                        {% csrf_token %}
-                        <div class="row p-0">
-                            <div class="col-12 text-center">
-                                <p class="mt-3 mb-3 rank">
-                                    <span class="fa fa-star user-star" data-value="1"></span>
-                                    <span class="fa fa-star user-star" data-value="2"></span>
-                                    <span class="fa fa-star user-star" data-value="3"></span>
-                                    <span class="fa fa-star user-star" data-value="4"></span>
-                                    <span class="fa fa-star user-star" data-value="5"></span>
-                                </p>
+                    <div class="review-container bg-light-grey">
+                        <div class="row">
+                            <div class="col text-center">
+                                <h3 class="mt-4 text-light-gold">Write your own Review</h3>
                             </div>
                         </div>
-                        {{ review_form|crispy }}
-                        <button type="submit" class="btn request-btn mt-0">POST</button>
-                    </form>
+                        <form method="POST" action="{% url 'post_review' %}" enctype="multipart/form-data" class="review-form">
+                            {% csrf_token %}
+                            <div class="row p-0">
+                                <div class="col-12 text-center">
+                                    <p class="mt-3 mb-3 rank">
+                                        <span id="star-5" class="fa fa-star user-star" data-value="5"></span>
+                                        <span id="star-4" class="fa fa-star user-star" data-value="4"></span>
+                                        <span id="star-3" class="fa fa-star user-star" data-value="3"></span>
+                                        <span id="star-2" class="fa fa-star user-star" data-value="2"></span>
+                                        <span id="star-1" class="fa fa-star user-star" data-value="1"></span>
+                                    </p>
+                                    <div class="star-warning d-none">
+                                        Please select a Star Rating
+                                    </div>
+                                </div>
+                            </div>
+                            {{ review_form|crispy }}
+                            <div class="text-center">
+                                <button type="submit" class="btn send-btn mt-0" id="review-submit">POST REVIEW</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block postload_js %}
+{{ block.super }}
+  <script>
+    $(document).ready(
+      function() {
+        $('.user-star').click(function() {
+            $(this).parents('.rank').find('.user-star').removeClass('star-checked');
+            $(this).addClass('star-checked');
+            let numberValue = this.dataset.value
+            $('#id_stars').val(numberValue)
+            if (!$('.star-warning').hasClass('d-none')) {
+                $('.star-warning').addClass('d-none');
+            }
+        });
+        $('#review-submit').click(function(e) {
+            let stars = $('#id_stars').val();
+            if (stars == "") {
+                e.preventDefault(e);
+                $('.star-warning').removeClass('d-none');
+            }
+        });
+      });
+  </script>
 {% endblock %}

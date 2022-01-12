@@ -4,16 +4,17 @@ from django.contrib.auth.models import User
 
 class Review(models.Model):
     STAR_CHOICES = (
-        (1, 'Very Poor'),
-        (2, 'Poor'),
-        (3, 'Average'),
-        (4, 'Good'),
-        (5, 'Very Good'),
+        ('','Select'),
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
     )
     user = models.ForeignKey(User, related_name='reviews',
                              on_delete=models.RESTRICT)
     created_on = models.DateTimeField(auto_now_add=True)
-    stars = models.IntegerField(default=3, choices=STAR_CHOICES)
+    stars = models.IntegerField(default='', choices=STAR_CHOICES, blank=False)
     review = models.TextField(blank=False)
     image = models.ManyToManyField('ReviewImage', blank=True)
     anon = models.BooleanField(default=False)

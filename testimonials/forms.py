@@ -25,11 +25,10 @@ class ReviewForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['review'].widget.attrs['placeholder'] = 'Review'
-        self.fields['review'].label = ''
-        self.fields['image'].label = ''
-        self.fields['stars'].label = ''
 
         for field in self.fields:
             if field != 'anon':
                 self.fields[field].widget.attrs['class'] = 'form-control mb-1'
-        self.fields['stars'].widget.attrs['class'] = 'd-none'
+                self.fields[field].label = ''
+        self.fields['stars'].widget = forms.HiddenInput()
+        self.fields['image'].widget.attrs['class'] = 'form-control bg-light-grey border-0 pl-0 text-white'

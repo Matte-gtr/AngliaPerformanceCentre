@@ -109,6 +109,14 @@ body {
     color: #6c5b3a;
 }
 
+.text-light-gold {
+    color: #c6a76c;
+}
+
+.text-purple {
+    color: #555adf;
+}
+
 .uppercase {
     text-transform: uppercase;
 }
@@ -170,7 +178,7 @@ body {
 .controls .emailinput,
 .controls .textarea,
 .controls .select,
-.contols .clearablefileinput {
+.controls .clearablefileinput {
     min-width: 250px;
     max-width: 650px;
     margin: 0 auto;
@@ -597,6 +605,11 @@ nav ul li {
     background-color: #fafafa;
 }
 
+.bg-light-grey,
+.bg-light-grey:focus {
+    background-color: #3a3a38;
+}
+
 .bg-grey {
     background-color: #262624;
 }
@@ -647,6 +660,19 @@ nav ul li {
     background-blend-mode: color-burn;
 }
 
+.review-container {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    margin: 40px 0;
+    border-radius: 5px;
+}
+
+.review-form {
+    max-width: 650px;
+    margin: 0 auto;
+}
+
 .review {
     background-color: #fafafa;
     max-width: 950px;
@@ -683,8 +709,12 @@ nav ul li {
     cursor: pointer;
 }
 
-.star-checked {
-    color: #ff7600; 
+.rank .star-checked {
+    color: #ff7600 !important; /* check */
+}
+
+.rank > .star-checked:after {
+    color: #ff7600 !important; /* check */
 }
 
 .rank {
@@ -711,6 +741,11 @@ nav ul li {
     color: #ff7600;
 }
 
+.rank > .star-checked,
+.rank > .star-checked ~ .user-star {
+    color: #ff7600;
+}
+
 .rank > .user-star:after {
     content: "";
     display: block;
@@ -719,6 +754,32 @@ nav ul li {
     left: 0;
     right: 0;
     height: 10px;
+}
+
+.star-warning {
+    width: 213px;
+    margin: 0 auto 15px;
+    background-color: #565555;
+    padding: 8px;
+    border-radius: 5px;
+    top: 66px;
+    left: 0;
+    right: 0;
+    position: absolute;
+}
+
+.star-warning:before {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: -12px;
+    margin: 0 auto;
+    border-bottom: 15px solid #565555;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    width: 20px;
 }
 
 /*----------Pricing----------*/
