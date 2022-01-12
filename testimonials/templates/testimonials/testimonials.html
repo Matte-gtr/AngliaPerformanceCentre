@@ -59,6 +59,11 @@
                                 {% endif %}
                             {% endwith %}
                             <p class="mb-0"><small>{{ review.created_on }}</small></p>
+                            {% with user=request.user %}
+                                {% if user == review.user or user.is_staff %}
+                                    <p class="mb-0"><a href="{% url 'edit_review' review.id %}"><i class="fas fa-edit"></i></a></p>     
+                                {% endif %}
+                            {% endwith %}
                         </div>
                         
                     {% endfor %}
@@ -109,7 +114,7 @@
             $(this).parents('.rank').find('.user-star').removeClass('star-checked');
             $(this).addClass('star-checked');
             let numberValue = this.dataset.value
-            $('#id_stars').val(numberValue)
+            $('#id_stars').val(numberValue);
             if (!$('.star-warning').hasClass('d-none')) {
                 $('.star-warning').addClass('d-none');
             }

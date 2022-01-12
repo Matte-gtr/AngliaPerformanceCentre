@@ -2,10 +2,10 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.db.models import Avg
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from .forms import ReviewForm
 from .models import ReviewImage, Review
-
 
 
 def testimonials(request):
@@ -59,5 +59,50 @@ def post_review(request):
 
 
 @login_required
-class delete_review(request, review_id):
+def delete_review(request, review_id):
+    """ a view to delete a review """
+    review = get_object_or_404(Review, pk=review_id)
+    if request.user == review.user or request.user.is_staff:
+        try:
+            review.delete()
+            messages.success(request, 'Your review by has been successfully deleted')
+        except Exception as e:
+            messages.error(request, f'Error deleting review: {e}')
+    else:
+        messages.warning(request, 'You are only able to delete your own reviews')
+    return redirect(reverse("testimonials"))
 
+
+@login_required
+def edit_review(request, review_id):
+    """ a view to edit your review """
+    review = get_object_or_404(Review, pk=review_id)
+    if request.user == review.user or request.user.is_staff:
+        if request.method == "POST":
+            form = ReviewForm(request.POST, request.FILES, instance=review)
+            files = request.FILES.getlist('image')
+            if form.is_valid:
+                form.save()
+                for file in files:
+                    img = ReviewImage(image=file)
+                    img.save()
+                    review.image.add(img)
+                form.save()
+                messages.success(request, "Your Review has been successfully updated")
+                return redirect(reverse('testimonials'))
+            else:
+                messages.error(request, "Update failed, Please ensure all fields \
+                               are filled in and re-submit")
+        else:
+            form = ReviewForm(instance=review)
+    else:
+        messages.warning(request, "You do not have the required permissions to \
+                         edit this post")
+    template = "testimonials/edit-review.html"
+    context = {
+        'review': review,
+        'form': form,
+        'title': 'edit review',
+        'section': 'testimonials',
+    }
+    return render(request, template, context)
