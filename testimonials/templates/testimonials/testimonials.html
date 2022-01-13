@@ -30,9 +30,19 @@
                     {% for review in reviews %}
                         <div class="review">
                             {% if review.anon == False %}
-                                <h5 class="font-weight-bold">{{ review.user }}</h5>
+                                <h5 class="font-weight-bold float-left">{{ review.user }}</h5>
+                                {% with user=request.user %}
+                                    {% if user == review.user or user.is_staff %}
+                                        <p class="mb-0 d-inline-block float-right"><a href="{% url 'edit_review' review.id %}"><i class="fas fa-edit"></i></a></p>     
+                                    {% endif %}
+                                {% endwith %}
                             {% else %}
-                            <h5 class="font-weight-bold">Anonymous</h5>
+                            <h5 class="font-weight-bold float-left">Anonymous</h5>
+                            {% with user=request.user %}
+                                {% if user == review.user or user.is_staff %}
+                                    <p class="mb-0 d-inline-block float-right"><a href="{% url 'edit_review' review.id %}"><i class="fas fa-edit"></i></a></p>     
+                                {% endif %}
+                            {% endwith %}
                             {% endif %}
                             <p class="m-0">
                                 <span class="fa fa-star{% if review.stars >= 1 %} text-orange{% endif %}"></span>
@@ -59,11 +69,6 @@
                                 {% endif %}
                             {% endwith %}
                             <p class="mb-0"><small>{{ review.created_on }}</small></p>
-                            {% with user=request.user %}
-                                {% if user == review.user or user.is_staff %}
-                                    <p class="mb-0"><a href="{% url 'edit_review' review.id %}"><i class="fas fa-edit"></i></a></p>     
-                                {% endif %}
-                            {% endwith %}
                         </div>
                         
                     {% endfor %}
@@ -94,6 +99,11 @@
                                 </div>
                             </div>
                             {{ review_form|crispy }}
+                            <!-- <div class="thumbnail-container">
+                                <div id="img-container">
+    
+                                </div>
+                            </div> -->
                             <div class="text-center">
                                 <button type="submit" class="btn send-btn mt-0" id="review-submit">POST REVIEW</button>
                             </div>
@@ -126,6 +136,31 @@
                 $('.star-warning').removeClass('d-none');
             }
         });
+
+        /* document.getElementById('image-select').onchange = function() {
+            let preview = document.getElementById('img-container');
+            let myFile = document.getElementById('image-select').files[0];
+            let reader = new FileReader();
+
+            function readFile(file, callback) {
+                reader.readAsDataURL(file);
+                reader.onloadend = function() {
+                    result = reader.result;
+                    callback(result)
+                }
+            }
+            fileList = [];
+            function appendToList(result) {
+                product = '<img src="' + result + '" class="thumbnail">'
+                fileList.push(product);
+                console.log(fileList);
+                preview.innerHTML = fileList;
+                if (!$('#img-container').hasClass('img-container')) {
+                    $('#img-container').addClass('img-container');
+                }
+            }
+            readFile(myFile, appendToList);
+        } */
       });
   </script>
 {% endblock %}

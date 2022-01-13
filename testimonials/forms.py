@@ -31,4 +31,6 @@ class ReviewForm(forms.ModelForm):
                 self.fields[field].widget.attrs['class'] = 'form-control mb-1'
                 self.fields[field].label = ''
         self.fields['stars'].widget = forms.HiddenInput()
-        self.fields['image'].widget.attrs['class'] = 'form-control bg-light-grey border-0 pl-0 text-white'
+        self.fields['image'].widget.attrs['class'] = 'form-control \
+            bg-light-grey border-0 pl-0 text-white'
+        self.fields['image'].widget.attrs['id'] = 'image-select'

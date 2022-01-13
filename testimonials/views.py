@@ -34,28 +34,27 @@ def testimonials(request):
 @login_required
 def post_review(request):
     """ a view for posting a review on the testimonials page """
-    if request.method == "POST":
-        if request.user.is_authenticated:
-            form = ReviewForm(request.POST, request.FILES)
-            files = request.FILES.getlist('image')
+    if request.user.is_authenticated:
+        form = ReviewForm(request.POST, request.FILES)
+        files = request.FILES.getlist('image')
 
-            if form.is_valid():
-                new_review = form.save(commit=False)
-                new_review.user = request.user
-                new_review.save()
+        if form.is_valid():
+            new_review = form.save(commit=False)
+            new_review.user = request.user
+            new_review.save()
 
-                for file in files:
-                    img = ReviewImage(image=file)
-                    img.save()
-                    new_review.image.add(img)
+            for file in files:
+                img = ReviewImage(image=file)
+                img.save()
+                new_review.image.add(img)
 
-                new_review.save()
-                messages.success(request, "Thanks for your review, it has been\
-                     submitted")
-                return redirect(reverse("testimonials"))
-        else:
-            messages.warning(request, "Please log in to post a review")
-            return redirect(reverse("account_login"))
+            new_review.save()
+            messages.success(request, 'Thanks for your review, it has been\
+                    submitted')
+            return redirect(reverse("testimonials"))
+    else:
+        messages.warning(request, "Please log in to post a review")
+        return redirect(reverse("account_login"))
 
 
 @login_required
