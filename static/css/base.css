@@ -691,6 +691,7 @@ nav ul li {
     height: auto;
     overflow: auto;
     white-space: nowrap;
+    margin-bottom: 10px;
 }
 
 .img-container {
@@ -702,6 +703,41 @@ nav ul li {
 
 .thumbnail {
     height: 100%;
+    transition: all .5s ease-in-out;
+}
+
+.img-delete {
+    position: relative;
+    visibility: hidden;
+    opacity: 0;
+    transition: all .5s linear;
+    cursor: pointer;
+}
+
+.delete-cross {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 1;
+    color: #c6a76c;
+    transition: color .5s linear;
+}
+
+.delete-cross:hover {
+    color: #555adf;
+}
+
+.dark-hover:hover {
+    background-color: rgba(0,0,0,0.4);
+}
+
+.dark-hover:hover .thumbnail {
+    transform: scale(0.7);
+}
+
+.dark-hover:hover .img-delete {
+    visibility: visible;
+    opacity: 1;
 }
 
 .user-star {

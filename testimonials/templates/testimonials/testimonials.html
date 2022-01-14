@@ -30,14 +30,14 @@
                     {% for review in reviews %}
                         <div class="review">
                             {% if review.anon == False %}
-                                <h5 class="font-weight-bold float-left">{{ review.user }}</h5>
+                                <h5 class="font-weight-bold d-inline-block">{{ review.user }}</h5>
                                 {% with user=request.user %}
                                     {% if user == review.user or user.is_staff %}
                                         <p class="mb-0 d-inline-block float-right"><a href="{% url 'edit_review' review.id %}"><i class="fas fa-edit"></i></a></p>     
                                     {% endif %}
                                 {% endwith %}
                             {% else %}
-                            <h5 class="font-weight-bold float-left">Anonymous</h5>
+                            <h5 class="font-weight-bold d-inline-block">Anonymous</h5>
                             {% with user=request.user %}
                                 {% if user == review.user or user.is_staff %}
                                     <p class="mb-0 d-inline-block float-right"><a href="{% url 'edit_review' review.id %}"><i class="fas fa-edit"></i></a></p>     
@@ -68,7 +68,11 @@
                                     </div>
                                 {% endif %}
                             {% endwith %}
-                            <p class="mb-0"><small>{{ review.created_on }}</small></p>
+                            {% if review.updated_on %}
+                                <p class="mb-0"><small>Updated: {{ review.updated_on }} </small></p>
+                            {% else %}
+                                <p class="mb-0"><small>{{ review.created_on }}</small></p>
+                            {% endif %}
                         </div>
                         
                     {% endfor %}

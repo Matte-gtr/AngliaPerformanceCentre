@@ -3,7 +3,12 @@ from .models import ReviewImage, Review
 
 
 class ReviewAdmin(admin.ModelAdmin):
-    pass
+    list_display = [
+        'user',
+        'pk',
+        'stars',
+        'created_on',
+    ]
 
 
 admin.site.register(Review, ReviewAdmin)

@@ -14,10 +14,12 @@ class Review(models.Model):
     user = models.ForeignKey(User, related_name='reviews',
                              on_delete=models.RESTRICT)
     created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(blank=True, null=True)
     stars = models.IntegerField(default='', choices=STAR_CHOICES, blank=False)
     review = models.TextField(blank=False)
     image = models.ManyToManyField('ReviewImage', blank=True)
     anon = models.BooleanField(default=False)
+    read = models.BooleanField(default=False)
     authorised = models.BooleanField(default=False)
 
     def __str__(self):

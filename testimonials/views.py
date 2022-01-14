@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from .forms import ReviewForm
 from .models import ReviewImage, Review
 
+from datetime import datetime
+
 
 def testimonials(request):
     """ a view for the testimonials page """
@@ -81,7 +83,20 @@ def edit_review(request, review_id):
             form = ReviewForm(request.POST, request.FILES, instance=review)
             files = request.FILES.getlist('image')
             if form.is_valid:
-                form.save()
+                delete_string = request.POST.get('imagecontrol')
+                delete_list = []
+                if delete_string:
+                    delete_list = delete_string.split(",")
+                if delete_list:
+                    for image_id in delete_list:
+                        review_image = get_object_or_404(ReviewImage, pk=image_id)
+                        try:
+                            review_image.delete()
+                        except Exception as e:
+                            messages.error(request, f"error deleting image(s): {e}")
+                form_review = form.save(commit=False)
+                form_review.updated_on = datetime.now()
+                form_review.save()
                 for file in files:
                     img = ReviewImage(image=file)
                     img.save()
