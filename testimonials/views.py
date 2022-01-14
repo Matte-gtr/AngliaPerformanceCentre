@@ -43,6 +43,7 @@ def post_review(request):
         if form.is_valid():
             new_review = form.save(commit=False)
             new_review.user = request.user
+            new_review.authorised = True  # For teseting only, delete
             new_review.save()
 
             for file in files:
@@ -52,7 +53,7 @@ def post_review(request):
 
             new_review.save()
             messages.success(request, 'Thanks for your review, it has been\
-                    submitted')
+                    submitted for approval')
             return redirect(reverse("testimonials"))
     else:
         messages.warning(request, "Please log in to post a review")
@@ -63,8 +64,16 @@ def post_review(request):
 def delete_review(request, review_id):
     """ a view to delete a review """
     review = get_object_or_404(Review, pk=review_id)
+    images = review.image.all()
     if request.user == review.user or request.user.is_staff:
         try:
+            if images:
+                for item in images:
+                    image = get_object_or_404(ReviewImage, pk=item.pk)
+                    try:
+                        image.delete()
+                    except Exception as e:
+                        messages.error(request, f"error deleting image(s): {e}")
             review.delete()
             messages.success(request, 'Your review by has been successfully deleted')
         except Exception as e:
@@ -80,38 +89,43 @@ def edit_review(request, review_id):
     review = get_object_or_404(Review, pk=review_id)
     if request.user == review.user or request.user.is_staff:
         if request.method == "POST":
-            form = ReviewForm(request.POST, request.FILES, instance=review)
-            files = request.FILES.getlist('image')
-            if form.is_valid:
-                delete_string = request.POST.get('imagecontrol')
-                delete_list = []
-                if delete_string:
-                    delete_list = delete_string.split(",")
-                if delete_list:
-                    for image_id in delete_list:
-                        review_image = get_object_or_404(ReviewImage, pk=image_id)
-                        try:
-                            review_image.delete()
-                        except Exception as e:
-                            messages.error(request, f"error deleting image(s): {e}")
-                form_review = form.save(commit=False)
-                form_review.updated_on = datetime.now()
-                form_review.save()
-                for file in files:
-                    img = ReviewImage(image=file)
-                    img.save()
-                    review.image.add(img)
-                form.save()
-                messages.success(request, "Your Review has been successfully updated")
-                return redirect(reverse('testimonials'))
+            if request.user == review.user:
+                form = ReviewForm(request.POST, request.FILES, instance=review)
+                files = request.FILES.getlist('image')
+                if form.is_valid:
+                    delete_string = request.POST.get('imagecontrol')
+                    delete_list = []
+                    if delete_string:
+                        delete_list = delete_string.split(",")
+                    if delete_list:
+                        for image_id in delete_list:
+                            review_image = get_object_or_404(ReviewImage, pk=image_id)
+                            try:
+                                review_image.delete()
+                            except Exception as e:
+                                messages.error(request, f"error deleting image(s): {e}")
+                    form_review = form.save(commit=False)
+                    form_review.updated_on = datetime.now()
+                    form_review.authorised = False
+                    form_review.save()
+                    for file in files:
+                        img = ReviewImage(image=file)
+                        img.save()
+                        review.image.add(img)
+                    form.save()
+                    messages.success(request, "Your Review has been successfully updated awaiting approval")
+                    return redirect(reverse('testimonials'))
+                else:
+                    messages.error(request, "Update failed, Please ensure all fields \
+                                are filled in and re-submit")
             else:
-                messages.error(request, "Update failed, Please ensure all fields \
-                               are filled in and re-submit")
+                messages.warning(request, "You cannot edit someone elses review")
+                return redirect(reverse('testimonials'))
         else:
             form = ReviewForm(instance=review)
     else:
-        messages.warning(request, "You do not have the required permissions to \
-                         edit this post")
+        messages.warning(request, "You can only make changes to posts you have created")
+        return redirect(reverse('testimonials'))
     template = "testimonials/edit-review.html"
     context = {
         'review': review,
