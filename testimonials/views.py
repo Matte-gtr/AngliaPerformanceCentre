@@ -43,7 +43,6 @@ def post_review(request):
         if form.is_valid():
             new_review = form.save(commit=False)
             new_review.user = request.user
-            new_review.authorised = True  # For teseting only, delete
             new_review.save()
 
             for file in files:
