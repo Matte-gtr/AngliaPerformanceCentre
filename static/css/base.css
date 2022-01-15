@@ -727,6 +727,10 @@ nav ul li {
     color: #555adf;
 }
 
+.dark-hover {
+    transition: all .5s linear;
+}
+
 .dark-hover:hover {
     background-color: rgba(0,0,0,0.4);
 }
@@ -816,6 +820,16 @@ nav ul li {
     border-left: 15px solid transparent;
     border-right: 15px solid transparent;
     width: 20px;
+}
+
+.back-button-container {
+    padding-bottom: 2.5rem;
+    font-size: 25px;
+}
+
+.i-move:hover i {
+    animation: back-and-forth 1.5s;
+    animation-iteration-count: infinite;
 }
 
 /*----------Pricing----------*/
@@ -919,6 +933,18 @@ nav ul li {
 
 .fade-in {
     animation: fade-in 1.5s linear;
+}
+
+@keyframes back-and-forth {
+    0% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(-10px);
+    }
+    100% {
+        transform: translateX(0);
+    }
 }
 
 /*----------Media Queries----------*/

@@ -1,9 +1,9 @@
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render, HttpResponse, redirect, reverse
-from .forms import MessageForm, CallbackForm
-
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+
+from .forms import MessageForm, CallbackForm
 
 
 def contact(request):
@@ -60,7 +60,7 @@ def send_callback(request):
         form = CallbackForm(request.POST or None)
         if form.is_valid():
             form.save()
-            # possibly send a text message from here at some point
+            # Send SMS to be added
             messages.success(request, "Message Received, We will be \
                 in touch shortly")
             return HttpResponseRedirect(page_location)

@@ -47,7 +47,9 @@
                         </div>
                         {% endif %}
                         <div class="text-center">
-                            <button type="submit" class="btn send-btn mt-0" id="review-submit">UPDATE</button>
+                            {% if request.user == review.user %}
+                                <button type="submit" class="btn send-btn mt-0" id="review-submit">UPDATE</button>
+                            {% endif %}
                             <button type="button" class="btn btn-danger d-inline-block" data-toggle="modal" data-target="#deleteReviewModal">
                                 DELETE
                             </button>
@@ -55,6 +57,9 @@
                     </form>
                 </div>
             </div>
+        </div>
+        <div class="back-button-container">
+            <a href="{% url 'testimonials' %}" class="standard-link i-move"><i class="fas fa-arrow-circle-left"></i> Testimonials</a>
         </div>
     </div>
 </div>
