@@ -99,6 +99,10 @@
                         <div class="dropdown-menu">
                             {% if user.is_authenticated %}
                                 <a href="{% url 'account_logout' %}"><button class="dropdown-item" type="button">Sign Out</button></a>
+                                <a href="{% url 'profile' %}"><button class="dropdown-item" type="button">Profile</button></a>
+                                {% if user.is_staff %}
+                                    <a href="{% url 'admin_panel' %}"><button class="dropdown-item" type="button">Admin</button></a>
+                                {% endif %}
                             {% else %}
                                 <a href="{% url 'account_login' %}"><button class="dropdown-item" type="button">Sign In</button></a>
                                 <a href="{% url 'account_signup' %}"><button class="dropdown-item" type="button">Sign Up</button></a>
@@ -136,6 +140,10 @@
                             <div class="dropdown-menu">
                                 {% if user.is_authenticated %}
                                     <a href="{% url 'account_logout' %}"><button class="dropdown-item" type="button">Sign Out</button></a>
+                                    <a href="{% url 'profile' %}"><button class="dropdown-item" type="button">Profile</button></a>
+                                    {% if user.is_staff %}
+                                        <a href="{% url 'admin_panel' %}"><button class="dropdown-item" type="button">Admin</button></a>
+                                    {% endif %}
                                 {% else %}
                                     <a href="{% url 'account_login' %}"><button class="dropdown-item" type="button">Sign In</button></a>
                                     <a href="{% url 'account_signup' %}"><button class="dropdown-item" type="button">Sign Up</button></a>

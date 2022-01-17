@@ -649,6 +649,13 @@ nav ul li {
 
 
 
+/*----------User Management----------*/
+
+.user-header {
+    background-image: url(/media/motherboard.jpg);
+    background-blend-mode: color-burn;
+}
+
 /*----------SERVICES (GENERAL)----------*/
 
 
