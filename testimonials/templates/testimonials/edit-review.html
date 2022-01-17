@@ -48,7 +48,16 @@
                         {% endif %}
                         <div class="text-center">
                             {% if request.user == review.user %}
+                                {% if request.user.is_staff %}
+                                    <a href="#">
+                                        <div class="btn btn-danger">UN-AUTH</div>
+                                    </a>
+                                {% endif %}
                                 <button type="submit" class="btn send-btn mt-0" id="review-submit">UPDATE</button>
+                            {% elif request.user.is_staff %}
+                                <a href="#">
+                                    <div class="btn btn-danger">UN-AUTH</div>
+                                </a>
                             {% endif %}
                             <button type="button" class="btn btn-danger d-inline-block" data-toggle="modal" data-target="#deleteReviewModal">
                                 DELETE

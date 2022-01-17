@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="header-container">
+                <header class="bg-header user-header">
+                    <h1 class="page-header">Message {{ message.id }}</h1>
+                </header>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid p-0">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    {{ message.name }}<br>
+                    {{ message.phone }}<br>
+                    {{ message.email }}<br>
+                    {{ message.message }}<br>
+                    {{ message.received_on }}<br>
+                    {{ message.read }}<br>
+                    {{ message.responded }}<br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="back-button-container">
+                        <a href="{% url 'admin_panel' %}#headingOne" class="standard-link i-move"><i class="fas fa-arrow-circle-left"></i> Admin Panel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

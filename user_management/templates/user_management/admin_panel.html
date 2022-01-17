@@ -4,64 +4,144 @@
         <div class="row">
             <div class="header-container">
                 <header class="bg-header user-header">
-                    <h1 class="page-header">Admin Panel</h1>
+                    <h1 id="scroll" class="page-header">Admin Panel</h1>
                 </header>
             </div>
         </div>
     </div>
-    <div class="container-fluid bg-darker dark-content p-0">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="accordion text-body" id="contactAccordion">
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h5 class="mb-0">
-                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                    Messages <div class="counter">{{ site_messages.count }}</div>
-                                </button>
-                                </h5>
-                            </div>
-                        
-                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#contactAccordion">
-                                <div class="card-body">
+    <div class="container-fluid bg-darker dark-content">
+        <div class="row">
+            <div class="col-12 p-0">
+                <div class="accordion text-body pt-2 pb-2" id="contactAccordion">
+                    <div class="card">
+                        <div class="card-header bg-darkest" id="headingOne">
+                            <h5 class="mb-0">
+                            <button id="messages" class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseMessages" aria-expanded="false" aria-controls="collapseOne">
+                                Messages <div class="counter">{{ site_messages.count }}</div>
+                            </button>
+                            </h5>
+                        </div>
+                    
+                        <div id="collapseMessages" class="collapse" aria-labelledby="headingOne" data-parent="#contactAccordion">
+                            <div class="card-body bg-dark p-0">
+                                <table class="table bg-light table-hover mb-0">
+                                    <tr class="bg-secondary">
+                                        <th scope="col" class="w-13"><input type="checkbox" id="master-message-checkbox"></th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Responded</th>
+                                        <th scope="col">Date</th>
+                                    </tr>
                                     {% for message in site_messages %}
-                                        {{ message.name }}<div class="float-right d-inline-block">{{ message.responded }}</div><br>
+                                        <tr>
+                                            <td><input type="checkbox" data-id="{{ message.id }}" class="message-checkbox"></td>
+                                            <td>
+                                                {% if message.read %}
+                                                    <a href="{% url 'view_message' message.id %}" class="text-secondary">{{ message.name }}</a>
+                                                {% else %}
+                                                    <strong><a href="{% url 'view_message' message.id %}">{{ message.name }}</a></strong>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if message.responded %}
+                                                    <i class="fas fa-check fa-lg text-success"></i>
+                                                {% else %}
+                                                    <i class="fas fa-times fa-lg text-danger"></i>
+                                                {% endif %}
+                                            </td>
+                                            <td><small>{{ message.received_on }}</small></td>
+                                        </tr>
                                     {% endfor %}
-                                </div>
+                                </table>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="card">
-                            <div class="card-header" id="headingTwo">
-                                <h5 class="mb-0">
-                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Callback Requests <div class="counter">{{ callbacks.count }}</div>
-                                </button>
-                                </h5>
-                            </div>
-                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#contactAccordion">
-                                <div class="card-body">
+                    <div class="card">
+                        <div class="card-header bg-darkest" id="headingTwo">
+                            <h5 class="mb-0">
+                            <button id="callbacks" class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseCallbacks" aria-expanded="false" aria-controls="collapseTwo">
+                                Callback Requests <div class="counter">{{ callbacks.count }}</div>
+                            </button>
+                            </h5>
+                        </div>
+                        <div id="collapseCallbacks" class="collapse" aria-labelledby="headingTwo" data-parent="#contactAccordion">
+                            <div class="card-body">
+                                <table class="table bg-light table-hover mb-0">
+                                    <tr class="bg-secondary">
+                                        <th scope="col" class="w-13"><input type="checkbox" id="master-callback-checkbox"></th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Responded</th>
+                                        <th scope="col">Date</th>
+                                    </tr>
                                     {% for callback in callbacks %}
-                                        {{ callback.name }}<br>
+                                        <tr>
+                                            <td><input type="checkbox" data-id="{{ callback.id }}" class="callback-checkbox"></td>
+                                            <td>
+                                                {% if callback.read %}
+                                                    <a href="{% url 'view_callback' callback.id %}" class="text-secondary">{{ callback.name }}</a>
+                                                {% else %}
+                                                    <strong><a href="{% url 'view_callback' callback.id %}">{{ callback.name }}</a></strong>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if callback.responded %}
+                                                    <i class="fas fa-check fa-lg text-success"></i>
+                                                {% else %}
+                                                    <i class="fas fa-times fa-lg text-danger"></i>
+                                                {% endif %}
+                                            </td>
+                                            <td><small>{{ callback.received_on }}</small></td>
+                                        </tr>
                                     {% endfor %}
-                                </div>
+                                </table>
                             </div>
                         </div>
-                        <div class="card">
-                            <div class="card-header" id="headingThree">
-                                <h5 class="mb-0">
-                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Reviews for Auth <div class="counter">{{ reviews.count }}</div>
-                                </button>
-                                </h5>
-                            </div>
-                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#contactAccordion">
-                                <div class="card-body">
+                    </div>
+                    <div class="card">
+                        <div class="card-header bg-darkest" id="headingThree">
+                            <h5 class="mb-0">
+                            <button id="reviews" class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseReviews" aria-expanded="false" aria-controls="collapseThree">
+                                Reviews for Auth <div class="counter">{{ reviews.count }}</div>
+                            </button>
+                            </h5>
+                        </div>
+                        <div id="collapseReviews" class="collapse" aria-labelledby="headingThree" data-parent="#contactAccordion">
+                            <div class="card-body">
+                                <table class="table bg-light table-hover mb-0">
+                                    <tr class="bg-secondary">
+                                        <th scope="col" class="w-13"><input type="checkbox" id="master-review-checkbox"></th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Rating</th>
+                                        <th scope="col">Date</th>
+                                    </tr>
                                     {% for review in reviews %}
-                                        {{ review.user }}<br>
+                                        <tr>
+                                            <td><input type="checkbox" data-id="{{ review.id }}" class="review-checkbox"></td>
+                                            <td>
+                                                {% if review.read %}
+                                                    <a href="{% url 'view_review' review.id %}" class="text-secondary">{{ review.user }}</a>
+                                                {% else %}
+                                                    <strong><a href="{% url 'view_review' review.id %}">{{ review.user }}</a></strong>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <p class="m-0">
+                                                    <span class="fa fa-star{% if review.stars >= 1 %} text-orange{% endif %}"></span>
+                                                    <span class="fa fa-star{% if review.stars >= 2 %} text-orange{% endif %}"></span>
+                                                    <span class="fa fa-star{% if review.stars >= 3 %} text-orange{% endif %}"></span>
+                                                    <span class="fa fa-star{% if review.stars >= 4 %} text-orange{% endif %}"></span>
+                                                    <span class="fa fa-star{% if review.stars >= 5 %} text-orange{% endif %}"></span>
+                                                </p>
+                                            </td>
+                                            {% if review.updated_on %}
+                                                <td><small>{{ review.updated_on }}</small></td>
+                                            {% else %}
+                                                <td><small>{{ review.created_on }}</small></td>
+                                            {% endif %}
+                                        </tr>
                                     {% endfor %}
-                                </div>
+                                </table>
+
                             </div>
                         </div>
                     </div>
@@ -69,4 +149,93 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block postload_js %}
+{{ block.super }}
+<script>
+    $(document).ready(function() {
+        $('#master-message-checkbox').click(function() {
+            checkAll('message')
+        });
+        $('#master-callback-checkbox').click(function() {
+            checkAll('callback')
+        });
+        $('#master-review-checkbox').click(function() {
+            checkAll('review')
+        });
+
+        function checkAll(type) {
+            let master_string = '#master-' + type + '-checkbox';
+            let master = $(master_string);
+            let checkbox_string = '.' + type + '-checkbox';
+            let checkbox = $(checkbox_string);
+            if (master.is(':checked')) {
+                $('.' + type + '-checkbox').prop('checked', true);
+            } else {
+                $('.' + type + '-checkbox').prop('checked', false);
+            }
+        }
+
+
+        /* set cookies based on state of accordion on click */
+        $('#reviews').click(function() {
+            if ($('#reviews').attr("aria-expanded") === "false") {
+                document.cookie = "position=reviews";
+            } else {
+                document.cookie = "position=none";
+            };
+        });
+        $('#messages').click(function() {
+            if ($('#messages').attr("aria-expanded") === "false") {
+                document.cookie = "position=messages";
+            } else {
+                document.cookie = "position=none";
+            };
+        });
+        $('#callbacks').click(function() {
+            if ($('#callbacks').attr("aria-expanded") === "false") {
+                document.cookie = "position=callbacks";
+            } else {
+                document.cookie = "position=none";
+            };
+        });
+        /* getCookie() example from https://www.w3schools.com/js/js_cookies.asp */
+        function getCookie(cname) {  
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                };
+            };
+            return "";
+        };
+        /* set the show state of section captured in the position cookie */
+        function checkCookie() {
+            let position = getCookie("position");
+            if (position == "reviews") {
+                $('#reviews').attr("aria-expanded","true");
+                $('#reviews').removeClass("collapsed");
+                $('#collapseReviews').collapse("show");
+            } else if (position == "messages") {
+                $('#messages').attr("aria-expanded","true");
+                $('#messages').removeClass("collapsed");
+                $('#collapseMessages').collapse("show");
+            } else if (position == "callbacks") {
+                $('#callbacks').attr("aria-expanded","true");
+                $('#callbacks').removeClass("collapsed");
+                $('#collapseCallbacks').collapse("show");
+            };
+        };
+        window.onload = function() {
+            checkCookie();
+        };
+    });
+</script>
 {% endblock %}

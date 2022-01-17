@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 class Review(models.Model):
     STAR_CHOICES = (
-        ('','Select'),
+        ('', 'Select'),
         (1, '1'),
         (2, '2'),
         (3, '3'),
