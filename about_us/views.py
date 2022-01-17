@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from .models import TeamMember
+
 
 def about_us(request):
     """ a view for the about us page """
@@ -13,10 +15,12 @@ def about_us(request):
 
 def the_team(request):
     """ a view for the team page """
+    members = TeamMember.objects.all()
     template = 'about_us/the_team.html'
     context = {
         'title': 'the team',
         'section': 'about',
+        'members': members,
     }
     return render(request, template, context)
 

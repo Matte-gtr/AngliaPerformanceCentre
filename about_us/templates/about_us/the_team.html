@@ -10,14 +10,24 @@
         </div>
     </div>
     <div class="container-fluid bg-darker">
-        <div class="row">
-            <p class="text-white">Bartosz Jakubowski, the owner-director, 
-                Tom, Mastert technitian
-                Czeslaw Szklarz, master technitian
-                Mahmood Anuar, technitian/fabricator
-                David Batista, technitian
-                Mohammet Imran, workshop manager/mapping/the voice on the phone-customer liason
-            </p>
+        <div class="container">
+            <div class="row">
+                {% for member in members %}
+                    <div class="col-12 dark-content">
+                        <img src="{{ member.image.url }}" alt="{{ member.first_name }}">
+                        <h3>{{ member.first_name }} {{ member.surname }}</h3>
+                        <h4>{{ member.job }}</h4>
+                        <p>{{ member.description }}</p>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
+    <p class="text-white">Bartosz Jakubowski, the owner-director, 
+        Tom, Mastert technitian
+        Czeslaw Szklarz, master technitian
+        Mahmood Anuar, technitian/fabricator
+        David Batista, technitian
+        Mohammet Imran, workshop manager/mapping/the voice on the phone-customer liason
+    </p>
 {% endblock %}
