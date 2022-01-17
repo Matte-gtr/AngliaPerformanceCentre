@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from contact.models import Message, Callback
+from testimonials.models import Review
 
 
 def profile(request):
@@ -17,11 +18,13 @@ def admin_panel(request):
     # Pagination required
     site_messages = Message.objects.all()
     callbacks = Callback.objects.all()
+    reviews = Review.objects.filter(authorised=False)
     template = "user_management/admin_panel.html"
     context = {
         'title': 'admin_panel',
         'section': 'user_management',
         'site_messages': site_messages,
         'callbacks': callbacks,
+        'reviews': reviews,
     }
     return render(request, template, context)

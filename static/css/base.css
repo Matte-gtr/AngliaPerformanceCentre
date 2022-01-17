@@ -656,6 +656,17 @@ nav ul li {
     background-blend-mode: color-burn;
 }
 
+.counter {
+    background-color: orange;
+    color: black;
+    display: inline-block;
+    padding: 5px;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    margin-left: 5px;
+}
+
 /*----------SERVICES (GENERAL)----------*/
 
 

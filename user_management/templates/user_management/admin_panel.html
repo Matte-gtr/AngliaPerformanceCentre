@@ -13,91 +13,58 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-
                     <div class="accordion text-body" id="contactAccordion">
                         <div class="card">
-                        <div class="card-header" id="headingOne">
-                            <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                Messages {{ site_messages.count }}
-                            </button>
-                            </h5>
-                        </div>
-                    
-                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#contactAccordion">
-                            <div class="card-body">
-                                {% for message in site_messages %}
-                                    {{ message.name }}<br>
-                                {% endfor %}
+                            <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    Messages <div class="counter">{{ site_messages.count }}</div>
+                                </button>
+                                </h5>
                             </div>
-                        </div>
+                        
+                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#contactAccordion">
+                                <div class="card-body">
+                                    {% for message in site_messages %}
+                                        {{ message.name }}<div class="float-right d-inline-block">{{ message.responded }}</div><br>
+                                    {% endfor %}
+                                </div>
+                            </div>
                         </div>
 
                         <div class="card">
-                        <div class="card-header" id="headingTwo">
-                            <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Callback Requests
-                            </button>
-                            </h5>
-                        </div>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#contactAccordion">
-                            <div class="card-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                            <div class="card-header" id="headingTwo">
+                                <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Callback Requests <div class="counter">{{ callbacks.count }}</div>
+                                </button>
+                                </h5>
                             </div>
-                        </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#contactAccordion">
+                                <div class="card-body">
+                                    {% for callback in callbacks %}
+                                        {{ callback.name }}<br>
+                                    {% endfor %}
+                                </div>
+                            </div>
                         </div>
                         <div class="card">
-                        <div class="card-header" id="headingThree">
-                            <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Collapsible Group Item #3
-                            </button>
-                            </h5>
-                        </div>
-                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#contactAccordion">
-                            <div class="card-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                            <div class="card-header" id="headingThree">
+                                <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Reviews for Auth <div class="counter">{{ reviews.count }}</div>
+                                </button>
+                                </h5>
+                            </div>
+                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#contactAccordion">
+                                <div class="card-body">
+                                    {% for review in reviews %}
+                                        {{ review.user }}<br>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
-                        </div>
                     </div>
-                </div>
-                </div>
-                <div class="row">
-                <h3>Messages</h3>
-                <div class="col">
-                    {% for message in site_messages %}
-                        <p>
-                        Name: {{ message.name }}
-                        </p>
-                        <p>
-                        Phone: {{ message.phone }}
-                        </p>
-                        <p>
-                        Email: {{ message.email }}
-                        </p>
-                        <p>
-                        Message: {{ message.message|linebreaks }}
-                        </p>
-                        <p>
-                        Received on: {{ message.received_on }}
-                        </p>
-                        <p>
-                        Read: {{ message.read }}
-                        </p>
-                        <p>
-                        Responded: {{ message.responded }}
-                        </p>
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="row">
-                <h3>Callback Requests</h3>
-                <div class="col">
-                    {% for callback in callbacks %}
-                        
-                    {% endfor %}
                 </div>
             </div>
         </div>
