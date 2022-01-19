@@ -1,10 +1,18 @@
 from django.shortcuts import render, reverse, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 
 from contact.models import Message, Callback
 from testimonials.models import Review
 
+
+def paginator_helper(request, object_list, per_page):
+    paginator = Paginator(object_list, per_page) # Show 25 contacts per page.
+    page_number = request.GET.get('page')
+    page_object = paginator.get_page(page_number)
+    return page_object
 
 @login_required
 def profile(request):
@@ -22,19 +30,34 @@ def admin_panel(request):
     """ a view to display the admin panel """
     # Pagination required
     # Safety features required
+    if request.user.is_authenticated:
+        user = get_object_or_404(User, pk=request.user.id)
+    else:
+        user = request.user
     if request.user.is_staff:
-        site_messages = Message.objects.all().order_by("responded", "read",
-                                                    "-received_on")
-        callbacks = Callback.objects.all().order_by("responded", "read",
-                                                    "-received_on")
+        message_count = Message.objects.filter(read=False).count
+        message_pag = paginator_helper(request,
+                                       Message.objects.
+                                       all().order_by("responded", "read",
+                                                      "-received_on"),
+                                       3)
+        callback_count = Callback.objects.filter(read=False).count
+        callback_pag = paginator_helper(request,
+                                        Callback.objects.
+                                        all().order_by("responded", "read",
+                                                       "-received_on"),
+                                        3)
         reviews = Review.objects.filter(authorised=False)
         template = "user_management/admin_panel.html"
         context = {
             'title': 'admin_panel',
             'section': 'user_management',
-            'site_messages': site_messages,
-            'callbacks': callbacks,
+            'site_messages': message_pag,
+            'message_count': message_count,
+            'callbacks': callback_pag,
+            'callback_count': callback_count,
             'reviews': reviews,
+            'my_user': user,
         }
         return render(request, template, context)
     else:
