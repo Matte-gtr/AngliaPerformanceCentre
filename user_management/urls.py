@@ -4,11 +4,13 @@ from . import views
 
 urlpatterns = [
     path('profile/', views.profile, name="profile"),
-    path('admin_panel/', views.admin_panel, name="admin_panel"),
-    path('admin_panel/view_message/<int:message_id>', views.view_message,
+    path('admin_messages/', views.admin_messages, name="admin_messages"),
+    path('admin_callbacks/', views.admin_callbacks, name="admin_callbacks"),
+    path('admin_reviews/', views.admin_reviews, name="admin_reviews"),
+    path('admin_messages/<int:message_id>', views.view_message,
          name="view_message"),
-    path('admin_panel/view_review/<int:review_id>', views.view_review,
+    path('admin_reviews/<int:review_id>', views.view_review,
          name="view_review"),
-    path('admin_panel/view_callback/<int:callback_id>', views.view_callback,
+    path('admin_callbacks/<int:callback_id>', views.view_callback,
          name="view_callback"),
 ]

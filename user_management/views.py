@@ -26,9 +26,8 @@ def profile(request):
 
 
 @login_required
-def admin_panel(request):
+def admin_messages(request):
     """ a view to display the admin panel """
-    # Pagination required
     # Safety features required
     if request.user.is_authenticated:
         user = get_object_or_404(User, pk=request.user.id)
@@ -42,21 +41,82 @@ def admin_panel(request):
                                                       "-received_on"),
                                        3)
         callback_count = Callback.objects.filter(read=False).count
+        review_count = Review.objects.filter(read=False).count
+        template = "user_management/admin_messages.html"
+        context = {
+            'title': 'admin messages',
+            'section': 'user_management',
+            'site_messages': message_pag,
+            'message_count': message_count,
+            'callback_count': callback_count,
+            'review_count': review_count,
+            'my_user': user,
+        }
+        return render(request, template, context)
+    else:
+        messages.warning(request, "You don't have the required permissions to\
+                         view this page")
+        return redirect(reverse('home'))
+
+
+@login_required
+def admin_callbacks(request):
+    """ a view to display the admin panel """
+    # Safety features required
+    if request.user.is_authenticated:
+        user = get_object_or_404(User, pk=request.user.id)
+    else:
+        user = request.user
+    if request.user.is_staff:
+        message_count = Message.objects.filter(read=False).count
+        callback_count = Callback.objects.filter(read=False).count
         callback_pag = paginator_helper(request,
                                         Callback.objects.
                                         all().order_by("responded", "read",
                                                        "-received_on"),
                                         3)
-        reviews = Review.objects.filter(authorised=False)
-        template = "user_management/admin_panel.html"
+        review_count = Review.objects.filter(read=False).count
+        template = "user_management/admin_callbacks.html"
         context = {
-            'title': 'admin_panel',
+            'title': 'admin callbacks',
             'section': 'user_management',
-            'site_messages': message_pag,
             'message_count': message_count,
             'callbacks': callback_pag,
             'callback_count': callback_count,
-            'reviews': reviews,
+            'review_count': review_count,
+            'my_user': user,
+        }
+        return render(request, template, context)
+    else:
+        messages.warning(request, "You don't have the required permissions to\
+                         view this page")
+        return redirect(reverse('home'))
+
+
+@login_required
+def admin_reviews(request):
+    """ a view to display the admin panel """
+    # Safety features required
+    if request.user.is_authenticated:
+        user = get_object_or_404(User, pk=request.user.id)
+    else:
+        user = request.user
+    if request.user.is_staff:
+        message_count = Message.objects.filter(read=False).count
+        callback_count = Callback.objects.filter(read=False).count
+        review_count = Review.objects.filter(read=False).count
+        review_pag = paginator_helper(request,
+                                      Review.objects.
+                                      filter(authorised=False).order_by("-created_on"),
+                                      3)
+        template = "user_management/admin_reviews.html"
+        context = {
+            'title': 'admin reviews',
+            'section': 'user_management',
+            'message_count': message_count,
+            'callback_count': callback_count,
+            'review_count': review_count,
+            'reviews': review_pag,
             'my_user': user,
         }
         return render(request, template, context)

@@ -1,0 +1,212 @@
+{% extends 'base.html' %}
+{% load param_tags %}
+{% block content %}
+    <div class="container-fluid bg-darker dark-content pt-3 pb-3">
+
+        <!--Mobile Grid Display start-->
+        <div class="row d-md-none">
+            <div class="col-12 p-0 border border-bottom-0">
+                <div class="text-center p-0">
+                    <a href="{% url 'admin_messages' %}" class="standard-link text-dark">
+                        <h3 class="mb-0 p-2 bg-secondary">Messages <div class="counter"><small>{{ message_count }}</small></div></h3>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 p-0 border border-top-0">
+                <table class="table bg-light table-hover mb-0">
+                    <tr class="bg-secondary">
+                        <th scope="col" class="w-13"><input type="checkbox" id="master-message-checkbox"></th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Responded</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                    {% for message in site_messages %}
+                        <tr>
+                            <td><input type="checkbox" data-id="{{ message.id }}" class="message-checkbox"></td>
+                            <td>
+                                {% if message.read %}
+                                    <a href="{% url 'view_message' message.id %}" class="text-secondary">{{ message.name }}</a>
+                                {% else %}
+                                    <strong><a href="{% url 'view_message' message.id %}">{{ message.name }}</a></strong>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if message.responded %}
+                                    <i class="fas fa-check fa-lg text-success"></i>
+                                {% else %}
+                                    <i class="fas fa-times fa-lg text-danger"></i>
+                                {% endif %}
+                            </td>
+                            <td><small>{{ message.received_on }}</small></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <!-- message pagination bar start -->
+                {% if site_messages.paginator.page_range|length > 1 %}
+                    <div class="container-fluid pt-2 bg-secondary">
+                        <div class="row">
+                            <nav class="mx-auto">
+                                <ul class="pagination mb-1">
+                                    {% if site_messages.has_previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?{% param_replace page=site_messages.previous_page_number %}" tabindex="-1">&laquo;</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" tabindex="-1">&laquo;</a>
+                                        </li>
+                                    {% endif %}
+                                    {% for pg in site_messages.paginator.page_range %}
+                                        {% if site_messages.number == pg %}
+                                            <li class="page-item active"><a class="page-link" href="?{% param_replace page=pg %}">{{ pg }}</a></li>
+                                        {% elif pg > site_messages.number|add:-3 and pg < site_messages.number|add:3 %}
+                                            <li class="page-item"><a class="page-link" href="?{% param_replace page=pg %}">{{ pg }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if site_messages.has_next %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?{% param_replace page=site_messages.next_page_number %}" tabindex="-1">&raquo;</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" tabindex="-1">&raquo;</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                {% endif %}
+                <!-- message pagination bar end -->
+            </div>
+            <div class="col-12 p-0 border border-top-0">
+                <div class="text-center p-0">
+                    <a href="{% url 'admin_callbacks' %}" class="standard-link">
+                        <h3 class="mb-0 p-2">Callbacks <div class="counter"><small>{{ callback_count }}</small></div></h3>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 p-0 border border-top-0">
+                <div class="text-center p-0">
+                    <a href="{% url 'admin_reviews' %}" class="standard-link">
+                        <h3 class="mb-0 p-2">Reviews <div class="counter"><small>{{ review_count }}</small></div></h3>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--Mobile Grid Display end-->
+
+        <!--Desktop Grid Display start-->
+        <div class="row d-none d-md-flex">
+            <div class="col-3 p-0">
+                <div class="text-center p-0 border">
+                    <a href="{% url 'admin_messages' %}" class="standard-link text-dark">
+                        <h3 class="mb-0 p-2 bg-secondary">Messages <div class="counter"><small>{{ message_count }}</small></div></h3>
+                    </a>
+                </div>
+                <div class="text-center p-0 border">
+                    <a href="{% url 'admin_callbacks' %}" class="standard-link">
+                        <h3 class="mb-0 p-2">Callbacks <div class="counter"><small>{{ callback_count }}</small></div></h3>
+                    </a>
+                </div>
+                <div class="text-center p-0 border">
+                    <a href="{% url 'admin_reviews' %}" class="standard-link">
+                        <h3 class="mb-0 p-2">Reviews <div class="counter"><small>{{ review_count }}</small></div></h3>
+                    </a>
+                </div>
+            </div>
+            <div class="col-9 p-0 border">
+                <table class="table bg-light table-hover mb-0">
+                    <tr class="bg-secondary">
+                        <th scope="col" class="w-13"><input type="checkbox" id="master-message-checkbox"></th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Responded</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                    {% for message in site_messages %}
+                        <tr>
+                            <td><input type="checkbox" data-id="{{ message.id }}" class="message-checkbox"></td>
+                            <td>
+                                {% if message.read %}
+                                    <a href="{% url 'view_message' message.id %}" class="text-secondary">{{ message.name }}</a>
+                                {% else %}
+                                    <strong><a href="{% url 'view_message' message.id %}">{{ message.name }}</a></strong>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if message.responded %}
+                                    <i class="fas fa-check fa-lg text-success"></i>
+                                {% else %}
+                                    <i class="fas fa-times fa-lg text-danger"></i>
+                                {% endif %}
+                            </td>
+                            <td><small>{{ message.received_on }}</small></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <!-- message pagination bar start -->
+                {% if site_messages.paginator.page_range|length > 1 %}
+                    <div class="container pt-2">
+                        <div class="row">
+                            <nav class="mx-auto">
+                                <ul class="pagination mb-1">
+                                    {% if site_messages.has_previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?{% param_replace page=site_messages.previous_page_number %}" tabindex="-1">&laquo;</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" tabindex="-1">&laquo;</a>
+                                        </li>
+                                    {% endif %}
+                                    {% for pg in site_messages.paginator.page_range %}
+                                        {% if site_messages.number == pg %}
+                                            <li class="page-item active"><a class="page-link" href="?{% param_replace page=pg %}">{{ pg }}</a></li>
+                                        {% elif pg > site_messages.number|add:-3 and pg < site_messages.number|add:3 %}
+                                            <li class="page-item"><a class="page-link" href="?{% param_replace page=pg %}">{{ pg }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if site_messages.has_next %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?{% param_replace page=site_messages.next_page_number %}" tabindex="-1">&raquo;</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" tabindex="-1">&raquo;</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                {% endif %}
+                <!-- message pagination bar end -->
+            </div>
+        </div>
+        <!--Desktop Grid Display end-->
+    </div>
+
+{% endblock %}
+
+{% block postload_js %}
+{{ block.super }}
+<script>
+    $(document).ready(function() {
+        $('#master-message-checkbox').click(function() {
+            checkAll('message')
+        });
+
+        function checkAll(type) {
+            let master_string = '#master-' + type + '-checkbox';
+            let master = $(master_string);
+            let checkbox_string = '.' + type + '-checkbox';
+            let checkbox = $(checkbox_string);
+            if (master.is(':checked')) {
+                $('.' + type + '-checkbox').prop('checked', true);
+            } else {
+                $('.' + type + '-checkbox').prop('checked', false);
+            }
+        }
+    });
+</script>
+{% endblock %}
