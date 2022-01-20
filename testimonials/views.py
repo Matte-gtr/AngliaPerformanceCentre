@@ -72,13 +72,15 @@ def delete_review(request, review_id):
                     try:
                         image.delete()
                     except Exception as e:
-                        messages.error(request, f"error deleting image(s): {e}")
+                        messages.error(request, f"error deleting image: {e}")
             review.delete()
-            messages.success(request, 'Your review by has been successfully deleted')
+            messages.success(request, 'Your review by has been successfully \
+                             deleted')
         except Exception as e:
             messages.error(request, f'Error deleting review: {e}')
     else:
-        messages.warning(request, 'You are only able to delete your own reviews')
+        messages.warning(request, 'You are only able to delete your own \
+                         reviews')
     return redirect(reverse("testimonials"))
 
 
@@ -98,11 +100,12 @@ def edit_review(request, review_id):
                         delete_list = delete_string.split(",")
                     if delete_list:
                         for image_id in delete_list:
-                            review_image = get_object_or_404(ReviewImage, pk=image_id)
+                            review_image = get_object_or_404(ReviewImage,
+                                                             pk=image_id)
                             try:
                                 review_image.delete()
                             except Exception as e:
-                                messages.error(request, f"error deleting image(s): {e}")
+                                messages.error(request, f"error deleting image: {e}")
                     form_review = form.save(commit=False)
                     form_review.updated_on = datetime.now()
                     form_review.authorised = False
@@ -112,18 +115,21 @@ def edit_review(request, review_id):
                         img.save()
                         review.image.add(img)
                     form.save()
-                    messages.success(request, "Your Review has been successfully updated awaiting approval")
+                    messages.success(request, "Your Review has been \
+                                     successfully updated awaiting approval")
                     return redirect(reverse('testimonials'))
                 else:
                     messages.error(request, "Update failed, Please ensure all fields \
                                 are filled in and re-submit")
             else:
-                messages.warning(request, "You cannot edit someone elses review")
+                messages.warning(request, "You cannot edit someone elses \
+                                 review")
                 return redirect(reverse('testimonials'))
         else:
             form = ReviewForm(instance=review)
     else:
-        messages.warning(request, "You can only make changes to posts you have created")
+        messages.warning(request, "You can only make changes to posts you \
+                         have created")
         return redirect(reverse('testimonials'))
     template = "testimonials/edit-review.html"
     context = {
