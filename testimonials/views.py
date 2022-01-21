@@ -109,6 +109,7 @@ def edit_review(request, review_id):
                     form_review = form.save(commit=False)
                     form_review.updated_on = datetime.now()
                     form_review.authorised = False
+                    form_review.read = False
                     form_review.save()
                     for file in files:
                         img = ReviewImage(image=file)

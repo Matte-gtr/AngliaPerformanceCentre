@@ -8,21 +8,27 @@
             <div class="col-12 p-0 border border-bottom-0">
                 <div class="text-center p-0">
                     <a href="{% url 'admin_messages' %}" class="standard-link">
-                        <h3 class="mb-0 p-2">Messages <div class="counter"><small>{{ message_count }}</small></div></h3>
+                        <h3 class="mb-0 p-2">Messages 
+                            {% if message_count > 0 %}<div class="counter"><small>{{ message_count }}</small></div>{% endif %}
+                        </h3>
                     </a>
                 </div>
             </div>
             <div class="col-12 p-0 border border-bottom-0">
                 <div class="text-center p-0">
                     <a href="{% url 'admin_callbacks' %}" class="standard-link">
-                        <h3 class="mb-0 p-2">Callbacks <div class="counter"><small>{{ callback_count }}</small></div></h3>
+                        <h3 class="mb-0 p-2">Callbacks 
+                            {% if callback_count > 0 %}<div class="counter"><small>{{ callback_count }}</small></div>{% endif %}
+                        </h3>
                     </a>
                 </div>
             </div>
             <div class="col-12 p-0 border border-bottom-0">
                 <div class="text-center p-0">
                     <a href="{% url 'admin_reviews' %}" class="standard-link text-dark">
-                        <h3 class="mb-0 p-2 bg-secondary">Reviews <div class="counter"><small>{{ review_count }}</small></div></h3>
+                        <h3 class="mb-0 p-2 bg-secondary">Reviews 
+                            {% if review_count > 0 %}<div class="counter"><small>{{ review_count }}</small></div>{% endif %}
+                        </h3>
                     </a>
                 </div>
             </div>
@@ -107,17 +113,23 @@
             <div class="col-3 p-0">
                 <div class="text-center p-0 border">
                     <a href="{% url 'admin_messages' %}" class="standard-link">
-                        <h3 class="mb-0 p-2">Messages <div class="counter"><small>{{ message_count }}</small></div></h3>
+                        <h3 class="mb-0 p-2">Messages 
+                            {% if message_count > 0 %}<div class="counter"><small>{{ message_count }}</small></div>{% endif %}
+                        </h3>
                     </a>
                 </div>
                 <div class="text-center p-0 border">
                     <a href="{% url 'admin_callbacks' %}" class="standard-link">
-                        <h3 class="mb-0 p-2">Callbacks <div class="counter"><small>{{ callback_count }}</small></div></h3>
+                        <h3 class="mb-0 p-2">Callbacks 
+                            {% if callback_count > 0 %}<div class="counter"><small>{{ callback_count }}</small></div>{% endif %}
+                        </h3>
                     </a>
                 </div>
                 <div class="text-center p-0 border">
                     <a href="{% url 'admin_reviews' %}" class="standard-link text-dark">
-                        <h3 class="mb-0 p-2 bg-secondary">Reviews <div class="counter"><small>{{ review_count }}</small></div></h3>
+                        <h3 class="mb-0 p-2 bg-secondary">Reviews 
+                            {% if review_count > 0 %}<div class="counter"><small>{{ review_count }}</small></div>{% endif %}
+                        </h3>
                     </a>
                 </div>
             </div>

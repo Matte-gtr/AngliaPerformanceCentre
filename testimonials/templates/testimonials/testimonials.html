@@ -28,7 +28,7 @@
             <div class="row">
                 <div class="col-12">
                     {% for review in reviews %}
-                        <div class="review">
+                        <article class="review">
                             {% if review.anon == False %}
                                 <h5 class="font-weight-bold d-inline-block">{{ review.user }}</h5>
                                 {% with user=request.user %}
@@ -73,7 +73,7 @@
                             {% else %}
                                 <p class="mb-0"><small>{{ review.created_on }}</small></p>
                             {% endif %}
-                        </div>
+                        </article>
                         
                     {% endfor %}
                 </div>
