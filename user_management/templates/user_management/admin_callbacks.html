@@ -31,6 +31,14 @@
                     <th scope="col">Responded</th>
                     <th scope="col">Date</th>
                 </tr>
+                {% if not callbacks %}
+                    <tr>
+                        <td></td>
+                        <td> No Callbacks</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endif %}
                 {% for callback in callbacks %}
                     <tr>
                         <td><input type="checkbox" data-id="{{ callback.id }}" class="callback-checkbox"></td>
@@ -135,6 +143,14 @@
                     <th scope="col">Responded</th>
                     <th scope="col">Date</th>
                 </tr>
+                {% if not callbacks %}
+                    <tr>
+                        <td></td>
+                        <td> No Callbacks</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endif %}
                 {% for callback in callbacks %}
                     <tr>
                         <td><input type="checkbox" data-id="{{ callback.id }}" class="callback-checkbox"></td>

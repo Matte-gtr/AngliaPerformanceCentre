@@ -22,6 +22,14 @@
                         <th scope="col">Responded</th>
                         <th scope="col">Date</th>
                     </tr>
+                    {% if not site_messages %}
+                        <tr>
+                            <td></td>
+                            <td> No Messages</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    {% endif %}
                     {% for message in site_messages %}
                         <tr>
                             <td><input type="checkbox" data-id="{{ message.id }}" class="message-checkbox"></td>
@@ -135,6 +143,14 @@
                         <th scope="col">Responded</th>
                         <th scope="col">Date</th>
                     </tr>
+                    {% if not site_messages %}
+                        <tr>
+                            <td></td>
+                            <td> No Messages</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    {% endif %}
                     {% for message in site_messages %}
                         <tr>
                             <td><input type="checkbox" data-id="{{ message.id }}" class="message-checkbox"></td>

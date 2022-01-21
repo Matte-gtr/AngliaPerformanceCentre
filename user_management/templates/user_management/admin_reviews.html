@@ -40,6 +40,14 @@
                         <th scope="col">Rating</th>
                         <th scope="col">Date</th>
                     </tr>
+                    {% if not reviews %}
+                        <tr>
+                            <td></td>
+                            <td> No Reviews</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    {% endif %}
                     {% for review in reviews %}
                         <tr>
                             <td><input type="checkbox" data-id="{{ review.id }}" class="review-checkbox"></td>
@@ -141,6 +149,14 @@
                         <th scope="col">Rating</th>
                         <th scope="col">Date</th>
                     </tr>
+                    {% if not reviews %}
+                        <tr>
+                            <td></td>
+                            <td> No Reviews</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    {% endif %}
                     {% for review in reviews %}
                         <tr>
                             <td><input type="checkbox" data-id="{{ review.id }}" class="review-checkbox"></td>

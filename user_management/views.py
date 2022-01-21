@@ -9,7 +9,7 @@ from testimonials.models import Review
 
 
 def paginator_helper(request, object_list, per_page):
-    paginator = Paginator(object_list, per_page) # Show 25 contacts per page.
+    paginator = Paginator(object_list, per_page)
     page_number = request.GET.get('page')
     page_object = paginator.get_page(page_number)
     return page_object
@@ -39,7 +39,7 @@ def admin_messages(request):
                                        Message.objects.
                                        all().order_by("responded", "read",
                                                       "-received_on"),
-                                       3)
+                                       10)
         callback_count = Callback.objects.filter(read=False).count
         review_count = Review.objects.filter(read=False).count
         template = "user_management/admin_messages.html"
@@ -74,7 +74,7 @@ def admin_callbacks(request):
                                         Callback.objects.
                                         all().order_by("responded", "read",
                                                        "-received_on"),
-                                        3)
+                                        10)
         review_count = Review.objects.filter(read=False).count
         template = "user_management/admin_callbacks.html"
         context = {
@@ -108,7 +108,7 @@ def admin_reviews(request):
         review_pag = paginator_helper(request,
                                       Review.objects.
                                       filter(authorised=False).order_by("-created_on"),
-                                      3)
+                                      10)
         template = "user_management/admin_reviews.html"
         context = {
             'title': 'admin reviews',

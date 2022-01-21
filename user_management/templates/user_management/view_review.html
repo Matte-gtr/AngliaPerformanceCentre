@@ -44,7 +44,9 @@
                             {% endif %}
                         {% endwith %}
                         <p class="mb-0"><small><strong>Posted:</strong> {{ review.created_on }}</small></p>
+                        {% if review.updated_on %}
                         <p class="mb-0"><small><strong>Updated:</strong> {{ review.updated_on }} </small></p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -89,9 +91,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn send-btn" data-dismiss="modal">CANCEL</button>
-                    <a href="{% url 'delete_review' review.id %}">
-                        <div class="btn btn-danger">DELETE</div>
-                    </a>
+                    <form action="{% url 'delete_review' review.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="return_url" value="redirect">
+                        <button type="submit" class="btn btn-danger">DELETE</button>
+                    </form>
                 </div>
             </div>
         </div>

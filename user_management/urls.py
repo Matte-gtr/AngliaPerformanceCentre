@@ -9,6 +9,8 @@ urlpatterns = [
      path('admin_reviews/', views.admin_reviews, name="admin_reviews"),
      path('admin_messages/<int:message_id>', views.view_message,
           name="view_message"),
+     path('admin_callbacks/<int:callback_id>', views.view_callback,
+          name="view_callback"),
      path('admin_reviews/<int:review_id>', views.view_review,
           name="view_review"),
      path('admin_reviews/approve/<int:review_id>', views.approve_review,

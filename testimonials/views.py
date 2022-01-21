@@ -64,6 +64,7 @@ def delete_review(request, review_id):
     """ a view to delete a review """
     review = get_object_or_404(Review, pk=review_id)
     images = review.image.all()
+    next_url = request.POST.get('return_url', None)
     if request.user == review.user or request.user.is_staff:
         try:
             if images:
@@ -81,7 +82,10 @@ def delete_review(request, review_id):
     else:
         messages.warning(request, 'You are only able to delete your own \
                          reviews')
-    return redirect(reverse("testimonials"))
+    if next_url:
+        return redirect(reverse('admin_reviews'))
+    else:
+        return redirect(reverse("testimonials"))
 
 
 @login_required
