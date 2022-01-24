@@ -230,6 +230,25 @@ def mark_unread(request, object_id, model):
 
 
 @login_required
+def toggle_responded(request, object_id, model):
+    """ a view to mark an object as responded in the admin page """
+    if model == 'callback':
+        this_object = get_object_or_404(Callback, pk=object_id)
+        this_path = redirect('view_callback', callback_id=object_id)
+    else:
+        this_object = get_object_or_404(Message, pk=object_id)
+        this_path = redirect('view_message', message_id=object_id)
+
+    if this_object.responded:
+        this_object.responded = False
+    else:
+        this_object.responded = True
+    this_object.save(update_fields=['responded'])
+    this_object.save()
+    return this_path
+
+
+@login_required
 def reply_to_message(request, message_id):
     """ a view to send a response to a message """
     if request.method == "POST":
@@ -264,4 +283,40 @@ def reply_to_message(request, message_id):
                              messages customers")
             return redirect(reverse('home'))
     else:
+        return redirect(reverse('home'))
+
+
+@login_required
+def delete_message(request, message_id):
+    """ a view to delete a message and all of it's replies """
+    if request.user.is_staff:
+        message = get_object_or_404(Message, pk=message_id)
+        try:
+            message.delete()
+            messages.success(request, f"Successfully deleted \
+                             message {message_id}")
+        except Exception as e:
+            messages.error(request, f"error deleting image: {e}")
+        return redirect(reverse('admin_messages'))
+    else:
+        messages.warning(request, "You do not have permissions to delete \
+                         messages")
+        return redirect(reverse('home'))
+
+
+@login_required
+def delete_callback(request, callback_id):
+    """ a view to delete a callback and all of it's replies """
+    if request.user.is_staff:
+        callback = get_object_or_404(Callback, pk=callback_id)
+        try:
+            callback.delete()
+            messages.success(request, f"Successfully deleted \
+                             callback {callback_id}")
+        except Exception as e:
+            messages.error(request, f"error deleting image: {e}")
+        return redirect(reverse('admin_callbacks'))
+    else:
+        messages.warning(request, "You do not have permissions to delete \
+                         callbacks")
         return redirect(reverse('home'))

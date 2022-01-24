@@ -897,6 +897,15 @@ nav ul li {
     transition: all .2s linear;
 }
 
+.send-btn-active {
+    background-color: #555adf;
+    border: 1px solid #5a5959;
+    color: white;
+    font-weight: 600;
+    margin-top: 5px;
+    transition: all .2s linear;
+}
+
 .send-btn:hover {
     background-color: #555adf;
     color: white;
@@ -967,6 +976,11 @@ nav ul li {
 
 #message-reply {
     display: none;
+}
+
+.response-block {
+    background-color: #e1d9d9;
+    padding: 2px;
 }
 
 /*----------Keyframes----------*/

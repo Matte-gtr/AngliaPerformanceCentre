@@ -27,8 +27,8 @@
                             <strong>Message:</strong> {{ message.message|linebreaks }}<br>
                             {% if message.responses.all.count > 0 %}
                                 {% for response in message.responses.all %}
-                                <div class="text-gold">
-                                    <strong>Reply ({{ response.sent_on }}):<br> </strong>{{ response.message_body }}
+                                <div class="text-gold response-block">
+                                    <strong>Reply ({{ response.sent_on }}):<br> </strong>{{ response.message_body|linebreaks }}
                                 </div>
                                 {% endfor %}
                             {% endif %}
@@ -36,9 +36,6 @@
                         <div class="message-section">
                             <strong>Received:</strong> {{ message.received_on }}<br>
                         </div>
-                        <!--<div class="message-section">
-                            <strong>Read:</strong> {{ message.read }}<br>
-                        </div>-->
                     </div>
                     <div class="external-message-section">
                         <strong>Responded:</strong> 
@@ -53,13 +50,16 @@
 
             <div class="row">
                 <div class="col-12">
-                    <div class="text-center">
-                        <div class="btn send-btn mt-1" id="reply-btn">REPLY</div>
+                    <div class="text-center mt-3">
+                        <div class="btn btn-success mt-1" id="reply-btn">REPLY</div>
                         <button type="button" class="btn btn-danger d-inline-block mt-1" data-toggle="modal" data-target="#deleteMessageModal">
                             DELETE
                         </button>
                         <a href="{% url 'mark_unread' object_id=message.id model='message' %}">
                             <div class="btn send-btn mt-1">MARK UNREAD</div>
+                        </a>
+                        <a href="{% url 'toggle_responded' object_id=message.id model='message' %}">
+                            <div class="btn send-btn mt-1">TOGGLE STATUS</div>
                         </a>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                     <form action="{% url 'reply_to_message' message.id %}" method="POST" class="reply-form">
                         {% csrf_token %}
                         {{ form }}                 
-                        <button type="submit" class="btn request-btn">SEND</button>
+                        <button type="submit" class="btn request-btn mt-2">SEND</button>
                     </form>
                 </div>
             </div>
@@ -101,11 +101,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn send-btn" data-dismiss="modal">CANCEL</button>
-                    <form action="#" method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="return_url" value="redirect">
-                        <button type="submit" class="btn btn-danger">DELETE</button>
-                    </form>
+                    <a href="{% url 'delete_message' message.id %}">
+                        <button type="button" class="btn btn-danger">DELETE</button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -122,8 +120,12 @@
             let visible = message.is('.opened')
             if (visible == true) {
                 $('#reply-btn').text("HIDE");
+                $('#reply-btn').removeClass('btn-success');
+                $('#reply-btn').addClass('send-btn-active');
             } else {
                 $('#reply-btn').text("REPLY");
+                $('#reply-btn').removeClass('send-btn-active');
+                $('#reply-btn').addClass('btn-success');
             }
         });
     });

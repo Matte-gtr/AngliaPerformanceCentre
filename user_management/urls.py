@@ -17,6 +17,12 @@ urlpatterns = [
           name="approve_review"),
      path('admin_<model>/unread/<int:object_id>', views.mark_unread,
           name="mark_unread"),
+     path('admin_<model>/responded/<int:object_id>', views.toggle_responded,
+          name="toggle_responded"),
      path('admin_messages/reply/<int:message_id>', views.reply_to_message,
           name="reply_to_message"),
+     path('admin_messages/delete/<int:message_id>', views.delete_message,
+          name="delete_message"),
+     path('admin_callbacks/delete/<int:callback_id>', views.delete_callback,
+          name="delete_callback"),
 ]
