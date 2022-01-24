@@ -55,7 +55,7 @@
                                 {% endif %}
                                 <button type="submit" class="btn send-btn mt-0" id="review-submit">UPDATE</button>
                             {% elif request.user.is_staff %}
-                                <a href="#">
+                                <a href="{% url 'unauth_review' review.id %}">
                                     <div class="btn btn-danger">UN-AUTH</div>
                                 </a>
                             {% endif %}

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Message, Callback
+from .models import Message, Callback, MessageResponse
 
 
 class MessageForm(forms.ModelForm):
@@ -40,6 +40,27 @@ class CallbackForm(forms.ModelForm):
         placeholders = {
             'name': 'Name *',
             'phone': 'Contact Number *',
+        }
+        for field in self.fields:
+            self.fields[field].label = ''
+            placeholder = placeholders[field]
+            self.fields[field].widget.attrs['placeholder'] = placeholder
+            self.fields[field].widget.attrs['class'] = 'form-control mb-1'
+
+
+class MessageResponseForm(forms.ModelForm):
+    class Meta:
+        model = MessageResponse
+        fields = [
+            'message_header',
+            'message_body',
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        placeholders = {
+            'message_header': 'Title *',
+            'message_body': 'Message',
         }
         for field in self.fields:
             self.fields[field].label = ''

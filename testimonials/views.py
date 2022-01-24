@@ -6,13 +6,15 @@ from django.contrib.auth.models import User
 
 from .forms import ReviewForm
 from .models import ReviewImage, Review
+from user_management.views import paginator_helper
 
 from datetime import datetime
 
 
 def testimonials(request):
     """ a view for the testimonials page """
-    auth_reviews = Review.objects.filter(authorised=True)
+    auth_reviews = paginator_helper(request, Review.objects.
+                                   filter(authorised=True), 10)
     review_count = Review.objects.filter(authorised=True).count()
     average = Review.objects.filter(authorised=True).\
         aggregate(Avg('stars'))['stars__avg']
@@ -36,27 +38,31 @@ def testimonials(request):
 @login_required
 def post_review(request):
     """ a view for posting a review on the testimonials page """
-    if request.user.is_authenticated:
-        form = ReviewForm(request.POST, request.FILES)
-        files = request.FILES.getlist('image')
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            form = ReviewForm(request.POST, request.FILES)
+            files = request.FILES.getlist('image')
 
-        if form.is_valid():
-            new_review = form.save(commit=False)
-            new_review.user = request.user
-            new_review.save()
+            if form.is_valid():
+                new_review = form.save(commit=False)
+                new_review.user = request.user
+                new_review.save()
 
-            for file in files:
-                img = ReviewImage(image=file)
-                img.save()
-                new_review.image.add(img)
+                for file in files:
+                    img = ReviewImage(image=file)
+                    img.save()
+                    new_review.image.add(img)
 
-            new_review.save()
-            messages.success(request, 'Thanks for your review, it has been\
-                    submitted for approval')
-            return redirect(reverse("testimonials"))
+                new_review.save()
+                messages.success(request, 'Thanks for your review, it has been\
+                        submitted for approval')
+                return redirect(reverse("testimonials"))
+        else:
+            next_redirect = request.POST.get("next")
+            messages.warning(request, "Please log in to post a review")
+            return redirect(reverse("account_login", kwargs={"next": next_redirect}))
     else:
-        messages.warning(request, "Please log in to post a review")
-        return redirect(reverse("account_login"))
+        return redirect('{}#post-review'.format(reverse('testimonials')))
 
 
 @login_required
@@ -144,3 +150,19 @@ def edit_review(request, review_id):
         'section': 'testimonials',
     }
     return render(request, template, context)
+
+
+@login_required
+def unauth_review(request, review_id):
+    """ a view to de-authorise a review (also marked as unread) """
+    if request.user.is_staff:
+        review = get_object_or_404(Review, pk=review_id)
+        review.read = False
+        review.authorised = False
+        review.save(update_fields=['read', 'authorised'])
+        messages.success(request, f"Review {review_id} has been de-authorised")
+        return redirect(reverse('testimonials'))
+    else:
+        messages.warning(request, "You do not have the required \
+                         permissions to complete this action")
+        return redirect(reverse('testimonials'))

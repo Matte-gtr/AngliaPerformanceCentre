@@ -4,7 +4,7 @@
 <div class="container-fluid bg-darker dark-content pt-3 pb-3">
 
     <!--Mobile Grid Display start-->
-    <div class="row d-md-none">
+    <div class="row d-md-none pr-1 pl-1">
         <div class="col-12 p-0 border border-bottom-0">
             <div class="text-center p-0">
                 <a href="{% url 'admin_messages' %}" class="standard-link">
@@ -26,7 +26,7 @@
         <div class="col-12 p-0 border border-top-0">
             <table class="table bg-light table-hover mb-0">
                 <tr class="bg-secondary">
-                    <th scope="col" class="w-13"><input type="checkbox" id="master-callback-checkbox"></th>
+                    <th scope="col" class="w-13"><input type="checkbox" id="master-callback-checkbox-mobile"></th>
                     <th scope="col">Name</th>
                     <th scope="col">Responded</th>
                     <th scope="col">Date</th>
@@ -41,7 +41,7 @@
                 {% endif %}
                 {% for callback in callbacks %}
                     <tr>
-                        <td><input type="checkbox" data-id="{{ callback.id }}" class="callback-checkbox"></td>
+                        <td><input type="checkbox" data-id="{{ callback.id }}" class="callback-checkbox-mobile"></td>
                         <td>
                             {% if callback.read %}
                                 <a href="{% url 'view_callback' callback.id %}" class="text-secondary">{{ callback.name }}</a>
@@ -111,7 +111,7 @@
     <!--Mobile Grid Display end-->
 
     <!--Desktop Grid Display start-->
-    <div class="row d-none d-md-flex">
+    <div class="row d-none d-md-flex pr-1 pl-1">
         <div class="col-3 p-0">
             <div class="text-center p-0 border">
                 <a href="{% url 'admin_messages' %}" class="standard-link">
@@ -138,7 +138,7 @@
         <div class="col-9 p-0 border">
             <table class="table bg-light table-hover mb-0">
                 <tr class="bg-secondary">
-                    <th scope="col" class="w-13"><input type="checkbox" id="master-callback-checkbox"></th>
+                    <th scope="col" class="w-13"><input type="checkbox" id="master-callback-checkbox-desktop"></th>
                     <th scope="col">Name</th>
                     <th scope="col">Responded</th>
                     <th scope="col">Date</th>
@@ -153,7 +153,7 @@
                 {% endif %}
                 {% for callback in callbacks %}
                     <tr>
-                        <td><input type="checkbox" data-id="{{ callback.id }}" class="callback-checkbox"></td>
+                        <td><input type="checkbox" data-id="{{ callback.id }}" class="callback-checkbox-desktop"></td>
                         <td>
                             {% if callback.read %}
                                 <a href="{% url 'view_callback' callback.id %}" class="text-secondary">{{ callback.name }}</a>
@@ -220,19 +220,22 @@
 {{ block.super }}
 <script>
     $(document).ready(function() {
-        $('#master-callback-checkbox').click(function() {
-            checkAll('callback')
+        $('#master-callback-checkbox-mobile').click(function() {
+            checkAll('callback', 'mobile')
+        });
+        $('#master-callback-checkbox-desktop').click(function() {
+            checkAll('callback', 'desktop')
         });
 
-        function checkAll(type) {
-            let master_string = '#master-' + type + '-checkbox';
+        function checkAll(type, platform) {
+            let master_string = '#master-' + type + '-checkbox-' + platform;
             let master = $(master_string);
-            let checkbox_string = '.' + type + '-checkbox';
+            let checkbox_string = '.' + type + '-checkbox-' + platform;
             let checkbox = $(checkbox_string);
             if (master.is(':checked')) {
-                $('.' + type + '-checkbox').prop('checked', true);
+                $('.' + type + '-checkbox-' + platform).prop('checked', true);
             } else {
-                $('.' + type + '-checkbox').prop('checked', false);
+                $('.' + type + '-checkbox-' + platform).prop('checked', false);
             }
         }
     });

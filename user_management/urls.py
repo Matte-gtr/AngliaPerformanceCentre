@@ -17,4 +17,6 @@ urlpatterns = [
           name="approve_review"),
      path('admin_<model>/unread/<int:object_id>', views.mark_unread,
           name="mark_unread"),
+     path('admin_messages/reply/<int:message_id>', views.reply_to_message,
+          name="reply_to_message"),
 ]

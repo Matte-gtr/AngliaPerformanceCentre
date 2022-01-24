@@ -23,3 +23,15 @@ class Callback(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+
+class MessageResponse(models.Model):
+    message_header = models.CharField(max_length=100, blank=False)
+    message_body = models.TextField(blank=False)
+    response_to = models.ForeignKey("Message", blank=False, null=True,
+                                    on_delete=models.CASCADE,
+                                    related_name="responses")
+    sent_on = models.DateTimeField(auto_now_add=True, blank=False)
+
+    def __str__(self):
+        return str(self.pk)

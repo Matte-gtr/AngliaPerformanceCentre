@@ -9,26 +9,123 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid p-0">
+    <div class="container-fluid bg-darker dark-content pl-0 pr-0 pt-3 pb-3">
         <div class="container">
             <div class="row">
-                <div class="col">
-                    {{ message.name }}<br>
-                    {{ message.phone }}<br>
-                    {{ message.email }}<br>
-                    {{ message.message }}<br>
-                    {{ message.received_on }}<br>
-                    {{ message.read }}<br>
-                    {{ message.responded }}<br>
+                <div class="col pt-4">
+                    <div class="message-container">
+                        <div class="message-section">
+                            <strong>From:</strong> {{ message.name }}<br>
+                        </div>
+                        <div class="message-section">
+                            <strong>Phone:</strong> {{ message.phone }}<br>
+                        </div>
+                        <div class="message-section text-break">
+                            <strong>Email:</strong> {{ message.email }}<br>
+                        </div>
+                        <div class="message-section">
+                            <strong>Message:</strong> {{ message.message|linebreaks }}<br>
+                            {% if message.responses.all.count > 0 %}
+                                {% for response in message.responses.all %}
+                                <div class="text-gold">
+                                    <strong>Reply ({{ response.sent_on }}):<br> </strong>{{ response.message_body }}
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="message-section">
+                            <strong>Received:</strong> {{ message.received_on }}<br>
+                        </div>
+                        <!--<div class="message-section">
+                            <strong>Read:</strong> {{ message.read }}<br>
+                        </div>-->
+                    </div>
+                    <div class="external-message-section">
+                        <strong>Responded:</strong> 
+                        {% if message.responded %}
+                            <i class="fas fa-check fa-lg text-success"></i>
+                        {% else %}
+                            <i class="fas fa-times fa-lg text-danger"></i>
+                        {% endif %}<br>
+                    </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-center">
+                        <div class="btn send-btn mt-1" id="reply-btn">REPLY</div>
+                        <button type="button" class="btn btn-danger d-inline-block mt-1" data-toggle="modal" data-target="#deleteMessageModal">
+                            DELETE
+                        </button>
+                        <a href="{% url 'mark_unread' object_id=message.id model='message' %}">
+                            <div class="btn send-btn mt-1">MARK UNREAD</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="message-reply" class="row">
+                <div class="col-12">
+                    <form action="{% url 'reply_to_message' message.id %}" method="POST" class="reply-form">
+                        {% csrf_token %}
+                        {{ form }}                 
+                        <button type="submit" class="btn request-btn">SEND</button>
+                    </form>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col">
-                    <div class="back-button-container">
+                    <div class="back-button-container mt-5">
                         <a href="{% url 'admin_messages' %}" class="standard-link i-move"><i class="fas fa-arrow-circle-left"></i> Admin Panel</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteMessageModal" tabindex="-1" role="dialog" aria-labelledby="deleteMessage" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteMessage">Delete Message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <strong>Are you sure you want to delete this Message?</strong><br>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn send-btn" data-dismiss="modal">CANCEL</button>
+                    <form action="#" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="return_url" value="redirect">
+                        <button type="submit" class="btn btn-danger">DELETE</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block postload_js %}
+{{ block.super }}
+<script>
+    $(document).ready(function() {
+        $('#reply-btn').click(function() {
+            let message = $('#message-reply')
+            message.slideToggle().toggleClass('opened');
+            let visible = message.is('.opened')
+            if (visible == true) {
+                $('#reply-btn').text("HIDE");
+            } else {
+                $('#reply-btn').text("REPLY");
+            }
+        });
+    });
+</script>
 {% endblock %}

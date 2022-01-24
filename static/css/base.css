@@ -846,13 +846,17 @@ nav ul li {
 
 .back-button-container {
     padding-bottom: 2.5rem;
-    padding-top: 2.5rem;
     font-size: 25px;
 }
 
 .i-move:hover i {
     animation: back-and-forth 1.5s;
     animation-iteration-count: infinite;
+}
+
+#post-review {
+    padding-top: 30px;
+    padding-bottom: 45px;
 }
 
 /*----------Pricing----------*/
@@ -883,8 +887,6 @@ nav ul li {
     background-image: url(/media/old-phone.jpg);
     background-blend-mode: multiply;
 }
-
-/*----------contact-----------*/
 
 .send-btn {
     background-color: #c6a76c;
@@ -932,6 +934,39 @@ nav ul li {
     padding: 10px;
     height: 100%;
     border-radius: 5px;
+}
+
+/*----------Admin----------*/
+
+.message-section {
+    background-color: #fafafa;
+    color: black;
+    padding: 2px 5px;
+    border: 1px solid grey;
+}
+
+.message-container {
+    overflow: hidden;
+    border: 1px solid #c6a76c;
+    border-radius: 5px;
+}
+
+.external-message-section {
+    padding: 20px 5px 0 5px;
+}
+
+.reply-form {
+    background-color: #c6a76c;
+    max-width: 930px;
+    text-align: center;
+    margin: auto;
+    margin-top: 35px;
+    border-radius: 5px;
+    padding: 20px 10px 13px;
+}
+
+#message-reply {
+    display: none;
 }
 
 /*----------Keyframes----------*/

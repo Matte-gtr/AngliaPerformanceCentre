@@ -4,7 +4,7 @@
     <div class="container-fluid bg-darker dark-content pt-3 pb-3">
 
         <!--Mobile Grid Display start-->
-        <div class="row d-md-none">
+        <div class="row d-md-none pr-1 pl-1">
             <div class="col-12 p-0 border border-bottom-0">
                 <div class="text-center p-0">
                     <a href="{% url 'admin_messages' %}" class="standard-link">
@@ -35,7 +35,7 @@
             <div class="col-12 p-0 border border-top-0">
                 <table class="table bg-light table-hover mb-0">
                     <tr class="bg-secondary">
-                        <th scope="col" class="w-13"><input type="checkbox" id="master-review-checkbox"></th>
+                        <th scope="col" class="w-13"><input type="checkbox" id="master-review-checkbox-mobile"></th>
                         <th scope="col">Name</th>
                         <th scope="col">Rating</th>
                         <th scope="col">Date</th>
@@ -50,7 +50,7 @@
                     {% endif %}
                     {% for review in reviews %}
                         <tr>
-                            <td><input type="checkbox" data-id="{{ review.id }}" class="review-checkbox"></td>
+                            <td><input type="checkbox" data-id="{{ review.id }}" class="review-checkbox-mobile"></td>
                             <td>
                                 {% if review.read %}
                                     <a href="{% url 'view_review' review.id %}" class="text-secondary">{{ review.user }}</a>
@@ -117,7 +117,7 @@
         <!--Mobile Grid Display end-->
 
         <!--Desktop Grid Display start-->
-        <div class="row d-none d-md-flex">
+        <div class="row d-none d-md-flex pr-1 pl-1">
             <div class="col-3 p-0">
                 <div class="text-center p-0 border">
                     <a href="{% url 'admin_messages' %}" class="standard-link">
@@ -144,7 +144,7 @@
             <div class="col-9 p-0 border">
                 <table class="table bg-light table-hover mb-0">
                     <tr class="bg-secondary">
-                        <th scope="col" class="w-13"><input type="checkbox" id="master-review-checkbox"></th>
+                        <th scope="col" class="w-13"><input type="checkbox" id="master-review-checkbox-desktop"></th>
                         <th scope="col">Name</th>
                         <th scope="col">Rating</th>
                         <th scope="col">Date</th>
@@ -159,7 +159,7 @@
                     {% endif %}
                     {% for review in reviews %}
                         <tr>
-                            <td><input type="checkbox" data-id="{{ review.id }}" class="review-checkbox"></td>
+                            <td><input type="checkbox" data-id="{{ review.id }}" class="review-checkbox-desktop"></td>
                             <td>
                                 {% if review.read %}
                                     <a href="{% url 'view_review' review.id %}" class="text-secondary">{{ review.user }}</a>
@@ -232,19 +232,22 @@
 {{ block.super }}
 <script>
     $(document).ready(function() {
-        $('#master-review-checkbox').click(function() {
-            checkAll('review')
+        $('#master-review-checkbox-mobile').click(function() {
+            checkAll('review', 'mobile')
+        });
+        $('#master-review-checkbox-desktop').click(function() {
+            checkAll('review', 'desktop')
         });
 
-        function checkAll(type) {
-            let master_string = '#master-' + type + '-checkbox';
+        function checkAll(type, platform) {
+            let master_string = '#master-' + type + '-checkbox-' + platform;
             let master = $(master_string);
-            let checkbox_string = '.' + type + '-checkbox';
+            let checkbox_string = '.' + type + '-checkbox-' + platform;
             let checkbox = $(checkbox_string);
             if (master.is(':checked')) {
-                $('.' + type + '-checkbox').prop('checked', true);
+                $('.' + type + '-checkbox-' + platform).prop('checked', true);
             } else {
-                $('.' + type + '-checkbox').prop('checked', false);
+                $('.' + type + '-checkbox-' + platform).prop('checked', false);
             }
         }
     });

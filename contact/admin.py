@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Message, Callback
+from .models import Message, Callback, MessageResponse
 
 
 class MessageAdmin(admin.ModelAdmin):
@@ -21,3 +21,4 @@ class CallbackAdmin(admin.ModelAdmin):
 
 admin.site.register(Message, MessageAdmin)
 admin.site.register(Callback, CallbackAdmin)
+admin.site.register(MessageResponse)

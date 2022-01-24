@@ -1,11 +1,14 @@
-from django.shortcuts import render, reverse, redirect, get_object_or_404
+from django.shortcuts import render, reverse, redirect, get_object_or_404,\
+    HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
+from django.core.mail import send_mail, BadHeaderError
 
 from contact.models import Message, Callback
 from testimonials.models import Review
+from contact.forms import MessageResponseForm
 
 
 def paginator_helper(request, object_list, per_page):
@@ -107,7 +110,8 @@ def admin_reviews(request):
         review_count = Review.objects.filter(read=False).count
         review_pag = paginator_helper(request,
                                       Review.objects.
-                                      filter(authorised=False).order_by("-created_on"),
+                                      filter(authorised=False).
+                                      order_by("read", "-created_on"),
                                       10)
         template = "user_management/admin_reviews.html"
         context = {
@@ -149,6 +153,9 @@ def view_review(request, review_id):
 @login_required
 def view_message(request, message_id):
     """ a view to display a message recieved """
+    form = MessageResponseForm(
+        initial={'message_header':
+                 'Re: Anglia Performance Centre Enquiry'})
     if request.user.is_staff:
         message = get_object_or_404(Message, pk=message_id)
         message.read = True
@@ -157,6 +164,7 @@ def view_message(request, message_id):
         context = {
             'title': 'message ' + str(message_id),
             'section': 'user_management',
+            'form': form,
             'message': message,
         }
         return render(request, template, context)
@@ -219,3 +227,41 @@ def mark_unread(request, object_id, model):
     this_object.save(update_fields=['read'])
     this_object.save()
     return this_path
+
+
+@login_required
+def reply_to_message(request, message_id):
+    """ a view to send a response to a message """
+    if request.method == "POST":
+        if request.user.is_staff:
+            form = MessageResponseForm(request.POST or None)
+            if form.is_valid():
+                original_message = get_object_or_404(Message, pk=message_id)
+                new_response = form.save(commit=False)
+                new_response.response_to = original_message
+                new_response.save()
+                original_message.responded = True
+                original_message.save(update_fields=['responded'])
+
+                subject = form.cleaned_data['message_header']
+                from_email = 'contact@apcperformance.co.uk'
+                message = form.cleaned_data['message_body']
+                recipient = original_message.email
+                recipients = []
+                recipients.append(recipient)
+
+                try:
+                    send_mail(subject, message, from_email, recipients)
+                    messages.success(request, "Your response has been sent")
+                except BadHeaderError:
+                    HttpResponse('Bad Header Found')
+                return redirect('view_message', message_id=message_id)
+            else:
+                messages.error(request, "Please check all fields are filled \
+                               out and resend your response")
+        else:
+            messages.warning(request, "You do not have permissions to \
+                             messages customers")
+            return redirect(reverse('home'))
+    else:
+        return redirect(reverse('home'))
