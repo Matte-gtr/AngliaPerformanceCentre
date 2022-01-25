@@ -25,16 +25,6 @@ def the_team(request):
     return render(request, template, context)
 
 
-def finance_options(request):
-    """ a view for the finance options page """
-    template = 'about_us/finance_options.html'
-    context = {
-        'title': 'finance options',
-        'section': 'about',
-    }
-    return render(request, template, context)
-
-
 def terms_and_conditions(request):
     """ a view for the terms and conditions page """
     template = 'about_us/terms_and_conditions.html'
