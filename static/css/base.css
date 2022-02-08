@@ -60,6 +60,11 @@ body {
     width: 70%;
 }
 
+.hr-gold-short {
+    border:1px solid #c6a76c;
+    width: 165px;
+}
+
 .hr-left {
     margin-left: 0;
 }
@@ -673,7 +678,29 @@ nav ul li {
 
 /*----------SERVICES (GENERAL)----------*/
 
+.card {
+    background-color: #b1b1b1;
+    color: #1a1a18;
+}
 
+
+
+/*----------Track/Drift Perparation----------*/
+
+.bg-track {
+    background-image: url(/media/custom-airbox.jpg);
+    height: 100vh;
+    width: 100%;
+    background-attachment: fixed;
+    background-size: cover;
+    
+}
+
+.bg-overlay {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.7);
+}
 
 /*----------Testimonials----------*/
 
