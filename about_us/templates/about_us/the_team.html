@@ -4,22 +4,26 @@
         <div class="row">
             <div class="header-container">
                 <header class="bg-header about-header">
-                    <h1 class="page-header">The Team</h1>
+                    <div class="dark-fade">
+                        <h1 class="page-header">The Team</h1>
+                    </div>
                 </header>
             </div>
         </div>
     </div>
-    <div class="container-fluid bg-darker">
-        <div class="container">
-            <div class="row">
-                {% for member in members %}
-                    <div class="col-12 dark-content">
-                        <img src="{{ member.image.url }}" alt="{{ member.first_name }}">
-                        <h3>{{ member.first_name }} {{ member.surname }}</h3>
-                        <h4>{{ member.job }}</h4>
-                        <p>{{ member.description }}</p>
-                    </div>
-                {% endfor %}
+    <div class="container-fluid bg-car bg-fixed dark-content p-0">
+        <div class="container-fluid dark-shadow pl-0 pr-0">
+            <div class="container">
+                <div class="row">
+                    {% for member in members %}
+                        <div class="col-12 dark-content">
+                            <img src="{{ member.image.url }}" alt="{{ member.first_name }}">
+                            <h3>{{ member.first_name }} {{ member.surname }}</h3>
+                            <h4>{{ member.job }}</h4>
+                            <p>{{ member.description }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>

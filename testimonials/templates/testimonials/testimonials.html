@@ -5,154 +5,158 @@
         <div class="row">
             <div class="header-container">
                 <header class="bg-header testimonials-header">
-                    <h1 class="page-header">Testimonials</h1>
+                    <div class="dark-fade">
+                        <h1 class="page-header">Testimonials</h1>
+                    </div>
                 </header>
             </div>
         </div>
     </div>
-    <div class="container-fluid p-0 bg-darker text-white">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h1 class="mt-5">Customer Testimonials</h1>
-                    <hr class="hr-gold-70 hr-left">
-                    <p class="mb-5"><a class="standard-link" href="#post-review">Write a Review</a></p>
+    <div class="container-fluid bg-car bg-fixed dark-content p-0">
+        <div class="container-fluid dark-shadow pl-0 pr-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="mt-5">Customer Testimonials</h1>
+                        <hr class="hr-gold-70 hr-left">
+                        <p class="mb-5"><a class="standard-link" href="#post-review">Write a Review</a></p>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <h3><span class="text-light-gold">{{ review_count }}</span> Reviews{% if review_count > 0 %}</h3>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <h3><span class="text-light-gold">{{ review_count }}</span> Reviews{% if review_count > 0 %}</h3>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <h3 class="float-md-right"><span class="text-light-gold">{{ average_rating }}</span> Average Rating{% else %}{% endif %}</h2>
+                    </div>
                 </div>
-                <div class="col-12 col-md-6">
-                    <h3 class="float-md-right"><span class="text-light-gold">{{ average_rating }}</span> Average Rating{% else %}{% endif %}</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    {% for review in reviews %}
-                        <article class="review">
-                            {% if review.anon == False %}
-                                <h5 class="font-weight-bold d-inline-block">{{ review.user }}</h5>
+                <div class="row">
+                    <div class="col-12">
+                        {% for review in reviews %}
+                            <article class="review">
+                                {% if review.anon == False %}
+                                    <h5 class="font-weight-bold d-inline-block">{{ review.user }}</h5>
+                                    {% with user=request.user %}
+                                        {% if user == review.user or user.is_staff %}
+                                            <p class="mb-0 d-inline-block float-right"><a href="{% url 'edit_review' review.id %}"><i class="fas fa-edit"></i></a></p>     
+                                        {% endif %}
+                                    {% endwith %}
+                                {% else %}
+                                <h5 class="font-weight-bold d-inline-block">Anonymous</h5>
                                 {% with user=request.user %}
                                     {% if user == review.user or user.is_staff %}
                                         <p class="mb-0 d-inline-block float-right"><a href="{% url 'edit_review' review.id %}"><i class="fas fa-edit"></i></a></p>     
                                     {% endif %}
                                 {% endwith %}
-                            {% else %}
-                            <h5 class="font-weight-bold d-inline-block">Anonymous</h5>
-                            {% with user=request.user %}
-                                {% if user == review.user or user.is_staff %}
-                                    <p class="mb-0 d-inline-block float-right"><a href="{% url 'edit_review' review.id %}"><i class="fas fa-edit"></i></a></p>     
                                 {% endif %}
-                            {% endwith %}
-                            {% endif %}
-                            <p class="m-0">
-                                <span class="fa fa-star{% if review.stars >= 1 %} text-orange{% endif %}"></span>
-                                <span class="fa fa-star{% if review.stars >= 2 %} text-orange{% endif %}"></span>
-                                <span class="fa fa-star{% if review.stars >= 3 %} text-orange{% endif %}"></span>
-                                <span class="fa fa-star{% if review.stars >= 4 %} text-orange{% endif %}"></span>
-                                <span class="fa fa-star{% if review.stars >= 5 %} text-orange{% endif %}"></span>
-                            </p>
-                            <hr class="mt-1">
-                            <p>{{ review.review|linebreaks }}</p>
-                            {% with counter=forloop.counter %}
-                                {% if review.image.count > 0 %}
-                                    <div class="row m-0">
-                                        <div class="thumbnail-container">
-                                            {% for img in review.image.all %}
-                                                <div class="img-container">
-                                                    <a data-fancybox="group-{{ counter }}" href="{{ img.image.url }}">
-                                                        <img class="thumbnail" src="{{ img.image.url }}" alt="">
-                                                    </a>
-                                                </div>
-                                            {% endfor %}
+                                <p class="m-0">
+                                    <span class="fa fa-star{% if review.stars >= 1 %} text-orange{% endif %}"></span>
+                                    <span class="fa fa-star{% if review.stars >= 2 %} text-orange{% endif %}"></span>
+                                    <span class="fa fa-star{% if review.stars >= 3 %} text-orange{% endif %}"></span>
+                                    <span class="fa fa-star{% if review.stars >= 4 %} text-orange{% endif %}"></span>
+                                    <span class="fa fa-star{% if review.stars >= 5 %} text-orange{% endif %}"></span>
+                                </p>
+                                <hr class="mt-1">
+                                <p>{{ review.review|linebreaks }}</p>
+                                {% with counter=forloop.counter %}
+                                    {% if review.image.count > 0 %}
+                                        <div class="row m-0">
+                                            <div class="thumbnail-container">
+                                                {% for img in review.image.all %}
+                                                    <div class="img-container">
+                                                        <a data-fancybox="group-{{ counter }}" href="{{ img.image.url }}">
+                                                            <img class="thumbnail" src="{{ img.image.url }}" alt="">
+                                                        </a>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}
+                                {% if review.updated_on %}
+                                    <p class="mb-0"><small>Updated: {{ review.updated_on }} </small></p>
+                                {% else %}
+                                    <p class="mb-0"><small>{{ review.created_on }}</small></p>
+                                {% endif %}
+                            </article>
+                        {% endfor %}
+
+                        <!-- review pagination bar start -->
+                        {% if reviews.paginator.page_range|length > 1 %}
+                        <div class="container pt-2">
+                            <div class="row">
+                                <nav class="mx-auto">
+                                    <ul class="pagination">
+                                        {% if reviews.has_previous %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?{% param_replace page=reviews.previous_page_number %}#headingTwo" tabindex="-1">&laquo;</a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item disabled">
+                                                <a class="page-link" href="#" tabindex="-1">&laquo;</a>
+                                            </li>
+                                        {% endif %}
+                                        {% for pg in reviews.paginator.page_range %}
+                                            {% if reviews.number == pg %}
+                                                <li class="page-item active"><a class="page-link" href="?{% param_replace page=pg %}#headingTwo">{{ pg }}</a></li>
+                                            {% elif pg > reviews.number|add:-3 and pg < reviews.number|add:3 %}
+                                                <li class="page-item"><a class="page-link" href="?{% param_replace page=pg %}#headingTwo">{{ pg }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if reviews.has_next %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?{% param_replace page=reviews.next_page_number %}#headingTwo" tabindex="-1">&raquo;</a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item disabled">
+                                                <a class="page-link" href="#" tabindex="-1">&raquo;</a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <!-- review pagination bar end -->
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div id="post-review" class="review-container bg-grey-50">
+                            <div class="row">
+                                <div class="col text-center">
+                                    <h3 class="mt-4 text-light-gold">Write your own Review</h3>
+                                </div>
+                            </div>
+                            <form method="POST" action="{% url 'post_review' %}" enctype="multipart/form-data" class="review-form">
+                                {% csrf_token %}
+                                <div class="row p-0">
+                                    <div class="col-12 text-center">
+                                        <p class="mt-3 mb-3 rank">
+                                            <span id="star-5" class="fa fa-star user-star" data-value="5"></span>
+                                            <span id="star-4" class="fa fa-star user-star" data-value="4"></span>
+                                            <span id="star-3" class="fa fa-star user-star" data-value="3"></span>
+                                            <span id="star-2" class="fa fa-star user-star" data-value="2"></span>
+                                            <span id="star-1" class="fa fa-star user-star" data-value="1"></span>
+                                        </p>
+                                        <div class="star-warning d-none">
+                                            Please select a Star Rating
                                         </div>
                                     </div>
-                                {% endif %}
-                            {% endwith %}
-                            {% if review.updated_on %}
-                                <p class="mb-0"><small>Updated: {{ review.updated_on }} </small></p>
-                            {% else %}
-                                <p class="mb-0"><small>{{ review.created_on }}</small></p>
-                            {% endif %}
-                        </article>
-                    {% endfor %}
-
-                    <!-- review pagination bar start -->
-                    {% if reviews.paginator.page_range|length > 1 %}
-                    <div class="container pt-2">
-                        <div class="row">
-                            <nav class="mx-auto">
-                                <ul class="pagination">
-                                    {% if reviews.has_previous %}
-                                        <li class="page-item">
-                                            <a class="page-link" href="?{% param_replace page=reviews.previous_page_number %}#headingTwo" tabindex="-1">&laquo;</a>
-                                        </li>
-                                    {% else %}
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" tabindex="-1">&laquo;</a>
-                                        </li>
-                                    {% endif %}
-                                    {% for pg in reviews.paginator.page_range %}
-                                        {% if reviews.number == pg %}
-                                            <li class="page-item active"><a class="page-link" href="?{% param_replace page=pg %}#headingTwo">{{ pg }}</a></li>
-                                        {% elif pg > reviews.number|add:-3 and pg < reviews.number|add:3 %}
-                                            <li class="page-item"><a class="page-link" href="?{% param_replace page=pg %}#headingTwo">{{ pg }}</a></li>
-                                        {% endif %}
-                                    {% endfor %}
-                                    {% if reviews.has_next %}
-                                        <li class="page-item">
-                                            <a class="page-link" href="?{% param_replace page=reviews.next_page_number %}#headingTwo" tabindex="-1">&raquo;</a>
-                                        </li>
-                                    {% else %}
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" tabindex="-1">&raquo;</a>
-                                        </li>
-                                    {% endif %}
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                {% endif %}
-                <!-- review pagination bar end -->
-
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div id="post-review" class="review-container bg-light-grey">
-                        <div class="row">
-                            <div class="col text-center">
-                                <h3 class="mt-4 text-light-gold">Write your own Review</h3>
-                            </div>
-                        </div>
-                        <form method="POST" action="{% url 'post_review' %}" enctype="multipart/form-data" class="review-form">
-                            {% csrf_token %}
-                            <div class="row p-0">
-                                <div class="col-12 text-center">
-                                    <p class="mt-3 mb-3 rank">
-                                        <span id="star-5" class="fa fa-star user-star" data-value="5"></span>
-                                        <span id="star-4" class="fa fa-star user-star" data-value="4"></span>
-                                        <span id="star-3" class="fa fa-star user-star" data-value="3"></span>
-                                        <span id="star-2" class="fa fa-star user-star" data-value="2"></span>
-                                        <span id="star-1" class="fa fa-star user-star" data-value="1"></span>
-                                    </p>
-                                    <div class="star-warning d-none">
-                                        Please select a Star Rating
+                                </div>
+                                {{ review_form|crispy }}
+                                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                                <!-- <div class="thumbnail-container">
+                                    <div id="img-container">
+        
                                     </div>
+                                </div> -->
+                                <div class="text-center">
+                                    <button type="submit" class="btn send-btn mt-0" id="review-submit">POST REVIEW</button>
                                 </div>
-                            </div>
-                            {{ review_form|crispy }}
-                            <input type="hidden" name="next" value="{{ request.get_full_path }}">
-                            <!-- <div class="thumbnail-container">
-                                <div id="img-container">
-    
-                                </div>
-                            </div> -->
-                            <div class="text-center">
-                                <button type="submit" class="btn send-btn mt-0" id="review-submit">POST REVIEW</button>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
