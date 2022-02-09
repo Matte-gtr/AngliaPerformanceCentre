@@ -6,21 +6,24 @@
 <title>{% block extra_title %}Sign Up | {% endblock %}</title>
 
 {% block content %}
-<div class="container-fluid bg-darker account-bg">
-  <div class="container dark-content allauth-page">
-    <div class="account-container">
-      <h1>{% trans "Sign Up" %}</h1>
+<div class="container-fluid allauth-bg p-0">
+  <div class="container-fluid dark-shadow account-bg">
+    <div class="container dark-content allauth-page">
+      <div class="account-container">
+        <h1>{% trans "Sign Up" %}</h1>
 
-      <p>{% blocktrans %}Already have an account? Then please <a class="standard-link" href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+        <p>{% blocktrans %}Already have an account? Then please <a class="standard-link" href="{{ login_url }}">sign
+            in</a>.{% endblocktrans %}</p>
 
-      <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-        {% csrf_token %}
-        {{ form|crispy }}
-        {% if redirect_field_value %}
-        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-        {% endif %}
-        <button class="btn send-btn" type="submit">{% trans "Sign Up" %} &raquo;</button>
-      </form>
+        <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+          {% csrf_token %}
+          {{ form|crispy }}
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+          <button class="btn send-btn" type="submit">{% trans "Sign Up" %} &raquo;</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>

@@ -35,6 +35,11 @@ body {
     box-shadow: 0 2px 10px rgba(0,0,0,0.4);
 }
 
+.btn-pro-cart {
+    color: #464646;
+    background-color: #c6a76c;
+}
+
 .green-text {
     color: #a0ff8f;
 }
@@ -144,6 +149,13 @@ body {
 .allauth-page {
     max-width: 480px;
     padding: 20px 0;
+}
+
+.allauth-bg {
+    background-image: url(/media/login.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 .account-bg {

@@ -1,12 +1,13 @@
 {% extends "account/base.html" %}
 
-  {% load i18n %}
-  {% load account socialaccount %}
+{% load i18n %}
+{% load account socialaccount %}
 
-  <title>{% block extra_title %}Sign In | {% endblock %}</title>
+<title>{% block extra_title %}Sign In | {% endblock %}</title>
 
-  {% block content %}
-  <div class="container-fluid bg-darker account-bg">
+{% block content %}
+<div class="container-fluid allauth-bg p-0">
+  <div class="container-fluid dark-shadow account-bg">
     <div class="container dark-content allauth-page">
       <div class="account-container">
         <h1>{% trans "Sign In" %}</h1>
@@ -15,8 +16,8 @@
 
         {% if socialaccount_providers %}
         <p>{% blocktrans with site.name as site_name %}Please sign in with one
-        of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
-        for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
+          of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
+          for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
 
         <div class="socialaccount_ballot">
 
@@ -32,7 +33,7 @@
 
         {% else %}
         <p>{% blocktrans %}If you have not created an account yet, then please
-        <a class="standard-link" href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+          <a class="standard-link" href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
         {% endif %}
 
         <form class="login" method="POST" action="{% url 'account_login' %}">
@@ -43,9 +44,10 @@
           {% endif %}
           <button class="btn send-btn mb-3" type="submit">{% trans "Sign In" %}</button>
         </form>
-        <a class="button secondaryAction standard-link" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+        <a class="button secondaryAction standard-link"
+          href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
       </div>
     </div>
   </div>
-  {% endblock %}
-  
+</div>
+{% endblock %}
