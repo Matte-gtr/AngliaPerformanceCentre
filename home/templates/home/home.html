@@ -4,30 +4,31 @@
 <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators d-none d-md-flex">
     {% for advert in adverts %}
-        <li data-target="#carouselIndicators" data-slide-to="{{ forloop.counter|add:'-1' }}" {% if forloop.counter == 1 %}class="active"{% endif %}></li>
+    <li data-target="#carouselIndicators" data-slide-to="{{ forloop.counter|add:'-1' }}"
+      {% if forloop.counter == 1 %}class="active" {% endif %}></li>
     {% endfor %}
   </ol>
   <div class="carousel-inner">
     {% for advert in adverts %}
-        <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
-            <div class="ad-container">
-              <img src="{{ advert.image.url }}" alt="{{ advert.name }}" class="ad-image">
-              <div class="img-overlay"></div>
-              <div class="ad-description fade-in">
-                <div class="row">
-                  <div class="col">
-                    <div class="ad-name">{{ advert.name }}</div>
-                  </div>
-                </div>
-                <hr class="ad-divider">
-                <div class="row">
-                  <div class="col fade-in">
-                    <a class="btn ad-btn" href="{% url advert.url.page_link %}">View ></a>
-                  </div>
-                </div>
-              </div>
+    <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
+      <div class="ad-container">
+        <img src="{{ advert.image.url }}" alt="{{ advert.name }}" class="ad-image">
+        <div class="img-overlay"></div>
+        <div class="ad-description fade-in">
+          <div class="row">
+            <div class="col">
+              <div class="ad-name">{{ advert.name }}</div>
             </div>
+          </div>
+          <hr class="ad-divider">
+          <div class="row">
+            <div class="col fade-in">
+              <a class="btn ad-btn" href="{% url advert.url.page_link %}">View ></a>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
     {% endfor %}
   </div>
   <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
@@ -40,90 +41,106 @@
   </a>
 </div>
 
-<div class="container-fluid bg-darker section-padding">
-  <section class="container">
-    <div class="row">
-      <div class="col">
-        <div>
-          <h2 class="section-header text-grey">Welcome to Anglia Performance Centre</h2>
+<div class="container-fluid bg-car p-0">
+  <div class="container-fluid dark-shadow section-padding">
+    <section class="container pt-4">
+      <div class="row">
+        <div class="col">
+          <div>
+            <h2 class="section-header text-grey">Welcome to Anglia Performance Centre</h2>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-12 col-lg-6 mb-4">
-        <h3 class="dark-content uppercase">About us</h3>
-        <hr class="hr-gold-70 hr-left">
-        <p class="dark-content">We are a family run garage, which emerged from a passion and love of cars. We have been running
-           the garage for the past 11 years and have over 60 years of combined mechanical knowledge under one roof. The owner, 
-           Bart, comes from a motorsport/engineering background whos passion transcends into cusomers vehicles. <a class="standard-link" href="{% url 'about_us' %}">Read more...</a></p>
-      </div>
-      <div class="col-12 col-lg-6 mb-4">
-        <h3 class="dark-content uppercase">Servicing</h3>
-        <hr class="hr-gold-70 hr-left">
-        <p class="dark-content">At APC, we service a vast array of cars on a daily basis. We cover all aspects of servicing 
-          from winter checks and oil change services to major services, cambelt and clutch replacements, and even full Nissan GTR and 
-          specialist vehile gearbox strip & rebuilds. There is no car too big or small. 
-          We also pride ourselves in unbiased advice and will happily answer any questions you might have. <a class="standard-link" href="{% url 'servicing_and_repairs' %}">Read more...</a></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12 col-lg-6 mb-4">
-        <h3 class="dark-content uppercase">Diagnostics and Repairs</h3>
-        <hr class="hr-gold-70 hr-left">
-        <p class="dark-content">We have a long proven track of succesful diagnostics and repairs. We use vast array of diagnostic 
-          tools ranging from Snap-on, AUtel or Launch to VW/BMW Specifics and PIWIS. We also have facilities to test and repair ECUs. 
-          We prefer to accuratley diagnose and repair problems rather than trying a range of parts before getting to the cause of the 
-          problem. <a class="standard-link" href="{% url 'diagnostics' %}">Read more...</a></p>
-      </div>
-      <div class="col-12 col-lg-6 mb-4">
-        <h3 class="dark-content uppercase">Motorsport/Track Preparation</h3>
-        <hr class="hr-gold-70 hr-left">
-        <p class="dark-content">We offer track and drift prepapation for customers vehicles, whether it be a weekend track car or a 
-          serious racing machine. We also offer corner weight setup. We also offer panel fabrication, full forged engine builds, diff 
-          rebuilds (we use and recommend WAVERTAC) and polybushing, 
-          to name a few. <a class="standard-link" href="{% url 'track_drift_preparation' %}">Read more...</a></p>
-      </div>
-    </div>
-    <div class="row lg-text-center">
-      <div class="col-12 mb-4">
-        <h3 class="dark-content uppercase">Other Services</h3>
-        <hr class="hr-gold-70 hr-left hr-lg-center">
-        <p class="dark-content">We pride ourselves a variety of other services, including custom exhaust systems, prototyping billet parts for 
-          GR6 gearboxes, we also cater for custom fabrication ie: intake systems, intercoolers, custom engine swaps etc. For a 
-          more comprehensive list of what we offer, please have a look under our Services tab or get in touch with us to discuss your requirements.</p>
-      </div>
-    </div>
-    <div class="row pt-1 lg-expand">
-      <div class="col-12 col-md-6 col-lg-3">
-        <div class="photo-card">
-          <a data-fancybox="group-1" href="/media/FB_IMG_1637590828563.jpg">
-            <img class="box-image" src="/media/FB_IMG_1637590828563.jpg" alt="car-image-1">
-          </a>
+      <div class="row">
+        <div class="col-12 col-lg-6 mb-4">
+          <h3 class="dark-content uppercase">About us</h3>
+          <hr class="hr-gold-70 hr-left">
+          <p class="dark-content">We are a family run garage, which emerged from a passion and love of cars. We have
+            been running
+            the garage for the past 11 years and have over 60 years of combined mechanical knowledge under one roof. The
+            owner,
+            Bart, comes from a motorsport/engineering background whos passion transcends into cusomers vehicles. <a
+              class="standard-link" href="{% url 'about_us' %}">Read more...</a></p>
+        </div>
+        <div class="col-12 col-lg-6 mb-4">
+          <h3 class="dark-content uppercase">Servicing</h3>
+          <hr class="hr-gold-70 hr-left">
+          <p class="dark-content">At APC, we service a vast array of cars on a daily basis. We cover all aspects of
+            servicing
+            from winter checks and oil change services to major services, cambelt and clutch replacements, and even full
+            Nissan GTR and
+            specialist vehile gearbox strip & rebuilds. There is no car too big or small.
+            We also pride ourselves in unbiased advice and will happily answer any questions you might have. <a
+              class="standard-link" href="{% url 'servicing_and_repairs' %}">Read more...</a></p>
         </div>
       </div>
-      <div class="col-12 col-md-6 col-lg-3">
-        <div class="photo-card">
-          <a data-fancybox="group-1" href="/media/FB_IMG_1637590782388.jpg">
-            <img class="box-image" src="/media/FB_IMG_1637590782388.jpg" alt="car-image-2">
-          </a>
+      <div class="row">
+        <div class="col-12 col-lg-6 mb-4">
+          <h3 class="dark-content uppercase">Diagnostics and Repairs</h3>
+          <hr class="hr-gold-70 hr-left">
+          <p class="dark-content">We have a long proven track of succesful diagnostics and repairs. We use vast array of
+            diagnostic
+            tools ranging from Snap-on, AUtel or Launch to VW/BMW Specifics and PIWIS. We also have facilities to test
+            and repair ECUs.
+            We prefer to accuratley diagnose and repair problems rather than trying a range of parts before getting to
+            the cause of the
+            problem. <a class="standard-link" href="{% url 'diagnostics' %}">Read more...</a></p>
+        </div>
+        <div class="col-12 col-lg-6 mb-4">
+          <h3 class="dark-content uppercase">Motorsport/Track Preparation</h3>
+          <hr class="hr-gold-70 hr-left">
+          <p class="dark-content">We offer track and drift prepapation for customers vehicles, whether it be a weekend
+            track car or a
+            serious racing machine. We also offer corner weight setup. We also offer panel fabrication, full forged
+            engine builds, diff
+            rebuilds (we use and recommend WAVERTAC) and polybushing,
+            to name a few. <a class="standard-link" href="{% url 'track_drift_preparation' %}">Read more...</a></p>
         </div>
       </div>
-      <div class="col-12 col-md-6 col-lg-3 d-none d-md-block">
-        <div class="photo-card">
-          <a data-fancybox="group-1" href="/media/FB_IMG_1637590841229.jpg">
-            <img class="box-image" src="/media/FB_IMG_1637590841229.jpg" alt="car-image-3">
-          </a>
+      <div class="row lg-text-center">
+        <div class="col-12 mb-4">
+          <h3 class="dark-content uppercase">Other Services</h3>
+          <hr class="hr-gold-70 hr-left hr-lg-center">
+          <p class="dark-content">We pride ourselves a variety of other services, including custom exhaust systems,
+            prototyping billet parts for
+            GR6 gearboxes, we also cater for custom fabrication ie: intake systems, intercoolers, custom engine swaps
+            etc. For a
+            more comprehensive list of what we offer, please have a look under our Services tab or get in touch with us
+            to discuss your requirements.</p>
         </div>
       </div>
-      <div class="col-12 col-md-6 col-lg-3 d-none d-md-block">
-        <div class="photo-card">
-          <a data-fancybox="group-1" href="/media/FB_IMG_1637590847180.jpg">
-            <img class="box-image" src="/media/FB_IMG_1637590847180.jpg" alt="car-image-4">
-          </a>
+      <div class="row pt-1 lg-expand">
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="photo-card">
+            <a data-fancybox="group-1" href="/media/FB_IMG_1637590828563.jpg">
+              <img class="box-image" src="/media/FB_IMG_1637590828563.jpg" alt="car-image-1">
+            </a>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="photo-card">
+            <a data-fancybox="group-1" href="/media/FB_IMG_1637590782388.jpg">
+              <img class="box-image" src="/media/FB_IMG_1637590782388.jpg" alt="car-image-2">
+            </a>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3 d-none d-md-block">
+          <div class="photo-card">
+            <a data-fancybox="group-1" href="/media/FB_IMG_1637590841229.jpg">
+              <img class="box-image" src="/media/FB_IMG_1637590841229.jpg" alt="car-image-3">
+            </a>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3 d-none d-md-block">
+          <div class="photo-card">
+            <a data-fancybox="group-1" href="/media/FB_IMG_1637590847180.jpg">
+              <img class="box-image" src="/media/FB_IMG_1637590847180.jpg" alt="car-image-4">
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </div>
 <section class="container-fluid">
   <div class="row">
@@ -164,7 +181,7 @@
               <input type="hidden" name="next" value="{{ request.path }}">
               <button type="submit" class="btn request-btn mt-0">REQUEST</button>
             </div>
-          </div>          
+          </div>
         </form>
       </div>
     </div>
@@ -179,10 +196,10 @@
 
 {% block postload_js %}
 {{ block.super }}
-  <script>
-    $(document).ready(
-      function() {
-        $('.ad-description').slideDown();
-      });
-  </script>
+<script>
+  $(document).ready(
+    function () {
+      $('.ad-description').slideDown();
+    });
+</script>
 {% endblock %}

@@ -282,11 +282,11 @@ body {
 /*----------Navbar----------*/
 
 .nav-container {
-    background: linear-gradient(
-        180deg,
+    background: linear-gradient( 
+        180deg, 
         rgba(51,51,51,1) 0%, 
-        rgba(115,113,106,1) 30%,
-        rgba(216,216,216,1) 100%);
+        rgb(94 94 94) 28%, 
+        rgb(0 0 0) 100%);
     font-family: 'Archivo Narrow', sans-serif;
 }
 
@@ -321,7 +321,7 @@ nav ul li {
 
 .nav-link {
     text-decoration: none;
-    color: #3e3e3d;
+    color: #adadad;
     transition: color 0.2s ease;
     cursor: pointer;
 }
@@ -371,8 +371,7 @@ nav ul li {
 }
 
 .active {
-    color: #704b03;
-    font-size: 20px;
+    color: #c6a76c;
 }
 
 .user-options {
@@ -679,11 +678,40 @@ nav ul li {
 /*----------SERVICES (GENERAL)----------*/
 
 .card {
-    background-color: #b1b1b1;
-    color: #1a1a18;
+    background-color: #222222;
+    margin: 8px 0;
+    box-shadow: 1px 1px 4px #0c0c0c;
 }
 
+.btn-link {
+    color: #fafafa;
+}
 
+.btn-link:hover {
+    color: #c6a76c;
+    text-decoration: none;
+}
+
+.btn-link:focus {
+    text-decoration: none;
+}
+
+.btn-link i {
+    color: #c6a76c;
+}
+
+/*----------Chip tuning----------*/
+
+.bg-car {
+    background-image: url(/media/car.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.dark-shadow {
+    background-color: rgba(0,0,0,0.9);
+}
 
 /*----------Track/Drift Perparation----------*/
 
