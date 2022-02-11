@@ -19,13 +19,35 @@
                         <h2>Peterborough Diagnostics</h2>
                         <hr class="hr-gold-short hr-left">
                         <section>
-                            We have a tested system of diagnosis-to-repair. We will not just throw parts at the issue and 
-                            pray for the best. Instead we use an educated and methodical approach toward the issue in hand. 
-                            We analyze data available to us via our daignostic equipment to eradicate the issue at hand. Our 
-                            years of experience do, surely, come handy but the raw data from varoius sensors is the best 
-                            picture and lead towards a succesful repair. We use tool from Snap-On, Autel, Launch, LExia, 
-                            Star, VAg COm, Vas or PIWIS, InPa, IstaD etc.
+                            At APC, we have a tested system of diagnosis-to-repair, we won't just throw parts at the issue and 
+                            hope for the best. Instead we use an educated and methodical approach towards the issue in hand, 
+                            we analyze the data available to us via our daignostic equipment where possible, and if this doesn't show us the issue, 
+                            we draw from our years of diagnostic experience to manually find and repair the issue. <br><br> 
+                            Our combined years of experience do come in handy but the raw data from varoius sensors often paints the best 
+                            picture that will lead towards a succesful repair. <br><br>
+                            <h3>Disnotic Tools</h3>
+                            The diagnostic tools we use include but are not limited to;
+                            <ul>
+                                <li>Snap-On</li>
+                                <li>Autel</li>
+                                <li>Launch</li>
+                                <li>LExia, </li>
+                                <li>Star</li>
+                                <li>VAg COm</li>
+                                <li>Vas or PIWIS</li>
+                                <li>InPa</li>
+                            </ul>
                         </section>
+                    </div>
+                </div>
+                <div class="row pt-2 pb-4">
+                    <div class="col-12">
+                        <center class="contact-link">
+                            <h4>Book your car in with us: </h4>
+                            <a href="{% url 'contact'  %}#contact-area">
+                                <button class="btn send-btn br-50 fs-20">Contact</button>
+                            </a>
+                        </center>
                     </div>
                 </div>
                 <div class="row">
@@ -34,4 +56,9 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block postload_js %}
+{{ block.super }}
+    {% include '../includes/js/scrollFromTop.html' %}
 {% endblock %}

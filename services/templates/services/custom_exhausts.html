@@ -13,9 +13,12 @@
     </div>
     <div class="container-fluid bg-car bg-fixed dark-content p-0">
         <div class="container-fluid dark-shadow pl-0 pr-0">
-            <div class="container">
-                <div class="row">
+            <div class="container pt-4 pb-5">
+                <div class="row pt-4 pb-4">
                     <div class="col pt-4">
+                        <h2>Peterborough Custom Exhausts</h2>
+                        <hr class="hr-gold-short hr-left">
+                        <section>
                         We offer a vast array of custom exhaust modifications. Ranging from a simple back box/resonator 
                         delete, to a full blown turbo-back system which is unique to your car. We have been tasked with 
                         some classic tractor exhausts as a full blown, turbo hayabusa system. Exhaust tips of your choice. 
@@ -23,7 +26,17 @@
                         Titanium is also available. 
                     </div>
                 </div>
-                <div class="row">
+                <div class="row pt-2 pb-4">
+                    <div class="col-12">
+                        <center class="contact-link">
+                            <h4>Book your car in with us: </h4>
+                            <a href="{% url 'contact'  %}#contact-area">
+                                <button class="btn send-btn br-50 fs-20">Contact</button>
+                            </a>
+                        </center>
+                    </div>
+                </div>
+                <div class="row d-none">
                     <img src="{{ MEDIA_URL }}exhaust-1.jpg" alt="">
                     <img src="{{ MEDIA_URL }}exhaust-2.jpg" alt="">
                     <img src="{{ MEDIA_URL }}exhaust-3.jpg" alt="">
@@ -37,4 +50,9 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block postload_js %}
+{{ block.super }}
+    {% include '../includes/js/scrollFromTop.html' %}
 {% endblock %}

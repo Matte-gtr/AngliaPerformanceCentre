@@ -39,12 +39,18 @@
                 </div>
                 <div class="row pt-2 pb-4">
                     <div class="col-12">
-                        <center>
+                        <center class="contact-link">
                             <h4>Book your car in with us: </h4>
                             <a href="{% url 'contact'  %}#contact-area">
                                 <button class="btn send-btn br-50 fs-20">Contact</button>
                             </a>
                         </center>
+                    </div>
+                </div>
+                <div class="row pt-4">
+                    <div class="col-12">
+                        <h3>Common Questions</h3>
+                        <hr class="hr-gold-short hr-left">
                     </div>
                 </div>
                 <div class="row pb-3">
@@ -130,6 +136,7 @@
     {{ block.super }}
         <script>
             $(document).ready(function() {
+                scrollFromTop()
                 $(".btn-link").click(function() {
                     target = $(this).attr("data-target");
                     if (!$(target).hasClass("show")) {
@@ -141,4 +148,5 @@
                 });
             });
         </script>
+        {% include '../includes/js/scrollFromTop.html' %}
     {% endblock %}

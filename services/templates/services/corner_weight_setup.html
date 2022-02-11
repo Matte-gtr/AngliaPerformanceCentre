@@ -13,15 +13,34 @@
     </div>
     <div class="container-fluid bg-car bg-fixed dark-content p-0">
         <div class="container-fluid dark-shadow pl-0 pr-0">
-            <div class="container">
-                <div class="row">
+            <div class="container pt-4 pb-5">
+                <div class="row pt-4 pb-4">
                     <div class="col pt-4">
-                        We have a corner weigh scale system wchi enables us to set your pride and joy ready for any track 
-                        battle. The improvements are vast as we can shift the weight distribution to the one that works 
-                        best for you and your car.
+                        <h2>Peterborough Corner Weight Setup</h2>
+                        <hr class="hr-gold-short hr-left">
+                        <section>
+                            We have a corner weigh scale system wchi enables us to set your pride and joy ready for any track 
+                            battle. The improvements are vast as we can shift the weight distribution to the one that works 
+                            best for you and your car.
+                        </section>
+                    </div>
+                </div>
+                <div class="row pt-2 pb-4">
+                    <div class="col-12">
+                        <center class="contact-link">
+                            <h4>Book your car in with us: </h4>
+                            <a href="{% url 'contact'  %}#contact-area">
+                                <button class="btn send-btn br-50 fs-20">Contact</button>
+                            </a>
+                        </center>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block postload_js %}
+{{ block.super }}
+    {% include '../includes/js/scrollFromTop.html' %}
 {% endblock %}
