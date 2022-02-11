@@ -19,11 +19,13 @@
                         <h2>Peterborough Custom Exhausts</h2>
                         <hr class="hr-gold-short hr-left">
                         <section>
-                        We offer a vast array of custom exhaust modifications. Ranging from a simple back box/resonator 
-                        delete, to a full blown turbo-back system which is unique to your car. We have been tasked with 
-                        some classic tractor exhausts as a full blown, turbo hayabusa system. Exhaust tips of your choice. 
-                        All of our products are from authorised suppliers, and steel we use is 316L grade or higher. 
-                        Titanium is also available. 
+                            We offer a vast array of custom exhaust modifications, ranging from a simple back box/resonator 
+                            delete, to a full blown turbo-back system which is unique to your car, and everything in between. <br><br>
+                            Some of our previous work includes a classic tractor exhaust, a full blown turbo hayabusa system and 
+                            a turbo back exhaust system for a Porsche 911 Turbo S, all of which were custom designs based on the idividual customer requirements. <br><br>
+                            All of our products are from authorised suppliers and the steel we use is 316L grade or higher, titanium is also available. 
+                            We will also add the exhaust tips of your choice.<br><br>
+                            If you are interested in a custom exhaust, please get in touch and we can discuss all of your options.
                     </div>
                 </div>
                 <div class="row pt-2 pb-4">
@@ -34,6 +36,76 @@
                                 <button class="btn send-btn br-50 fs-20">Contact</button>
                             </a>
                         </center>
+                    </div>
+                </div>
+                <div class="row pt-4">
+                    <div class="col-12">
+                        <h3>Common Questions</h3>
+                        <hr class="hr-gold-short hr-left">
+                    </div>
+                </div>
+                <div class="row pb-3">
+                    <div class="col-12 col-md-8">
+                        <section id="accordion">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne"
+                                            aria-expanded="false" aria-controls="collapseOne">
+                                            <i class="fas fa-plus pr-4"></i>
+                                            Why should I change my standard exhaust?
+                                        </button>
+                                    </h5>
+                                </div>
+
+                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                    <div class="card-body">
+                                        There are a number of reasons to change your exhaust, starting with the most obvious; to change the sound.
+                                        In the case of modified vehicles, as you increase the power output of your engine, the volume of exhaust gases
+                                        leaving your engine with increase. Standard exhausts are generally quite restrictive, so once you reach a certain 
+                                        power level, you will need to install a larger diameter exhaust to cope with the higher volume of exhaust gases.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingTwo">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                                            aria-expanded="false" aria-controls="collapseTwo">
+                                            <i class="fas fa-plus pr-4"></i>
+                                            Will changing my exhaust make my car faster?
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                    <div class="card-body">
+                                        Changing your cars exhaust system will allow your car's engine to "breathe" better and allow more exhaust gases to
+                                        escape through it, which provides more room for fresh air to enter your engine and create a bigger combustion on the next 
+                                        cycle. To get the most out of your custom/aftermaket exhaust, you can also have your ECU remapped/chipped to take advantage 
+                                        of the extra air flow and gain further power.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingThree">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
+                                            aria-expanded="false" aria-controls="collapseThree">
+                                            <i class="fas fa-plus pr-4"></i>
+                                            Which material is best for a custom exhaust?
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                                    <div class="card-body">
+                                        The material that your exhaust is made of doesn't actually have a huge impact on the sound of your car, the sound has a lot more
+                                        to do with your muffler design and/or resonators. Stainless steel is a common choice for aftermarket exhausts as it is corrosion
+                                        resistant, relatively light and able to withstand the heat required. Titanium takes it a step further as it is up to 40% lighter, just as 
+                                        strong, and has the added bonus of turning blue when it is heated.
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                     </div>
                 </div>
                 <div class="row d-none">
@@ -53,6 +125,20 @@
 {% endblock %}
 
 {% block postload_js %}
-{{ block.super }}
+    {{ block.super }}
+    <script>
+        $(document).ready(function() {
+            scrollFromTop()
+            $(".btn-link").click(function() {
+                target = $(this).attr("data-target");
+                if (!$(target).hasClass("show")) {
+                    $(".btn-link").find(".fas").addClass("fa-plus").removeClass("fa-minus");
+                    $(this).find(".fas").removeClass("fa-plus").addClass("fa-minus");
+                } else {
+                    $(".btn-link").find(".fas").addClass("fa-plus").removeClass("fa-minus");
+                }
+            });
+        });
+    </script>
     {% include '../includes/js/scrollFromTop.html' %}
 {% endblock %}
