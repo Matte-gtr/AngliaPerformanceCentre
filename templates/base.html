@@ -334,18 +334,15 @@
         $(document).ready(function () {
             $('.toast').toast('show');
 
-            function getHeaderHeight() {
-                let headerHeight = document.getElementById("base-header").offsetHeight;
-                let bannerHeight = 0;
-                if ($("#banner").length > 0) {
-                    bannerHeight = document.getElementById("banner").offsetHeight;
-                };
-                let height = headerHeight + bannerHeight - 1;
-                return height;
-            }
+            let headerHeight = document.getElementById("base-header").offsetHeight;
+            let bannerHeight = 0;
+            if ($("#banner").length > 0) {
+                bannerHeight = document.getElementById("banner").offsetHeight;
+            };
+            let height = headerHeight + bannerHeight - 1;
+
 
             $(window).on('scroll', function () {
-                let height = getHeaderHeight();
                 if ($(window).scrollTop() >= height) {
                     $(".nav-container").addClass("fixed-top");
                     $("#nav-spacer").removeClass("d-none");
@@ -356,7 +353,6 @@
             });
 
             function scrollFromTop() {
-                let height = getHeaderHeight()
                 $(window).scrollTop($('#mobile-nav').position().top)
             };
 
@@ -364,7 +360,6 @@
             let menuOpen = false;
             menuBtn.click(function () {
                 if (!menuOpen) {
-                    let height = getHeaderHeight();
                     if ($(window).scrollTop() < height) {
                         scrollFromTop();
                         setTimeout(function() {
