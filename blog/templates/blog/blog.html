@@ -21,7 +21,13 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="bg-grey-50 haze-container mt-0">
-                            Something
+                            {% for post in blog_posts %}
+                                <h1>{{ post.category }}</h1>
+                                <h2>{{ post.post_title }}</h2>
+                                <h3>{{ post.added_on }}</h3>
+                                <h4>{{ post.post_body }}</h4>
+                                <h5>{{ post.images.url }}</h5>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>

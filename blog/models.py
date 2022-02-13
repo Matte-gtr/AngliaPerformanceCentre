@@ -20,14 +20,13 @@ class BlogPost(models.Model):
     post_title = models.CharField(max_length=254, blank=False, null=False)
     added_on = models.DateTimeField(auto_now_add=True)
     post_body = models.TextField(blank=False)
+    image = models.ManyToManyField('BlogPostImage', blank=True)
 
     def __str__(self):
         return str(self.post_title)
 
 
 class BlogPostImage(models.Model):
-    post = models.ForeignKey(BlogPost, on_delete=models.CASCADE, blank=False,
-                             null=False, related_name="images")
     image = models.ImageField(upload_to="blogs", blank=False, null=False)
 
     def __str__(self):
