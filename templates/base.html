@@ -333,7 +333,13 @@
     <script>
         $(document).ready(function () {
             $('.toast').toast('show');
-
+            $('.toast').on('shown.bs.toast', function () {
+                function hidetoast () {
+                    $('.toast').toast('dispose');
+                };
+                setTimeout(hidetoast, 5000); 
+            });
+            
             let headerHeight = document.getElementById("base-header").offsetHeight;
             let bannerHeight = 0;
             if ($("#banner").length > 0) {
