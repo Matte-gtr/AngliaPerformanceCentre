@@ -1,74 +1,76 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container-fluid p-0 bg-darker text-white">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="review-container bg-light-grey">
-                    <div class="row">
-                        <div class="col text-center">
-                            <h3 class="mt-4 text-light-gold">Edit Review</h3>
-                        </div>
-                    </div>
-                    <form method="POST" action="{% url 'edit_review' review.id %}" enctype="multipart/form-data"
-                        class="review-form">
-                        {% csrf_token %}
-                        <div class="row p-0">
-                            <div class="col-12 text-center">
-                                <p class="mt-3 mb-3 rank">
-                                    <span id="star-5"
-                                        class="fa fa-star user-star{% if review.stars == 5 %} star-checked{% endif %}"
-                                        data-value="5"></span>
-                                    <span id="star-4"
-                                        class="fa fa-star user-star{% if review.stars == 4 %} star-checked{% endif %}"
-                                        data-value="4"></span>
-                                    <span id="star-3"
-                                        class="fa fa-star user-star{% if review.stars == 3 %} star-checked{% endif %}"
-                                        data-value="3"></span>
-                                    <span id="star-2"
-                                        class="fa fa-star user-star{% if review.stars == 2 %} star-checked{% endif %}"
-                                        data-value="2"></span>
-                                    <span id="star-1"
-                                        class="fa fa-star user-star{% if review.stars == 1 %} star-checked{% endif %}"
-                                        data-value="1"></span>
-                                </p>
+<div class="container-fluid bg-engine bg-fixed dark-content p-0">
+    <div class="container-fluid dark-shadow pl-0 pr-0">
+        <div class="container">
+            <div class="row">
+                <div class="col p-0">
+                    <div class="review-container bg-grey-50">
+                        <div class="row">
+                            <div class="col text-center">
+                                <h3 class="mt-4 text-light-gold">Edit Review</h3>
                             </div>
                         </div>
-                        {{ form|crispy }}
-                        {% if review.image.count > 0 %}
-                        <h4 class="bg-grey mb-0 p-1">Current Images</h4>
-                        <div class="thumbnail-container bg-grey p-1">
-                            {% for img in review.image.all %}
-                                <div class="img-container dark-hover">
-                                    <div class="img-delete"><div class="fas fa-times fa-lg delete-cross" data-id="{{ img.id }}"></div></div>
-                                    <img class="thumbnail" src="{{ img.image.url }}" alt="">
+                        <form method="POST" action="{% url 'edit_review' review.id %}" enctype="multipart/form-data"
+                            class="review-form">
+                            {% csrf_token %}
+                            <div class="row p-0">
+                                <div class="col-12 text-center">
+                                    <p class="mt-3 mb-3 rank">
+                                        <span id="star-5"
+                                            class="fa fa-star user-star{% if review.stars == 5 %} star-checked{% endif %}"
+                                            data-value="5"></span>
+                                        <span id="star-4"
+                                            class="fa fa-star user-star{% if review.stars == 4 %} star-checked{% endif %}"
+                                            data-value="4"></span>
+                                        <span id="star-3"
+                                            class="fa fa-star user-star{% if review.stars == 3 %} star-checked{% endif %}"
+                                            data-value="3"></span>
+                                        <span id="star-2"
+                                            class="fa fa-star user-star{% if review.stars == 2 %} star-checked{% endif %}"
+                                            data-value="2"></span>
+                                        <span id="star-1"
+                                            class="fa fa-star user-star{% if review.stars == 1 %} star-checked{% endif %}"
+                                            data-value="1"></span>
+                                    </p>
                                 </div>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-                        <div class="text-center">
-                            {% if request.user == review.user %}
-                                {% if request.user.is_staff %}
+                            </div>
+                            {{ form|crispy }}
+                            {% if review.image.count > 0 %}
+                            <h4 class="bg-darkest mb-0 p-1">Current Images</h4>
+                            <div class="thumbnail-container bg-darkest p-1">
+                                {% for img in review.image.all %}
+                                    <div class="img-container dark-hover">
+                                        <div class="img-delete"><div class="fas fa-times fa-lg delete-cross" data-id="{{ img.id }}"></div></div>
+                                        <img class="thumbnail" src="{{ img.image.url }}" alt="">
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <div class="text-center">
+                                {% if request.user == review.user %}
+                                    {% if request.user.is_staff %}
+                                        <a href="{% url 'unauth_review' review.id %}">
+                                            <div class="btn btn-danger">UN-AUTH</div>
+                                        </a>
+                                    {% endif %}
+                                    <button type="submit" class="btn send-btn mt-0" id="review-submit">UPDATE</button>
+                                {% elif request.user.is_staff %}
                                     <a href="{% url 'unauth_review' review.id %}">
                                         <div class="btn btn-danger">UN-AUTH</div>
                                     </a>
                                 {% endif %}
-                                <button type="submit" class="btn send-btn mt-0" id="review-submit">UPDATE</button>
-                            {% elif request.user.is_staff %}
-                                <a href="{% url 'unauth_review' review.id %}">
-                                    <div class="btn btn-danger">UN-AUTH</div>
-                                </a>
-                            {% endif %}
-                            <button type="button" class="btn btn-danger d-inline-block" data-toggle="modal" data-target="#deleteReviewModal">
-                                DELETE
-                            </button>
-                        </div>
-                    </form>
+                                <button type="button" class="btn btn-danger d-inline-block" data-toggle="modal" data-target="#deleteReviewModal">
+                                    DELETE
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="back-button-container">
-            <a href="{% url 'testimonials' %}" class="standard-link i-move"><i class="fas fa-arrow-circle-left"></i> Testimonials</a>
+            <div class="back-button-container">
+                <a href="{% url 'testimonials' %}" class="standard-link i-move"><i class="fas fa-arrow-circle-left"></i> Testimonials</a>
+            </div>
         </div>
     </div>
 </div>
