@@ -108,9 +108,11 @@
                             {% endif %}
                         </div>
                     </div>
-                    <button type="button" class="btn btn-pro-cart apc-border">
-                        <i class="fas fa-shopping-cart"></i> £0.00
-                    </button>
+                    <a href="{% url 'cart' %}">
+                        <button type="button" class="btn btn-pro-cart apc-border">
+                            <i class="fas fa-shopping-cart"></i> £0.00
+                        </button>
+                    </a>
                 </div>
 
             </ul>
@@ -149,9 +151,11 @@
                                 {% endif %}
                             </div>
                         </div>
-                        <button type="button" class="btn btn-pro-cart apc-border">
-                            <i class="fas fa-shopping-cart"></i> £0.00
-                        </button>
+                        <a href="{% url 'cart' %}">
+                            <button type="button" class="btn btn-pro-cart apc-border">
+                                <i class="fas fa-shopping-cart"></i> £0.00
+                            </button>
+                        </a>
                     </div>
                 </li>
             </ul>
