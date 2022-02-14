@@ -27,7 +27,7 @@ class BlogPost(models.Model):
 
 
 class BlogPostImage(models.Model):
-    image = models.ImageField(upload_to="blogs", blank=False, null=False)
+    image = models.FileField(upload_to="blogs", blank=False, null=False)
 
     def __str__(self):
         return str(self.pk)
