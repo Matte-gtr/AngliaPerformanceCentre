@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!--Content-->
+    <div class="container-fluid bg-engine bg-fixed dark-content p-0">
+        <div class="container-fluid dark-shadow pl-0 pr-0">
+            <div class="container pt-4 pb-5">
+                <div class="row pt-4 pb-lg-1">
+                    <div class="col-12 pt-4 blog-container bg-off-white">
+                        <article>
+
+                            <h2>{{ blog_post.post_title }}</h2>
+                            <hr class="hr-gold-short hr-left">
+                            <div class="pl-3 pr-3">
+                                <small>
+                                    <span class="float-left">{{ blog_post.added_on }}</span>
+                                    <a class="control-link" href="#"><span class="float-right filter-bg">{{ blog_post.category }}</span></a> 
+                                </small>
+                            </div>
+                            <hr class="w-100">
+                            {{ blog_post.post_body|safe }}
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
