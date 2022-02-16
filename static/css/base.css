@@ -1018,30 +1018,47 @@ nav ul li {
     background-blend-mode: multiply;
 }
 
-.blog-img-container {
-    width: auto;
-    height: 220px;
-    overflow: hidden;
-    display: inline-block;
-}
-
 .haze-top {
     padding-top: 5px;
 }
 
-.blog-post {
-    background-color: #fafafa;
-    color: black;
-    padding: 10px;
-    margin: 15px 0;
+.blog-container {
+    color: #1a1a18;
     border-radius: 5px;
+    overflow: hidden;
 }
 
-.blog-datestamp {
-    padding-left: 5px;
-    color: grey;
-    border-bottom: 1px solid #d7d7d7;
-    padding-bottom: 3px;
+.control-link {
+    color: #5a5959;
+    padding-left: 10px;
+}
+
+.control-link:hover {
+    color: #1a1a18;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.control-link.active {
+    background-color: grey;
+}
+
+.image-container {
+    height: 285px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.blog-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.filter-bg {
+    background-color: #d3cfcf;
+    padding: 1px 7px;
+    border-radius: 12px;
 }
 
 /*----------Contact----------*/
@@ -1207,6 +1224,12 @@ nav ul li {
     .account-container {
         background-color: rgba(255,255,255,0.1);
         padding: 20px 10px;
+    }
+}
+
+@media (min-width: 576px) {
+    .image-container {
+        height: 350px;
     }
 }
 

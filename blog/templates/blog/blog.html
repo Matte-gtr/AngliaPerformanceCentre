@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+{% load param_tags %}
 {% block content %}
+    <!--Header Banner-->
     <div class="container-fluid">
         <div class="row">
             <div class="header-container">
@@ -11,61 +13,62 @@
             </div>
         </div>
     </div>
+    <!--Content-->
     <div class="container-fluid bg-engine bg-fixed dark-content p-0">
         <div class="container-fluid dark-shadow pl-0 pr-0">
             <div class="container pt-4 pb-5">
-                <div class="row pt-4 pb-4">
+                <div class="row pt-4 pb-lg-4">
                     <div class="col pt-4">
                         <h2>APC Blog</h2>
                         <hr class="hr-gold-short hr-left">
-                        <p>Check out our blog to see our latest work.</p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 p-0">
-                        <div class="bg-grey-50 haze-container haze-top mt-0">
-                            {% for post in blog_posts %}
-                            {% with forloop.counter as postloop %}
-                            <article class="blog-post">
-                                <header>
-                                    <h2 class="mb-0">{{ post.post_title }} ({% if post.category.category == "other" %}{{ post.category }}{% else %}<a class="standard-link" href="{% url post.category.category %}">{{ post.category }}</a>{% endif %})</h2>
-                                </header>
-                                <p class="blog-datestamp"><small>{{ post.added_on }}</small></p>
-                                <h4>{{ post.post_body|linebreaks }}</h4>
-                                {% if post.image.count > 0 %}
-                                    <div class="thumbnail-container">
-                                        {% for img in post.image.all %}
-                                            {% with img.image.url|slice:"-3:"|lower as ft %}
-                                                {% if ft == "mp4" or ft == "mov" or ft == "wmv" or ft == "avi" %}
-                                                    <div class="blog-img-container">
-                                                        <a data-fancybox="group-{{ postloop }}" href="{{ img.image.url }}">
-                                                            <video class="thumbnail" controls>
-                                                                <source src="{{ img.image.url }}" type='video/{{ft}}'>
-                                                            </video>
-                                                        </a>
-                                                    </div>
-                                                {% elif img.image.url|slice:"-3:" == "pdf" %}
-                                                    <div class="blog-img-container">
-                                                        <a data-fancybox="group-{{ postloop }}" href="{{ img.image.url }}">
-                                                            <embed class="thumbnail" src="{{ img.image.url }}" type="application/pdf">
-                                                        </a>
-                                                    </div>
-                                                {% else %}
-                                                    <div class="blog-img-container">
-                                                        <a data-fancybox="group-{{ postloop }}" href="{{ img.image.url }}">
-                                                            <img class="thumbnail" src="{{ img.image.url }}" alt="{{ img.image.url }}">
-                                                        </a>
-                                                    </div>
-                                                {% endif %}
-                                            {% endwith %}
-                                        {% endfor %}
-                                    </div>
-                                {% else %}
-                                    <p>No images</p>
-                                {% endif %}
-                            </article>
-                            {% endwith %}
-                            {% endfor %}
+                    <div class="col-12 col-lg-8 order-2 order-lg-1 px-0 px-sm-2">
+                        {% for post in blog_posts %}
+                        <article class="blog-container bg-off-white mb-3">
+                            {% if post.image.count > 0 %}
+                            <div class="image-container">
+                                <img class="blog-image" src="{{ post.image.all.0.image.url }}" alt="{{ post.image.all.0.image }}">
+                            </div>
+                            {% else %}
+                            <div class="image-container">
+                                <img class="blog-image" src="{{ MEDIA_URL }}aachal-mgSrMMCnFKE-unsplash.jpg" alt="default blog image">
+                            </div>
+                            {% endif %}
+                            <h3 class="pl-3 pt-2 m-0">{{ post.post_title }}</h3>
+                            <div class="pl-3 pr-3">
+                                <small>
+                                    <span class="float-left">{{ post.added_on }}</span>
+                                    <a class="control-link" href="#"><span class="float-right filter-bg">{{ post.category }}</span></a> 
+                                </small>
+                            </div>
+                            <hr class="w-100 my-1">
+                            <div class="pl-3 pr-3 py-2">
+                                {{ post.short_body }}{% if post.short_body|length < post.post_body|length %}<a href="#">...read more.</a>{% endif %}
+                            </div>
+                        </article>
+                        {% endfor %}
+                    </div>
+                    <div class="col-12 col-lg-4 order-1 order-lg-2 mb-3">
+                        <div class="blog-container bg-off-white">
+                            <div class="d-block d-lg-none p-3">
+                                <strong>Filter </strong>
+                                <select name="cat-filter" id="cat-filter">
+                                    <option value="None" selected disabled>Category</option>
+                                    <option value="Unfiltered">All</option>
+                                    {% for cat in categories %}
+                                    <option value="{{ cat.category }}">{{ cat.friendly_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="d-none d-lg-block p-3">
+                                <strong class="d-block">Filter</strong>
+                                <a href="#" class="control-link">All</a><br/>
+                                {% for cat in categories %}
+                                <a href="#" class="control-link">{{ cat.friendly_name }}</a><br/>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -73,3 +76,57 @@
         </div>
     </div>
 {% endblock %}
+
+
+
+
+
+
+<!--<div class="row">
+    <div class="col-12 p-0">
+        <div class="bg-grey-50 haze-container haze-top mt-0">
+            {% for post in blog_posts %}
+            {% with forloop.counter as postloop %}
+            <article class="blog-post">
+                <header>
+                    <h2 class="mb-0">{{ post.post_title }} ({% if post.category.category == "other" %}{{ post.category }}{% else %}<a class="standard-link" href="{% url post.category.category %}">{{ post.category }}</a>{% endif %})</h2>
+                </header>
+                <p class="blog-datestamp"><small>{{ post.added_on }}</small></p>
+                <h4>{{ post.post_body|linebreaks }}</h4>
+                {% if post.image.count > 0 %}
+                    <div class="thumbnail-container">
+                        {% for img in post.image.all %}
+                            {% with img.image.url|slice:"-3:"|lower as ft %}
+                                {% if ft == "mp4" or ft == "mov" or ft == "wmv" or ft == "avi" %}
+                                    <div class="blog-img-container">
+                                        <a data-fancybox="group-{{ postloop }}" href="{{ img.image.url }}">
+                                            <video class="thumbnail" controls>
+                                                <source src="{{ img.image.url }}" type='video/{{ft}}'>
+                                            </video>
+                                        </a>
+                                    </div>
+                                {% elif img.image.url|slice:"-3:" == "pdf" %}
+                                    <div class="blog-img-container">
+                                        <a data-fancybox="group-{{ postloop }}" href="{{ img.image.url }}">
+                                            <embed class="thumbnail" src="{{ img.image.url }}" type="application/pdf">
+                                        </a>
+                                    </div>
+                                {% else %}
+                                    <div class="blog-img-container">
+                                        <a data-fancybox="group-{{ postloop }}" href="{{ img.image.url }}">
+                                            <img class="thumbnail" src="{{ img.image.url }}" alt="{{ img.image.url }}">
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>No images</p>
+                {% endif %}
+            </article>
+            {% endwith %}
+            {% endfor %}
+        </div>
+    </div>
+</div>-->

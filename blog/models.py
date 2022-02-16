@@ -1,4 +1,5 @@
 from django.db import models
+from .validators import validate_video_file
 
 
 class BlogCategory(models.Model):
@@ -19,15 +20,25 @@ class BlogPost(models.Model):
                                  related_name="blog_posts")
     post_title = models.CharField(max_length=254, blank=False, null=False)
     added_on = models.DateTimeField(auto_now_add=True)
-    post_body = models.TextField(blank=False)
+    post_body = models.TextField(blank=True)
     image = models.ManyToManyField('BlogPostImage', blank=True)
+    video = models.ManyToManyField('BlogPostVideo', blank=True)
+    public = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.post_title)
 
 
 class BlogPostImage(models.Model):
-    image = models.FileField(upload_to="blogs", blank=False, null=False)
+    image = models.ImageField(upload_to="blogs", blank=False, null=False)
+
+    def __str__(self):
+        return str(self.pk)
+
+
+class BlogPostVideo(models.Model):
+    video = models.FileField(upload_to="blogs", blank=False, null=False,
+                             validators=[validate_video_file])
 
     def __str__(self):
         return str(self.pk)
