@@ -62,10 +62,10 @@
             </table>
             <!-- callback pagination bar start -->
             {% if callbacks.paginator.page_range|length > 1 %}
-                <div class="container pt-2">
+                <div class="container-fluid pt-2 bg-off-white border-top">
                     <div class="row">
                         <nav class="mx-auto">
-                            <ul class="pagination">
+                            <ul class="pagination mb-2">
                                 {% if callbacks.has_previous %}
                                     <li class="page-item">
                                         <a class="page-link" href="?{% param_replace page=callbacks.previous_page_number %}#headingTwo" tabindex="-1">&laquo;</a>
@@ -174,10 +174,10 @@
             </table>
             <!-- callback pagination bar start -->
             {% if callbacks.paginator.page_range|length > 1 %}
-                <div class="container pt-2">
+                <div class="container-fluid pt-2 bg-off-white border-top">
                     <div class="row">
                         <nav class="mx-auto">
-                            <ul class="pagination">
+                            <ul class="pagination mb-2">
                                 {% if callbacks.has_previous %}
                                     <li class="page-item">
                                         <a class="page-link" href="?{% param_replace page=callbacks.previous_page_number %}#headingTwo" tabindex="-1">&laquo;</a>

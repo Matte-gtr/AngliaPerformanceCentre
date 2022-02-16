@@ -83,10 +83,10 @@
 
                         <!-- review pagination bar start -->
                         {% if reviews.paginator.page_range|length > 1 %}
-                        <div class="container pt-2">
+                        <div class="review pt-2 bg-off-white">
                             <div class="row">
                                 <nav class="mx-auto">
-                                    <ul class="pagination">
+                                    <ul class="pagination mb-0">
                                         {% if reviews.has_previous %}
                                             <li class="page-item">
                                                 <a class="page-link" href="?{% param_replace page=reviews.previous_page_number %}#headingTwo" tabindex="-1">&laquo;</a>

@@ -53,10 +53,10 @@
                 </table>
                 <!-- message pagination bar start -->
                 {% if site_messages.paginator.page_range|length > 1 %}
-                    <div class="container-fluid pt-2 bg-secondary">
+                    <div class="container-fluid pt-2 bg-off-white border-top">
                         <div class="row">
                             <nav class="mx-auto">
-                                <ul class="pagination mb-1">
+                                <ul class="pagination mb-2">
                                     {% if site_messages.has_previous %}
                                         <li class="page-item">
                                             <a class="page-link" href="?{% param_replace page=site_messages.previous_page_number %}" tabindex="-1">&laquo;</a>
@@ -174,10 +174,10 @@
                 </table>
                 <!-- message pagination bar start -->
                 {% if site_messages.paginator.page_range|length > 1 %}
-                    <div class="container pt-2">
+                    <div class="container-fluid pt-2 bg-off-white border-top">
                         <div class="row">
                             <nav class="mx-auto">
-                                <ul class="pagination mb-1">
+                                <ul class="pagination mb-2">
                                     {% if site_messages.has_previous %}
                                         <li class="page-item">
                                             <a class="page-link" href="?{% param_replace page=site_messages.previous_page_number %}" tabindex="-1">&laquo;</a>

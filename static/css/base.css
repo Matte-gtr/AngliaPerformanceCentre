@@ -209,6 +209,21 @@ body {
     height: auto;
 }
 
+.page-item.active .page-link {
+    color: #121212;
+    background-color: #c6a76c;
+    border-color: #8a8d91;
+}
+
+.page-link {
+    color: #121212;
+    border: 1px solid #8a8d91;
+}
+
+.mb-1px {
+    margin-bottom: 1px;
+}
+
 /*----------Forms----------*/
 
 .controls {

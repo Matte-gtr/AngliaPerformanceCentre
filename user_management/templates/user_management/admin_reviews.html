@@ -77,10 +77,10 @@
                 </table>
                 <!-- message pagination bar start -->
                 {% if reviews.paginator.page_range|length > 1 %}
-                    <div class="container-fluid pt-2 bg-secondary">
+                    <div class="container-fluid pt-2 bg-off-white border-top">
                         <div class="row">
                             <nav class="mx-auto">
-                                <ul class="pagination mb-1">
+                                <ul class="pagination mb-2">
                                     {% if reviews.has_previous %}
                                         <li class="page-item">
                                             <a class="page-link" href="?{% param_replace page=reviews.previous_page_number %}" tabindex="-1">&laquo;</a>
@@ -186,10 +186,10 @@
                 </table>
                 <!-- message pagination bar start -->
                 {% if reviews.paginator.page_range|length > 1 %}
-                    <div class="container-fluid pt-2 bg-secondary">
+                    <div class="container-fluid pt-2 bg-off-white border-top">
                         <div class="row">
                             <nav class="mx-auto">
-                                <ul class="pagination mb-1">
+                                <ul class="pagination mb-2">
                                     {% if reviews.has_previous %}
                                         <li class="page-item">
                                             <a class="page-link" href="?{% param_replace page=reviews.previous_page_number %}" tabindex="-1">&laquo;</a>
