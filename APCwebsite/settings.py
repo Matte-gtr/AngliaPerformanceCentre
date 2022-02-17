@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     # 'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.google',
+    'ckeditor',
     'crispy_forms',
     'home',
     'about_us',
