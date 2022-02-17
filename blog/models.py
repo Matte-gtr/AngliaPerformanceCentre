@@ -1,6 +1,6 @@
 from django.db import models
 from .validators import validate_video_file
-from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class BlogCategory(models.Model):
@@ -21,7 +21,7 @@ class BlogPost(models.Model):
                                  related_name="blog_posts")
     post_title = models.CharField(max_length=254, blank=False, null=False)
     added_on = models.DateTimeField(auto_now_add=True)
-    post_body = RichTextField(blank=True, null=True)
+    post_body = RichTextUploadingField(blank=True, null=True)
     image = models.ManyToManyField('BlogPostImage', blank=True)
     video = models.ManyToManyField('BlogPostVideo', blank=True)
     public = models.BooleanField(default=False)
