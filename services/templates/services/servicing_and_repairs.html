@@ -71,21 +71,7 @@
                         </center>
                     </div>
                 </div>
-                <div class="row d-none">
-                    <div class="col-12">
-                        <img src="{{ MEDIA_URL }}brakes.jpg" alt="">
-                        <img src="{{ MEDIA_URL }}gearbox-open.jpg" alt="">
-                        <img src="{{ MEDIA_URL }}repair-1.jpg" alt="">
-                        <img src="{{ MEDIA_URL }}repair-2.jpg" alt="">
-                        <img src="{{ MEDIA_URL }}service.jpg" alt="">
-                    </div>
-                </div>
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block postload_js %}
-{{ block.super }}
-    {% include '../includes/js/scrollFromTop.html' %}
 {% endblock %}

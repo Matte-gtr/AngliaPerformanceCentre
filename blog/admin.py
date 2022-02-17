@@ -1,8 +1,7 @@
 from django.contrib import admin
-from .models import BlogCategory, BlogPost, BlogPostImage, BlogPostVideo
+from .models import BlogCategory, BlogPost, BlogPostVideo
 
 
 admin.site.register(BlogCategory)
 admin.site.register(BlogPost)
-admin.site.register(BlogPostImage)
 admin.site.register(BlogPostVideo)

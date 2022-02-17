@@ -139,7 +139,6 @@
     {{ block.super }}
         <script>
             $(document).ready(function() {
-                scrollFromTop()
                 $(".btn-link").click(function() {
                     target = $(this).attr("data-target");
                     if (!$(target).hasClass("show")) {
@@ -151,5 +150,4 @@
                 });
             });
         </script>
-        {% include '../includes/js/scrollFromTop.html' %}
     {% endblock %}

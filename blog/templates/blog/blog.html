@@ -28,9 +28,9 @@
                         {% if blog_posts|length > 0 %}
                         {% for post in blog_posts %}
                         <article class="blog-container bg-off-white mb-4">
-                            {% if post.image.count > 0 %}
+                            {% if post.header_image %}
                             <div class="image-container">
-                                <img class="blog-image" src="{{ post.image.all.0.image.url }}" alt="{{ post.image.all.0.image }}">
+                                <img class="blog-image" src="{{ post.header_image.url }}" alt="{{ post.header_image.pk }}">
                             </div>
                             {% else %}
                             <div class="image-container">
@@ -41,12 +41,16 @@
                             <div class="pl-3 pr-3">
                                 <small>
                                     <span class="float-left">{{ post.added_on }}</span>
-                                    <a class="control-link" href="#"><span class="float-right filter-bg">{{ post.category }}</span></a> 
+                                    {% if post.category.category == "other" %}
+                                    <a class="control-link"><span class="float-right filter-bg">{{ post.category }}</span></a>
+                                    {% else %}
+                                    <a class="control-link" href="{% url post.category.category %}"><span class="float-right filter-bg">{{ post.category }}</span></a>
+                                    {% endif %}
                                 </small>
                             </div>
                             <hr class="w-100 my-1">
                             <div class="pl-3 pr-3 py-2">
-                                {{ post.short_body }}{% if post.short_body|length < post.post_body|length %}...{% endif %}
+                                {{ post.short_body }}...
                             </div>
                             <div class="text-center">
                                 <a href="{% url 'view_post' post.id %}">

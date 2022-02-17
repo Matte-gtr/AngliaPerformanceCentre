@@ -112,27 +112,15 @@
                         </section>
                     </div>
                 </div>
-                <div class="row d-none">
-                    <img src="{{ MEDIA_URL }}exhaust-1.jpg" alt="">
-                    <img src="{{ MEDIA_URL }}exhaust-2.jpg" alt="">
-                    <img src="{{ MEDIA_URL }}exhaust-3.jpg" alt="">
-                    <img src="{{ MEDIA_URL }}exhaust-4.jpg" alt="">
-                    <img src="{{ MEDIA_URL }}exhaust-5.jpg" alt="">
-                    <img src="{{ MEDIA_URL }}exhaust-6.jpg" alt="">
-                    <img src="{{ MEDIA_URL }}exhaust-7.jpg" alt="">
-                    <img src="{{ MEDIA_URL }}exhaust-8.jpg" alt="">
-                    <img src="{{ MEDIA_URL }}exhaust-complete.jpg" alt="">
-                </div>
             </div>
         </div>
     </div>
 {% endblock %}
 
 {% block postload_js %}
-    {{ block.super }}
+{{ block.super }}
     <script>
         $(document).ready(function() {
-            scrollFromTop()
             $(".btn-link").click(function() {
                 target = $(this).attr("data-target");
                 if (!$(target).hasClass("show")) {
@@ -144,5 +132,4 @@
             });
         });
     </script>
-    {% include '../includes/js/scrollFromTop.html' %}
 {% endblock %}

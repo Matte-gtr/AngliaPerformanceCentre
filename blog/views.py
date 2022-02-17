@@ -2,12 +2,20 @@ from django.shortcuts import render, get_object_or_404
 from .models import BlogPost, BlogCategory
 from user_management.views import paginator_helper
 
+import re
+
+
+def clean_snippet(text):
+    """Remove html tags from a string"""
+    clean = re.compile('<.*?>')
+    return re.sub(clean, '', text)
+
 
 def blog(request):
     """ a view to display the blog page """
     category = "All"
     filter_cat = None
-    blog_posts = BlogPost.objects.filter(public=True).order_by('added_on')
+    blog_posts = BlogPost.objects.filter(publish=True).order_by('added_on')
     for post in blog_posts:
         post.short_body = post.post_body[:200]
     categories = BlogCategory.objects.all()
@@ -21,7 +29,8 @@ def blog(request):
     blog_posts = paginator_helper(request, blog_posts.
                                   order_by('added_on'), 8)
     for post in blog_posts:
-        post.short_body = post.post_body[:200]
+        short_body = clean_snippet(post.post_body).replace("&nbsp;", "")
+        post.short_body = short_body[:200]
     template = "blog/blog.html"
     context = {
         'title': 'blog',

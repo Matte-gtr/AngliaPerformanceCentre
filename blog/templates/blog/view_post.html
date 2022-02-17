@@ -5,23 +5,59 @@
         <div class="container-fluid dark-shadow pl-0 pr-0">
             <div class="container pt-4 pb-5">
                 <div class="row pt-4 pb-lg-1">
-                    <div class="col-12 pt-4 blog-container bg-off-white">
+                    <div class="col-12 pt-4 pb-4 blog-container px-lg-5 bg-off-white">
                         <article>
-
-                            <h2>{{ blog_post.post_title }}</h2>
+                            <h1>{{ blog_post.post_title }}</h1>
                             <hr class="hr-gold-short hr-left">
                             <div class="pl-3 pr-3">
                                 <small>
                                     <span class="float-left">{{ blog_post.added_on }}</span>
-                                    <a class="control-link" href="#"><span class="float-right filter-bg">{{ blog_post.category }}</span></a> 
+                                    <a class="control-link" href="{% url blog_post.category.category %}"><span class="float-right filter-bg">{{ blog_post.category }}</span></a> 
                                 </small>
                             </div>
                             <hr class="w-100">
-                            {{ blog_post.post_body|safe }}
+                            {% if blog_post.header_image %}
+                            <div id="img-contain" class="full-blog-image-container landscape">
+                                <a data-fancybox="image-1" href="{{ blog_post.header_image.url }}">
+                                    <img id="header-img" class="blog-header-image" src="{{ blog_post.header_image.url }}" alt="{{ blog_post.header_image.url }}">
+                                </a>
+                            </div>
+                            {% endif %}
+                            <div class="pt-2">
+                                {{ blog_post.post_body|safe }}
+                            </div>
+                            {% if blog_post.video.count > 0 %}
+                                {% for vid in blog_post.video.all %}
+                                <a data-fancybox="group-1" href="{{ vid.video.url }}">
+                                    <video class="blog-vid" controls>
+                                        <source src="{{ vid.video.url }}" type="video/{{ vid.filetype }}">
+                                    </video>
+                                </a>
+                                {% endfor %}
+                            {% endif %}
                         </article>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="back-button-container p-0 mt-5">
+                            <a href="{% url 'blog' %}" class="standard-link i-move"><i class="fas fa-arrow-circle-left"></i> Blog</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+{% block postload_js %}
+{{ block.super }}
+    <script>
+        $(document).ready(function() {
+            let hImage = $("#header-img");
+            let container = $("#img-contain");
+            if (hImage.height() > hImage.width()) {
+                container.removeClass('landscape').addClass('portrait');
+            }
+        });
+    </script>
 {% endblock %}
