@@ -12,7 +12,11 @@
                             <div class="pl-3 pr-3">
                                 <small>
                                     <span class="float-left">{{ blog_post.added_on }}</span>
-                                    <a class="control-link" href="{% url blog_post.category.category %}"><span class="float-right filter-bg">{{ blog_post.category }}</span></a> 
+                                    {% if blog_post.category.category == "other" %}
+                                    <a class="control-link"><span class="float-right filter-bg">{{ blog_post.category }}</span></a>
+                                    {% else %}
+                                    <a class="control-link" href="{% url blog_post.category.category %}"><span class="float-right filter-bg">{{ blog_post.category }}</span></a>
+                                    {% endif %} 
                                 </small>
                             </div>
                             <hr class="w-100">

@@ -107,3 +107,19 @@ def post_preview(request, blog_id):
         messages.error(request, "You don't have the required permissions to \
                        view this page")
         return redirect(reverse('blog'))
+
+
+@login_required
+def publish_post(request, blog_id):
+    """ a view to publish a blog post to the blog """
+    if request.user.is_staff:
+        blog_post = get_object_or_404(BlogPost, pk=blog_id)
+        blog_post.publish = True
+        blog_post.save(update_fields={'publish'})
+        messages.success(request, "Your post has been published on the \
+                         Blog page")
+        return redirect(reverse('blog'))
+    else:
+        messages.error(request, "You don't have the required permissions \
+                       to complete this action")
+        return redirect(reverse('blog'))

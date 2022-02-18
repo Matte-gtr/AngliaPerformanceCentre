@@ -5,15 +5,19 @@
         <div class="container-fluid dark-shadow pl-0 pr-0">
             <div class="container pt-4 pb-5">
                 <div class="row pt-4 pb-lg-1">
+                    <div class="col-12"><center><h1 class="pb-4">Preview</h1></center></div>
                     <div class="col-12 pt-4 pb-4 blog-container px-lg-5 bg-off-white">
-                        <center><h1>Preview</h1></center>
                         <article>
                             <h1>{{ blog_post.post_title }}</h1>
                             <hr class="hr-gold-short hr-left">
                             <div class="pl-3 pr-3">
                                 <small>
                                     <span class="float-left">{{ blog_post.added_on }}</span>
-                                    <a class="control-link" href="{% url blog_post.category.category %}"><span class="float-right filter-bg">{{ blog_post.category }}</span></a> 
+                                    {% if blog_post.category.category == "other" %}
+                                    <a class="control-link"><span class="float-right filter-bg">{{ blog_post.category }}</span></a>
+                                    {% else %}
+                                    <a class="control-link" href="{% url blog_post.category.category %}"><span class="float-right filter-bg">{{ blog_post.category }}</span></a>
+                                    {% endif %} 
                                 </small>
                             </div>
                             <hr class="w-100">
@@ -37,10 +41,11 @@
                                 </a>
                                 {% endfor %}
                             {% endif %}
-                            <center>
+                            <center class="pt-4">
                                 <a href=""><button class="btn btn-secondary">Edit</button></a>
-                                <a href=""><button class="btn btn-secondary">Save</button></a>
-                                <a href=""><button class="btn btn-secondary">Post</button></a>
+                                <a href="{% url 'blog' %}"><button class="btn btn-secondary">Save</button></a>
+                                <a href=""><button class="btn btn-danger">Delete</button></a>
+                                <a href="{% url 'publish_post' blog_post.id %}"><button class="btn send-btn mt-0">Publish</button></a>
                             </center>
                         </article>
                     </div>
