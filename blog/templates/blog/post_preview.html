@@ -6,6 +6,7 @@
             <div class="container pt-4 pb-5">
                 <div class="row pt-4 pb-lg-1">
                     <div class="col-12 pt-4 pb-4 blog-container px-lg-5 bg-off-white">
+                        <center><h1>Preview</h1></center>
                         <article>
                             <h1>{{ blog_post.post_title }}</h1>
                             <hr class="hr-gold-short hr-left">
@@ -36,14 +37,12 @@
                                 </a>
                                 {% endfor %}
                             {% endif %}
+                            <center>
+                                <a href=""><button class="btn btn-secondary">Edit</button></a>
+                                <a href=""><button class="btn btn-secondary">Save</button></a>
+                                <a href=""><button class="btn btn-secondary">Post</button></a>
+                            </center>
                         </article>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="back-button-container p-0 mt-5">
-                            <a href="{% url 'blog' %}" class="standard-link i-move"><i class="fas fa-arrow-circle-left"></i> Blog</a>
-                        </div>
                     </div>
                 </div>
             </div>

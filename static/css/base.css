@@ -1104,6 +1104,13 @@ nav ul li {
     max-height: 400px;
 }
 
+.video_default {
+    width: 100%;
+    max-width: 510px;
+    height: auto;
+    padding: 10px;
+}
+
 /*----------Contact----------*/
 
 .contact-header {

@@ -21,7 +21,7 @@ class BlogPost(models.Model):
                                  related_name="blog_posts")
     post_title = models.CharField(max_length=254, blank=False, null=False)
     added_on = models.DateTimeField(auto_now_add=True)
-    post_body = RichTextUploadingField(blank=True, null=True)
+    post_body = RichTextUploadingField(blank=False, null=False)
     header_image = models.ImageField(upload_to="blogs/header_images",
                                      blank=True, null=True)
     video = models.ManyToManyField('BlogPostVideo', blank=True)
@@ -32,7 +32,7 @@ class BlogPost(models.Model):
 
 
 class BlogPostVideo(models.Model):
-    video = models.FileField(upload_to="blogs/videos", blank=False, null=False,
+    video = models.FileField(upload_to="blogs/videos", blank=True, null=True,
                              validators=[validate_video_file])
     filetype = models.CharField(max_length=24, blank=True, null=True)
 

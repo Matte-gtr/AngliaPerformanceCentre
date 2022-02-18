@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!--Content-->
+    <div class="container-fluid bg-car bg-fixed dark-content p-0">
+        <div class="container-fluid dark-shadow pl-0 pr-0">
+            <div class="container pt-4 pb-5">
+                <div class="row pt-4 pb-lg-1">
+                    <div class="col-12 pt-4 pb-4 blog-container px-lg-5 bg-off-white">
+                        <h2>Add a Blog Post</h2>
+                        <hr class="hr-gold-short hr-left">
+                        <form action="{% url 'add_post' %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.media }}
+                            {% for field in form.visible_fields %}
+                                {% if field.field.widget.input_type == None %}
+                                <div class="overflow-auto">
+                                    {{ field.label }}
+                                    {{ field }}
+                                </div>
+                                {% else %}
+                                    {{ field.label }}
+                                    {{ field }}
+                                {% endif %}
+                            {% endfor %}
+                            <div class="text-center">
+                                <a href="#">
+                                    <div class="btn btn-secondary">Cancel</div>
+                                </a>
+                                <button type="submit" class="btn send-btn mt-0">Preview</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
