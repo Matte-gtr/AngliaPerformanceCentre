@@ -8,6 +8,7 @@ from django.core.mail import send_mail, BadHeaderError
 
 from contact.models import Message, Callback
 from testimonials.models import Review
+from blog.models import BlogPost
 from contact.forms import MessageResponseForm
 
 
@@ -31,11 +32,6 @@ def profile(request):
 @login_required
 def admin_messages(request):
     """ a view to display the admin panel """
-    # Safety features required
-    if request.user.is_authenticated:
-        user = get_object_or_404(User, pk=request.user.id)
-    else:
-        user = request.user
     if request.user.is_staff:
         message_count = Message.objects.filter(read=False).count
         message_pag = paginator_helper(request,
@@ -45,6 +41,7 @@ def admin_messages(request):
                                        10)
         callback_count = Callback.objects.filter(read=False).count
         review_count = Review.objects.filter(read=False).count
+        blog_count = BlogPost.objects.filter(publish=False).count
         template = "user_management/admin_messages.html"
         context = {
             'title': 'admin messages',
@@ -53,7 +50,7 @@ def admin_messages(request):
             'message_count': message_count,
             'callback_count': callback_count,
             'review_count': review_count,
-            'my_user': user,
+            'blog_count': blog_count,
         }
         return render(request, template, context)
     else:
@@ -65,11 +62,6 @@ def admin_messages(request):
 @login_required
 def admin_callbacks(request):
     """ a view to display the admin panel """
-    # Safety features required
-    if request.user.is_authenticated:
-        user = get_object_or_404(User, pk=request.user.id)
-    else:
-        user = request.user
     if request.user.is_staff:
         message_count = Message.objects.filter(read=False).count
         callback_count = Callback.objects.filter(read=False).count
@@ -79,6 +71,7 @@ def admin_callbacks(request):
                                                        "-received_on"),
                                         10)
         review_count = Review.objects.filter(read=False).count
+        blog_count = BlogPost.objects.filter(publish=False).count
         template = "user_management/admin_callbacks.html"
         context = {
             'title': 'admin callbacks',
@@ -87,7 +80,7 @@ def admin_callbacks(request):
             'callbacks': callback_pag,
             'callback_count': callback_count,
             'review_count': review_count,
-            'my_user': user,
+            'blog_count': blog_count,
         }
         return render(request, template, context)
     else:
@@ -99,15 +92,11 @@ def admin_callbacks(request):
 @login_required
 def admin_reviews(request):
     """ a view to display the admin panel """
-    # Safety features required
-    if request.user.is_authenticated:
-        user = get_object_or_404(User, pk=request.user.id)
-    else:
-        user = request.user
     if request.user.is_staff:
         message_count = Message.objects.filter(read=False).count
         callback_count = Callback.objects.filter(read=False).count
         review_count = Review.objects.filter(read=False).count
+        blog_count = BlogPost.objects.filter(publish=False).count
         review_pag = paginator_helper(request,
                                       Review.objects.
                                       filter(authorised=False).
@@ -121,13 +110,39 @@ def admin_reviews(request):
             'callback_count': callback_count,
             'review_count': review_count,
             'reviews': review_pag,
-            'my_user': user,
+            'blog_count': blog_count,
         }
         return render(request, template, context)
     else:
         messages.warning(request, "You don't have the required permissions to\
                          view this page")
         return redirect(reverse('home'))
+
+
+@login_required
+def admin_blog_posts(request):
+    """ a view to display a list of unpublished blog posts """
+    if request.user.is_staff:
+        message_count = Message.objects.filter(read=False).count
+        callback_count = Callback.objects.filter(read=False).count
+        review_count = Review.objects.filter(read=False).count
+        blog_count = BlogPost.objects.filter(publish=False).count
+        blog_posts = paginator_helper(request,
+                                      BlogPost.objects.
+                                      filter(publish=False).
+                                      order_by('-added_on'),
+                                      10)
+        template = "user_management/admin_blog_posts.html"
+        context = {
+            'title': 'admin blog posts',
+            'section': 'user_management',
+            'message_count': message_count,
+            'callback_count': callback_count,
+            'review_count': review_count,
+            'blog_count': blog_count,
+            'blog_posts': blog_posts,
+        }
+        return render(request, template, context)
 
 
 @login_required

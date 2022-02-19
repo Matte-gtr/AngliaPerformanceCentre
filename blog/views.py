@@ -96,13 +96,18 @@ def post_preview(request, blog_id):
     """ a view to preview a blog post before it is made public """
     if request.user.is_staff:
         blog_post = get_object_or_404(BlogPost, pk=blog_id)
-        template = "blog/post_preview.html"
-        context = {
-            'title': f'Preview {blog_id}',
-            'section': 'blog',
-            'blog_post': blog_post,
-        }
-        return render(request, template, context)
+        if blog_post.publish == False:
+            template = "blog/post_preview.html"
+            context = {
+                'title': f'Preview {blog_id}',
+                'section': 'blog',
+                'blog_post': blog_post,
+            }
+            return render(request, template, context)
+        else:
+            messages.error(request, f"Blog post {blog_id} is already \
+                published")
+            return redirect(reverse('blog'))
     else:
         messages.error(request, "You don't have the required permissions to \
                        view this page")
@@ -110,14 +115,18 @@ def post_preview(request, blog_id):
 
 
 @login_required
-def publish_post(request, blog_id):
+def display_post(request, blog_id, setting):
     """ a view to publish a blog post to the blog """
     if request.user.is_staff:
         blog_post = get_object_or_404(BlogPost, pk=blog_id)
-        blog_post.publish = True
+        blog_post.publish = setting
         blog_post.save(update_fields={'publish'})
-        messages.success(request, "Your post has been published on the \
-                         Blog page")
+        if setting is True:
+            messages.success(request, "Your post has been published on the \
+                            Blog page")
+        else:
+            messages.success(request, "Your post has been removed from the \
+                            Blog page")
         return redirect(reverse('blog'))
     else:
         messages.error(request, "You don't have the required permissions \

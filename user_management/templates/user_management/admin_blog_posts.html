@@ -16,9 +16,27 @@
         </div>
         <div class="col-12 p-0 border border-bottom-0">
             <div class="text-center p-0">
-                <a href="{% url 'admin_callbacks' %}" class="standard-link text-dark">
-                    <h3 class="mb-0 p-2 bg-secondary">Callbacks 
+                <a href="{% url 'admin_callbacks' %}" class="standard-link">
+                    <h3 class="mb-0 p-2">Callbacks 
                         {% if callback_count > 0 %}<div class="counter"><small>{{ callback_count }}</small></div>{% endif %}
+                    </h3>
+                </a>
+            </div>
+        </div>
+        <div class="col-12 p-0 border border-bottom-0">
+            <div class="text-center p-0">
+                <a href="{% url 'admin_reviews' %}" class="standard-link">
+                    <h3 class="mb-0 p-2">Reviews 
+                        {% if review_count > 0 %}<div class="counter"><small>{{ review_count }}</small></div>{% endif %}
+                    </h3>
+                </a>
+            </div>
+        </div>
+        <div class="col-12 p-0 border border-bottom-0">
+            <div class="text-center p-0">
+                <a href="{% url 'admin_blog_posts' %}" class="standard-link text-dark">
+                    <h3 class="mb-0 p-2 bg-secondary">Blog Posts 
+                        {% if blog_count > 0 %}<div class="counter"><small>{{ blog_count }}</small></div>{% endif %}
                     </h3>
                 </a>
             </div>
@@ -26,65 +44,57 @@
         <div class="col-12 p-0 border border-top-0">
             <table class="table bg-light table-hover mb-0">
                 <tr class="bg-secondary">
-                    <th scope="col" class="w-13"><input type="checkbox" id="master-callback-checkbox-mobile"></th>
+                    <th scope="col" class="w-13"><input type="checkbox" id="master-blog_post-checkbox-mobile"></th>
                     <th scope="col">Name</th>
-                    <th scope="col">Responded</th>
+                    <th scope="col">Category</th>
                     <th scope="col">Date</th>
                 </tr>
-                {% if not callbacks %}
+                {% if not blog_posts %}
                     <tr>
                         <td></td>
-                        <td> No Callbacks</td>
+                        <td> No Un-published Blog Posts</td>
                         <td></td>
                         <td></td>
                     </tr>
                 {% endif %}
-                {% for callback in callbacks %}
+                {% for post in blog_posts %}
                     <tr>
-                        <td><input type="checkbox" data-id="{{ callback.id }}" class="callback-checkbox-mobile"></td>
+                        <td><input type="checkbox" data-id="{{ post.id }}" class="blog_post-checkbox-mobile"></td>
                         <td>
-                            {% if callback.read %}
-                                <a href="{% url 'view_callback' callback.id %}" class="text-secondary">{{ callback.name }}</a>
-                            {% else %}
-                                <strong><a href="{% url 'view_callback' callback.id %}">{{ callback.name }}</a></strong>
-                            {% endif %}
+                            <a href="{% url 'post_preview' post.id %}" class="font-weight-bold">{{ post.post_title }}</a>
                         </td>
                         <td>
-                            {% if callback.responded %}
-                                <i class="fas fa-check fa-lg text-success"></i>
-                            {% else %}
-                                <i class="fas fa-times fa-lg text-danger"></i>
-                            {% endif %}
+                            {{ post.category.friendly_name }}
                         </td>
-                        <td><small>{{ callback.received_on }}</small></td>
+                        <td><small>{{ post.added_on }}</small></td>
                     </tr>
                 {% endfor %}
             </table>
-            <!-- callback pagination bar start -->
-            {% if callbacks.paginator.page_range|length > 1 %}
+            <!-- blog_post pagination bar start -->
+            {% if blog_posts.paginator.page_range|length > 1 %}
                 <div class="container-fluid pt-2 bg-off-white border-top">
                     <div class="row">
                         <nav class="mx-auto">
                             <ul class="pagination mb-2">
-                                {% if callbacks.has_previous %}
+                                {% if blog_posts.has_previous %}
                                     <li class="page-item">
-                                        <a class="page-link" href="?{% param_replace page=callbacks.previous_page_number %}#headingTwo" tabindex="-1">&laquo;</a>
+                                        <a class="page-link" href="?{% param_replace page=blog_posts.previous_page_number %}#headingTwo" tabindex="-1">&laquo;</a>
                                     </li>
                                 {% else %}
                                     <li class="page-item disabled">
                                         <a class="page-link" href="#" tabindex="-1">&laquo;</a>
                                     </li>
                                 {% endif %}
-                                {% for pg in callbacks.paginator.page_range %}
-                                    {% if callbacks.number == pg %}
+                                {% for pg in blog_posts.paginator.page_range %}
+                                    {% if blog_posts.number == pg %}
                                         <li class="page-item active"><a class="page-link" href="?{% param_replace page=pg %}#headingTwo">{{ pg }}</a></li>
-                                    {% elif pg > callbacks.number|add:-3 and pg < callbacks.number|add:3 %}
+                                    {% elif pg > blog_posts.number|add:-3 and pg < blog_posts.number|add:3 %}
                                         <li class="page-item"><a class="page-link" href="?{% param_replace page=pg %}#headingTwo">{{ pg }}</a></li>
                                     {% endif %}
                                 {% endfor %}
-                                {% if callbacks.has_next %}
+                                {% if blog_posts.has_next %}
                                     <li class="page-item">
-                                        <a class="page-link" href="?{% param_replace page=callbacks.next_page_number %}#headingTwo" tabindex="-1">&raquo;</a>
+                                        <a class="page-link" href="?{% param_replace page=blog_posts.next_page_number %}#headingTwo" tabindex="-1">&raquo;</a>
                                     </li>
                                 {% else %}
                                     <li class="page-item disabled">
@@ -96,25 +106,7 @@
                     </div>
                 </div>
             {% endif %}
-            <!-- callback pagination bar end -->
-        </div>
-        <div class="col-12 p-0 border border-top-0">
-            <div class="text-center p-0">
-                <a href="{% url 'admin_reviews' %}" class="standard-link">
-                    <h3 class="mb-0 p-2">Reviews 
-                        {% if review_count > 0 %}<div class="counter"><small>{{ review_count }}</small></div>{% endif %}
-                    </h3>
-                </a>
-            </div>
-        </div>
-        <div class="col-12 p-0 border border-top-0">
-            <div class="text-center p-0">
-                <a href="{% url 'admin_blog_posts' %}" class="standard-link">
-                    <h3 class="mb-0 p-2">Blog Posts 
-                        {% if blog_count > 0 %}<div class="counter"><small>{{ blog_count }}</small></div>{% endif %}
-                    </h3>
-                </a>
-            </div>
+            <!-- blog_post pagination bar end -->
         </div>
     </div>
     <!--Mobile Grid Display end-->
@@ -154,65 +146,57 @@
         <div class="col-9 p-0 border">
             <table class="table bg-light table-hover mb-0">
                 <tr class="bg-secondary">
-                    <th scope="col" class="w-13"><input type="checkbox" id="master-callback-checkbox-desktop"></th>
+                    <th scope="col" class="w-13"><input type="checkbox" id="master-blog_post-checkbox-desktop"></th>
                     <th scope="col">Name</th>
-                    <th scope="col">Responded</th>
+                    <th scope="col">Category</th>
                     <th scope="col">Date</th>
                 </tr>
-                {% if not callbacks %}
+                {% if not blog_posts %}
                     <tr>
                         <td></td>
-                        <td> No Callbacks</td>
+                        <td> No Un-published Blog Posts</td>
                         <td></td>
                         <td></td>
                     </tr>
                 {% endif %}
-                {% for callback in callbacks %}
+                {% for post in blog_posts %}
                     <tr>
-                        <td><input type="checkbox" data-id="{{ callback.id }}" class="callback-checkbox-desktop"></td>
+                        <td><input type="checkbox" data-id="{{ post.id }}" class="blog_post-checkbox-desktop"></td>
                         <td>
-                            {% if callback.read %}
-                                <a href="{% url 'view_callback' callback.id %}" class="text-secondary">{{ callback.name }}</a>
-                            {% else %}
-                                <strong><a href="{% url 'view_callback' callback.id %}">{{ callback.name }}</a></strong>
-                            {% endif %}
+                            <a href="{% url 'post_preview' post.id %}" class="font-weight-bold">{{ post.post_title }}</a>
                         </td>
                         <td>
-                            {% if callback.responded %}
-                                <i class="fas fa-check fa-lg text-success"></i>
-                            {% else %}
-                                <i class="fas fa-times fa-lg text-danger"></i>
-                            {% endif %}
+                            {{ post.category.friendly_name }}
                         </td>
-                        <td><small>{{ callback.received_on }}</small></td>
+                        <td><small>{{ post.added_on }}</small></td>
                     </tr>
                 {% endfor %}
             </table>
-            <!-- callback pagination bar start -->
-            {% if callbacks.paginator.page_range|length > 1 %}
+            <!-- blog_post pagination bar start -->
+            {% if blog_posts.paginator.page_range|length > 1 %}
                 <div class="container-fluid pt-2 bg-off-white border-top">
                     <div class="row">
                         <nav class="mx-auto">
                             <ul class="pagination mb-2">
-                                {% if callbacks.has_previous %}
+                                {% if blog_posts.has_previous %}
                                     <li class="page-item">
-                                        <a class="page-link" href="?{% param_replace page=callbacks.previous_page_number %}#headingTwo" tabindex="-1">&laquo;</a>
+                                        <a class="page-link" href="?{% param_replace page=blog_posts.previous_page_number %}#headingTwo" tabindex="-1">&laquo;</a>
                                     </li>
                                 {% else %}
                                     <li class="page-item disabled">
                                         <a class="page-link" href="#" tabindex="-1">&laquo;</a>
                                     </li>
                                 {% endif %}
-                                {% for pg in callbacks.paginator.page_range %}
-                                    {% if callbacks.number == pg %}
+                                {% for pg in blog_posts.paginator.page_range %}
+                                    {% if blog_posts.number == pg %}
                                         <li class="page-item active"><a class="page-link" href="?{% param_replace page=pg %}#headingTwo">{{ pg }}</a></li>
-                                    {% elif pg > callbacks.number|add:-3 and pg < callbacks.number|add:3 %}
+                                    {% elif pg > blog_posts.number|add:-3 and pg < blog_posts.number|add:3 %}
                                         <li class="page-item"><a class="page-link" href="?{% param_replace page=pg %}#headingTwo">{{ pg }}</a></li>
                                     {% endif %}
                                 {% endfor %}
-                                {% if callbacks.has_next %}
+                                {% if blog_posts.has_next %}
                                     <li class="page-item">
-                                        <a class="page-link" href="?{% param_replace page=callbacks.next_page_number %}#headingTwo" tabindex="-1">&raquo;</a>
+                                        <a class="page-link" href="?{% param_replace page=blog_posts.next_page_number %}#headingTwo" tabindex="-1">&raquo;</a>
                                     </li>
                                 {% else %}
                                     <li class="page-item disabled">
@@ -224,7 +208,7 @@
                     </div>
                 </div>
             {% endif %}
-            <!-- callback pagination bar end -->
+            <!-- blog_post pagination bar end -->
             </div>
         </div>
         <!--Desktop Grid Display end-->
@@ -236,11 +220,11 @@
 {{ block.super }}
 <script>
     $(document).ready(function() {
-        $('#master-callback-checkbox-mobile').click(function() {
-            checkAll('callback', 'mobile')
+        $('#master-blog_post-checkbox-mobile').click(function() {
+            checkAll('blog_post', 'mobile')
         });
-        $('#master-callback-checkbox-desktop').click(function() {
-            checkAll('callback', 'desktop')
+        $('#master-blog_post-checkbox-desktop').click(function() {
+            checkAll('blog_post', 'desktop')
         });
 
         function checkAll(type, platform) {

@@ -84,6 +84,13 @@
                                 {% endfor %}
                             </div>
                         </div>
+                        {% if request.user.is_staff %}
+                        <div class="blog-container bg-off-white p-2 mt-1">
+                            <center>
+                                <a href="{% url 'add_post' %}"><button class="btn send-btn mt-0">Add Post</button></a>
+                            </center>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="row">

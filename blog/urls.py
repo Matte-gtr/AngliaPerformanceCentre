@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 from . import views
 
 
@@ -8,6 +8,6 @@ urlpatterns = [
     path('add_post/', views.add_post, name="add_post"),
     path('post_preview/<int:blog_id>', views.post_preview,
          name="post_preview"),
-    path('publish_post/<int:blog_id>', views.publish_post,
-         name="publish_post"),
+    path('display_post/<setting>/<int:blog_id>', views.display_post,
+         name="display_post"),
 ]

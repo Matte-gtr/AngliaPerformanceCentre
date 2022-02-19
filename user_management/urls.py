@@ -7,6 +7,7 @@ urlpatterns = [
      path('admin_messages/', views.admin_messages, name="admin_messages"),
      path('admin_callbacks/', views.admin_callbacks, name="admin_callbacks"),
      path('admin_reviews/', views.admin_reviews, name="admin_reviews"),
+     path('admin_blog_posts/', views.admin_blog_posts, name="admin_blog_posts"),
      path('admin_messages/<int:message_id>', views.view_message,
           name="view_message"),
      path('admin_callbacks/<int:callback_id>', views.view_callback,
