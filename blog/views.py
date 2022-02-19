@@ -96,12 +96,15 @@ def post_preview(request, blog_id):
     """ a view to preview a blog post before it is made public """
     if request.user.is_staff:
         blog_post = get_object_or_404(BlogPost, pk=blog_id)
+        refer = request.META.get('HTTP_REFERER')
+        refer = refer.split('/')[-2]
         if blog_post.publish == False:
             template = "blog/post_preview.html"
             context = {
                 'title': f'Preview {blog_id}',
                 'section': 'blog',
                 'blog_post': blog_post,
+                'refer': refer,
             }
             return render(request, template, context)
         else:
@@ -121,7 +124,7 @@ def display_post(request, blog_id, setting):
         blog_post = get_object_or_404(BlogPost, pk=blog_id)
         blog_post.publish = setting
         blog_post.save(update_fields={'publish'})
-        if setting is True:
+        if setting == "True":
             messages.success(request, "Your post has been published on the \
                             Blog page")
         else:
@@ -132,3 +135,27 @@ def display_post(request, blog_id, setting):
         messages.error(request, "You don't have the required permissions \
                        to complete this action")
         return redirect(reverse('blog'))
+
+
+@login_required
+def delete_blog_post(request, blog_id, next_url="blog"):
+    """ a view to delete a blog post """
+    blog_post = get_object_or_404(BlogPost, pk=blog_id)
+    if request.user.is_staff:
+        videos = blog_post.video.all()
+        try:
+            if videos:
+                for item in videos:
+                    video = get_object_or_404(BlogPostVideo, pk=item.pk)
+                    try:
+                        video.delete()
+                    except Exception as e:
+                        messages.error(request, f"error deleting image: {e}")
+            blog_post.delete()
+            messages.success(request, f"Blog post {blog_id} successfully deleted")
+        except Exception as e:
+            messages.error(request, f"error deleting blog post: {e}")
+    else:
+        messages.error(request, "You don't have the required permission \
+                       to complete this action")
+    return redirect(reverse(next_url))

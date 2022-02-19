@@ -44,7 +44,11 @@
                             <center class="pt-4">
                                 <a href=""><button class="btn btn-secondary">Edit</button></a>
                                 <a href="{% url 'admin_blog_posts' %}"><button class="btn btn-secondary">Save</button></a>
-                                <a href=""><button class="btn btn-danger">Delete</button></a>
+                                {% if refer == "add_post" %}
+                                <a href="{% url 'delete_blog_post' blog_id=blog_post.id next_url="blog" %}"><button class="btn btn-danger">Delete</button></a>
+                                {% else %}
+                                <a href="{% url 'delete_blog_post' blog_id=blog_post.id next_url="admin_blog_posts" %}"><button class="btn btn-danger">Delete</button></a>
+                                {% endif %}
                                 <a href="{% url 'display_post' blog_id=blog_post.id setting=True %}"><button class="btn send-btn mt-0">Publish</button></a>
                             </center>
                         </article>
