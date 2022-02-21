@@ -60,7 +60,7 @@ def send_callback(request):
         form = CallbackForm(request.POST or None)
         if form.is_valid():
             form.save()
-            # Send SMS to be added
+            # Send SMS to be added?
             messages.success(request, "Message Received, We will be \
                 in touch shortly")
             return HttpResponseRedirect(page_location)

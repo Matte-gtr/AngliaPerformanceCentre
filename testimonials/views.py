@@ -14,7 +14,7 @@ from datetime import datetime
 def testimonials(request):
     """ a view for the testimonials page """
     auth_reviews = paginator_helper(request, Review.objects.
-                                   filter(authorised=True), 10)
+                                    filter(authorised=True), 10)
     review_count = Review.objects.filter(authorised=True).count()
     average = Review.objects.filter(authorised=True).\
         aggregate(Avg('stars'))['stars__avg']
@@ -63,7 +63,7 @@ def post_review(request):
                 return redirect(reverse('testimonials'))
         else:
             next_redirect = request.POST.get("next")
-            messages.warning(request, "Please log in to post a review")
+            messages.info(request, "Please log in to post a review")
             return redirect(reverse("account_login", kwargs={"next": next_redirect}))
     else:
         return redirect('{}#post-review'.format(reverse('testimonials')))

@@ -76,12 +76,12 @@ def add_post(request):
                 return redirect(reverse('post_preview',
                                 kwargs={"blog_id": new_post.id}))
             else:
-                messages.error(request, "Please check you file upload types \
+                messages.error(request, "Please check your file upload types \
                                and blog content")
         else:
             form = BlogPostForm()
     else:
-        messages.error(request, 'You are not authorised to add Blog posts')
+        messages.warning(request, 'You are not authorised to add Blog posts')
         return redirect(reverse('home'))
     template = "blog/add_post.html"
     context = {
@@ -101,11 +101,11 @@ def post_preview(request, blog_id):
         refer = request.META.get('HTTP_REFERER')
         refer = refer.split('/')[-2]
         if blog_post.publish == True:
-            messages.error(request, f"Blog post {blog_id} is already \
+            messages.info(request, f"Blog post {blog_id} is already \
                 published")
             return redirect(reverse('blog'))
     else:
-        messages.error(request, "You don't have the required permissions to \
+        messages.warning(request, "You don't have the required permissions to \
                        view this page")
         return redirect(reverse('blog'))
     template = "blog/post_preview.html"
@@ -133,7 +133,7 @@ def display_post(request, blog_id, setting):
                             Blog page")
         return redirect(reverse('blog'))
     else:
-        messages.error(request, "You don't have the required permissions \
+        messages.warning(request, "You don't have the required permissions \
                        to complete this action")
         return redirect(reverse('blog'))
 
@@ -157,7 +157,7 @@ def delete_blog_post(request, blog_id, next_url="blog"):
         except Exception as e:
             messages.error(request, f"error deleting blog post: {e}")
     else:
-        messages.error(request, "You don't have the required permission \
+        messages.warning(request, "You don't have the required permission \
                        to complete this action")
         return redirect(reverse('blog'))
     return redirect(reverse(next_url))

@@ -157,7 +157,7 @@ body {
 }
 
 .allauth-bg {
-    background-image: url(/media/login.jpg);
+    background-image: url(/media/defaults/login.jpg);
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -711,7 +711,7 @@ nav ul li {
 /*----------ABOUT (GENERAL)----------*/
 
 .about-header {
-    background-image: url(/media/stockvault-speedometer151553.jpg);
+    background-image: url(/media/defaults/stockvault-speedometer151553.jpg);
     background-blend-mode: multiply;
 }
 
@@ -734,7 +734,7 @@ nav ul li {
 /*----------User Management----------*/
 
 .user-header {
-    background-image: url(/media/motherboard.jpg);
+    background-image: url(/media/defaults/motherboard.jpg);
     background-blend-mode: color-burn;
 }
 
@@ -796,24 +796,23 @@ nav ul li {
 /*----------Chip tuning----------*/
 
 .bg-car {
-    background-image: url(/media/car.jpg);
+    background-image: url(/media/defaults/car.jpg);
 }
 
 /*----------Engine Rebuilds----------*/
 
 .bg-engine {
-    background-image: url(/media/engine-bg.jpg);
+    background-image: url(/media/defaults/engine-bg.jpg);
 }
 
 /*----------Track/Drift Perparation----------*/
 
 .bg-track {
-    background-image: url(/media/custom-airbox.jpg);
+    background-image: url(/media/defaults/custom-airbox.jpg);
     height: 100vh;
     width: 100%;
     background-attachment: fixed;
     background-size: cover;
-    
 }
 
 .bg-overlay {
@@ -825,7 +824,7 @@ nav ul li {
 /*----------Testimonials----------*/
 
 .testimonials-header {
-    background-image: url(/media/stars.jpg);
+    background-image: url(/media/defaults/stars.jpg);
     background-blend-mode: color-burn;
 }
 
@@ -1016,14 +1015,14 @@ nav ul li {
 /*----------Pricing----------*/
 
 .pricing-header {
-    background-image: url(/media/accounting.jpg);
+    background-image: url(/media/defaults/accounting.jpg);
     background-blend-mode: color-burn;
 }
 
 /*----------SHOP (GENERAL)----------*/
 
 .shop-header {
-    background-image: url(/media/car-sales.jpg);
+    background-image: url(/media/defaults/car-sales.jpg);
     background-blend-mode: multiply;
 }
 
@@ -1034,7 +1033,7 @@ nav ul li {
 /*----------Blog----------*/
 
 .blog-header {
-    background-image: url(/media/blog.jpg);
+    background-image: url(/media/defaults/blog.jpg);
     background-blend-mode: multiply;
 }
 
@@ -1119,7 +1118,7 @@ nav ul li {
 /*----------Contact----------*/
 
 .contact-header {
-    background-image: url(/media/old-phone.jpg);
+    background-image: url(/media/defaults/old-phone.jpg);
     background-blend-mode: multiply;
 }
 
@@ -1174,7 +1173,7 @@ nav ul li {
 }
 
 .services-header {
-    background-image: url(/media/engine-components.jpg);
+    background-image: url(/media/defaults/engine-components.jpg);
     background-blend-mode: color-burn;
 }
 

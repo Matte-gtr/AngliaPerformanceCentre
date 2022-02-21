@@ -294,8 +294,8 @@ def reply_to_message(request, message_id):
                 messages.error(request, "Please check all fields are filled \
                                out and resend your response")
         else:
-            messages.warning(request, "You do not have permissions to \
-                             messages customers")
+            messages.warning(request, "You don't have the required permissions to \
+                             message customers")
             return redirect(reverse('home'))
     else:
         return redirect(reverse('home'))
@@ -314,8 +314,8 @@ def delete_message(request, message_id):
             messages.error(request, f"error deleting image: {e}")
         return redirect(reverse('admin_messages'))
     else:
-        messages.warning(request, "You do not have permissions to delete \
-                         messages")
+        messages.warning(request, "You don't have the required \
+                         permissions to delete messages")
         return redirect(reverse('home'))
 
 
@@ -332,6 +332,6 @@ def delete_callback(request, callback_id):
             messages.error(request, f"error deleting image: {e}")
         return redirect(reverse('admin_callbacks'))
     else:
-        messages.warning(request, "You do not have permissions to delete \
+        messages.warning(request, "You don't have the required permissions to delete \
                          callbacks")
         return redirect(reverse('home'))
