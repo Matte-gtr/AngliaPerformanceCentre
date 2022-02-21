@@ -195,8 +195,6 @@ def edit_blog_post(request, blog_id):
                     vid.save()
                     blog_post.video.add(vid)
                 form.save()
-                messages.success(request, "Your Post has been \
-                                successfully updated.")
                 return redirect(reverse('post_preview',
                                         args={blog_id: blog_id}))
             else:
