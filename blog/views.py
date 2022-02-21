@@ -2,11 +2,14 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from user_management.views import paginator_helper
+from django.core.exceptions import ValidationError
 
 from .models import BlogPost, BlogCategory, BlogPostVideo
 from .forms import BlogPostForm
+from .validators import validate_video_file
 
 import re
+from datetime import datetime
 
 
 def clean_snippet(text):
@@ -158,4 +161,59 @@ def delete_blog_post(request, blog_id, next_url="blog"):
     else:
         messages.error(request, "You don't have the required permission \
                        to complete this action")
+        return redirect(reverse('blog'))
     return redirect(reverse(next_url))
+
+
+@login_required
+def edit_blog_post(request, blog_id):
+    """ a view to edit a blog post """
+    blog_post = get_object_or_404(BlogPost, pk=blog_id)
+    if request.user.is_staff:
+        if request.method == "POST":
+            form = BlogPostForm(request.POST, request.FILES,
+                                instance=blog_post)
+            files = request.FILES.getlist('video')
+            if form.is_valid():
+                delete_string = request.POST.get('videocontrol')
+                delete_list = []
+                if delete_string:
+                    delete_list = delete_string.split(",")
+                if delete_list:
+                    for video_id in delete_list:
+                        blog_video = get_object_or_404(BlogPostVideo,
+                                                       pk=video_id)
+                        try:
+                            blog_video.delete()
+                        except Exception as e:
+                            messages.error(request, f"error deleting \
+                                           video: {e}")
+                form_blog_post = form.save(commit=False)
+                form_blog_post.added_on = datetime.now()
+                form_blog_post.save()
+                for file in files:
+                    vid = BlogPostVideo(video=file)
+                    vid.save()
+                    blog_post.video.add(vid)
+                form.save()
+                messages.success(request, "Your Post has been \
+                                successfully updated.")
+                return redirect(reverse('post_preview',
+                                        args={blog_id: blog_id}))
+            else:
+                messages.error(request, "Update failed, Please ensure all fields \
+                                are filled in correctly")
+        else:
+            form = BlogPostForm(instance=blog_post)
+    else:
+        messages.warning(request, "You don't have the required \
+                         permissions to edit blog posts")
+        return redirect(reverse('blog'))
+    template = "blog/edit_blog_post.html"
+    context = {
+        'title': f"Edit Post {blog_id}",
+        'section': 'blog',
+        'blog_post': blog_post,
+        'form': form,
+    }
+    return render(request, template, context)

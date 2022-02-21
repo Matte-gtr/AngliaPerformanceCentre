@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!--Content-->
+    <div class="container-fluid bg-car bg-fixed dark-content p-0">
+        <div class="container-fluid dark-shadow pl-0 pr-0">
+            <div class="container pt-4 pb-5">
+                <div class="row pt-4 pb-lg-1">
+                    <div class="col-12 pt-4 pb-4 blog-container px-lg-5 bg-off-white">
+                        <h2>Edit Blog Post {{ blog_post.id }}</h2>
+                        <hr class="hr-gold-short hr-left">
+                        <form action="{% url 'edit_blog_post' blog_post.id %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.media }}
+                            {% for field in form.visible_fields %}
+                                {% if field.field.widget.input_type == None %}
+                                <div class="overflow-auto">
+                                    {{ field.label }}
+                                    {{ field }}
+                                </div>
+                                {% else %}
+                                    {{ field.label }}
+                                    {{ field }}
+                                    {{ field.errors }}
+                                {% endif %}
+                            {% endfor %}
+                            {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
+                            {% endfor %}
+                            {% if blog_post.video.count > 0 %}
+                            <h4 class="mb-0 p-1">Current Videos</h4>
+                            <div class="thumbnail-container p-1">
+                                {% for vid in blog_post.video.all %}
+                                    <div class="img-container dark-hover">
+                                        <div class="img-delete"><div class="fas fa-times fa-lg delete-cross text-dark" data-id="{{ vid.id }}"></div></div>
+                                        <video class="thumbnail" controls>
+                                            <source src="{{ vid.video.url }}" type="video/{{ vid.filetype }}">
+                                        </video>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <div class="text-center">
+                                <a href="{% url 'post_preview' blog_post.id %}">
+                                    <div class="btn btn-secondary">Cancel</div>
+                                </a>
+                                <button type="submit" class="btn send-btn mt-0">Preview</button>
+                            </div>
+                        </form>
+                        {{ files }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block postload_js %}
+{{ block.super }}
+<script>
+    $(document).ready(
+        function () {
+            let videoDeleteList = []
+            $('.delete-cross').click(function() {
+                videoKey = $(this).data('id');
+                videoDeleteList.push(videoKey);
+                $(this).parent().parent().remove();
+                $('#id_video_control').val(videoDeleteList);
+                console.log($('#id_video_control').val());
+            });
+        });
+</script>
+{% endblock %}

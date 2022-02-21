@@ -224,6 +224,11 @@ body {
     text-decoration: none;
 }
 
+.errorlist {
+    list-style: none;
+    color: red;
+}
+
 /*----------Forms----------*/
 
 .controls {

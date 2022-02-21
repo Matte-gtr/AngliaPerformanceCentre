@@ -1,14 +1,24 @@
 from django import forms
-from .models import BlogPost
 from ckeditor_uploader.fields import RichTextUploadingField
+
+from .models import BlogPost
+from .validators import validate_video_file
 
 
 class BlogPostForm(forms.ModelForm):
     post_body = RichTextUploadingField()
     video = forms.FileField(
+        validators=[validate_video_file],
         required=False,
         widget=forms.ClearableFileInput(attrs={
             'multiple': True,
+        })
+    )
+    videocontrol = forms.CharField(
+        required=False,
+        widget=forms.HiddenInput(attrs={
+            'name': 'video_control',
+            'id': 'id_video_control'
         })
     )
 

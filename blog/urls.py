@@ -12,4 +12,6 @@ urlpatterns = [
           name="display_post"),
      path('delete_blog_post/<next_url>/<int:blog_id>', views.delete_blog_post,
           name="delete_blog_post"),
+     path('edit_blog_post/<int:blog_id>', views.edit_blog_post,
+          name="edit_blog_post"),
 ]
