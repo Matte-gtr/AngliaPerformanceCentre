@@ -2,11 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from user_management.views import paginator_helper
-from django.core.exceptions import ValidationError
 
 from .models import BlogPost, BlogCategory, BlogPostVideo
 from .forms import BlogPostForm
-from .validators import validate_video_file
 
 import re
 from datetime import datetime
