@@ -16,11 +16,16 @@
                                 <div class="overflow-auto">
                                     {{ field.label }}
                                     {{ field }}
+                                    {{ field.errors }}
                                 </div>
                                 {% else %}
                                     {{ field.label }}
                                     {{ field }}
+                                    {{ field.errors }}
                                 {% endif %}
+                            {% endfor %}
+                            {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
                             {% endfor %}
                             <div class="text-center">
                                 <a href="{% url 'blog' %}">

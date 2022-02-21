@@ -71,6 +71,7 @@ def add_post(request):
                 new_post = form.save()
                 for file in videos:
                     vid = BlogPostVideo(video=file)
+                    vid.full_clean()
                     vid.save()
                     new_post.video.add(vid)
                 new_post.save()
@@ -79,19 +80,19 @@ def add_post(request):
             else:
                 messages.error(request, "Please check you file upload types \
                                and blog content")
-                return redirect(reverse('add_post'))
         else:
             form = BlogPostForm()
-            template = "blog/add_post.html"
-            context = {
-                'title': 'Add Post',
-                'section': 'blog',
-                'form': form,
-            }
-            return render(request, template, context)
     else:
         messages.error(request, 'You are not authorised to add Blog posts')
         return redirect(reverse('home'))
+    template = "blog/add_post.html"
+    context = {
+        'title': 'Add Post',
+        'section': 'blog',
+        'form': form,
+    }
+    return render(request, template, context)
+
 
 
 @login_required
@@ -101,16 +102,7 @@ def post_preview(request, blog_id):
         blog_post = get_object_or_404(BlogPost, pk=blog_id)
         refer = request.META.get('HTTP_REFERER')
         refer = refer.split('/')[-2]
-        if blog_post.publish == False:
-            template = "blog/post_preview.html"
-            context = {
-                'title': f'Preview {blog_id}',
-                'section': 'blog',
-                'blog_post': blog_post,
-                'refer': refer,
-            }
-            return render(request, template, context)
-        else:
+        if blog_post.publish == True:
             messages.error(request, f"Blog post {blog_id} is already \
                 published")
             return redirect(reverse('blog'))
@@ -118,6 +110,14 @@ def post_preview(request, blog_id):
         messages.error(request, "You don't have the required permissions to \
                        view this page")
         return redirect(reverse('blog'))
+    template = "blog/post_preview.html"
+    context = {
+        'title': f'Preview {blog_id}',
+        'section': 'blog',
+        'blog_post': blog_post,
+        'refer': refer,
+    }
+    return render(request, template, context)
 
 
 @login_required
@@ -193,6 +193,7 @@ def edit_blog_post(request, blog_id):
                 form_blog_post.save()
                 for file in files:
                     vid = BlogPostVideo(video=file)
+                    vid.full_clean()
                     vid.save()
                     blog_post.video.add(vid)
                 form.save()
