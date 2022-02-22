@@ -1,99 +1,120 @@
 {% extends 'base.html' %}
 {% load param_tags %}
 {% block content %}
-    <div class="container-fluid bg-darker dark-content pt-3 pb-3">
-
+<div class="container-fluid bg-darker dark-content pt-3 pb-3">
+    <div class="container p-0">
         <!--Mobile Grid Display start-->
-        <div class="row d-md-none pr-1 pl-1">
+        <div class="row pr-1 pl-1">
             <div class="col-12 p-0 border border-bottom-0">
                 <div class="text-center p-0">
                     <a href="{% url 'admin_messages' %}" class="standard-link text-dark">
-                        <h3 class="mb-0 p-2 bg-secondary">Messages 
-                            {% if message_count > 0 %}<div class="counter"><small>{{ message_count }}</small></div>{% endif %}
+                        <h3 class="mb-0 p-2 bg-secondary">Messages
+                            {% if message_count > 0 %}<div class="counter"><small>{{ message_count }}</small></div>
+                            {% endif %}
                         </h3>
                     </a>
                 </div>
             </div>
             <div class="col-12 p-0 border border-top-0">
+                <form id="ajax-form">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <select class="custom-select border-bottom-0" name="action" id="id-action">
+                            <option selected value="none">Select Action...</option>
+                            <option value="respond">Mark Responded</option>
+                            <option value="read">Mark Read</option>
+                            <option value="delete">Delete All</option>
+                        </select>
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary rounded-0 border-top border-left" type="button"
+                                id="id-ajax-go">Go</button>
+                        </div>
+                    </div>
+                </form>
                 <table class="table bg-light table-hover mb-0">
                     <tr class="bg-secondary">
-                        <th scope="col" class="w-13"><input type="checkbox" id="master-message-checkbox-mobile"></th>
+                        <th scope="col" class="w-13"><input type="checkbox" id="master-message-checkbox"></th>
                         <th scope="col">Name</th>
                         <th scope="col">Responded</th>
                         <th scope="col">Date</th>
                     </tr>
                     {% if not site_messages %}
-                        <tr>
-                            <td></td>
-                            <td> No Messages</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                    <tr>
+                        <td></td>
+                        <td> No Messages</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                     {% endif %}
                     {% for message in site_messages %}
-                        <tr>
-                            <td><input type="checkbox" data-id="{{ message.id }}" class="message-checkbox-mobile"></td>
-                            <td>
-                                {% if message.read %}
-                                    <a href="{% url 'view_message' message.id %}" class="text-secondary">{{ message.name }}</a>
-                                {% else %}
-                                    <strong><a href="{% url 'view_message' message.id %}">{{ message.name }}</a></strong>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if message.responded %}
-                                    <i class="fas fa-check fa-lg text-success"></i>
-                                {% else %}
-                                    <i class="fas fa-times fa-lg text-danger"></i>
-                                {% endif %}
-                            </td>
-                            <td><small>{{ message.received_on }}</small></td>
-                        </tr>
+                    <tr>
+                        <td><input type="checkbox" data-id="{{ message.id }}" class="message-checkbox"></td>
+                        <td>
+                            {% if message.read %}
+                            <a href="{% url 'view_message' message.id %}" class="text-secondary">{{ message.name }}</a>
+                            {% else %}
+                            <strong><a href="{% url 'view_message' message.id %}">{{ message.name }}</a></strong>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if message.responded %}
+                            <i class="fas fa-check fa-lg text-success"></i>
+                            {% else %}
+                            <i class="fas fa-times fa-lg text-danger"></i>
+                            {% endif %}
+                        </td>
+                        <td><small>{{ message.received_on }}</small></td>
+                    </tr>
                     {% endfor %}
                 </table>
                 <!-- message pagination bar start -->
                 {% if site_messages.paginator.page_range|length > 1 %}
-                    <div class="container-fluid pt-2 bg-off-white border-top">
-                        <div class="row">
-                            <nav class="mx-auto">
-                                <ul class="pagination mb-2">
-                                    {% if site_messages.has_previous %}
-                                        <li class="page-item">
-                                            <a class="page-link" href="?{% param_replace page=site_messages.previous_page_number %}" tabindex="-1">&laquo;</a>
-                                        </li>
-                                    {% else %}
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" tabindex="-1">&laquo;</a>
-                                        </li>
-                                    {% endif %}
-                                    {% for pg in site_messages.paginator.page_range %}
-                                        {% if site_messages.number == pg %}
-                                            <li class="page-item active"><a class="page-link" href="?{% param_replace page=pg %}">{{ pg }}</a></li>
-                                        {% elif pg > site_messages.number|add:-3 and pg < site_messages.number|add:3 %}
-                                            <li class="page-item"><a class="page-link" href="?{% param_replace page=pg %}">{{ pg }}</a></li>
-                                        {% endif %}
-                                    {% endfor %}
-                                    {% if site_messages.has_next %}
-                                        <li class="page-item">
-                                            <a class="page-link" href="?{% param_replace page=site_messages.next_page_number %}" tabindex="-1">&raquo;</a>
-                                        </li>
-                                    {% else %}
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" tabindex="-1">&raquo;</a>
-                                        </li>
-                                    {% endif %}
-                                </ul>
-                            </nav>
-                        </div>
+                <div class="container-fluid pt-2 bg-off-white border-top">
+                    <div class="row">
+                        <nav class="mx-auto">
+                            <ul class="pagination mb-2">
+                                {% if site_messages.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?{% param_replace page=site_messages.previous_page_number %}"
+                                        tabindex="-1">&laquo;</a>
+                                </li>
+                                {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">&laquo;</a>
+                                </li>
+                                {% endif %}
+                                {% for pg in site_messages.paginator.page_range %}
+                                {% if site_messages.number == pg %}
+                                <li class="page-item active"><a class="page-link"
+                                        href="?{% param_replace page=pg %}">{{ pg }}</a></li>
+                                {% elif pg > site_messages.number|add:-3 and pg < site_messages.number|add:3 %}
+                                <li class="page-item"><a class="page-link" href="?{% param_replace page=pg %}">{{ pg }}</a>
+                                </li>
+                                {% endif %}
+                                {% endfor %}
+                                {% if site_messages.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?{% param_replace page=site_messages.next_page_number %}"
+                                        tabindex="-1">&raquo;</a>
+                                </li>
+                                {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">&raquo;</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
                     </div>
+                </div>
                 {% endif %}
                 <!-- message pagination bar end -->
             </div>
             <div class="col-12 p-0 border border-top-0">
                 <div class="text-center p-0">
                     <a href="{% url 'admin_callbacks' %}" class="standard-link">
-                        <h3 class="mb-0 p-2">Callbacks 
-                            {% if callback_count > 0 %}<div class="counter"><small>{{ callback_count }}</small></div>{% endif %}
+                        <h3 class="mb-0 p-2">Callbacks
+                            {% if callback_count > 0 %}<div class="counter"><small>{{ callback_count }}</small></div>
+                            {% endif %}
                         </h3>
                     </a>
                 </div>
@@ -101,7 +122,7 @@
             <div class="col-12 p-0 border border-top-0">
                 <div class="text-center p-0">
                     <a href="{% url 'admin_reviews' %}" class="standard-link">
-                        <h3 class="mb-0 p-2">Reviews 
+                        <h3 class="mb-0 p-2">Reviews
                             {% if review_count > 0 %}<div class="counter"><small>{{ review_count }}</small></div>{% endif %}
                         </h3>
                     </a>
@@ -110,148 +131,36 @@
             <div class="col-12 p-0 border border-top-0">
                 <div class="text-center p-0">
                     <a href="{% url 'admin_blog_posts' %}" class="standard-link">
-                        <h3 class="mb-0 p-2">Blog Posts 
-                            {% if blog_count > 0 %}<div class="counter"><small>{{ blog_count }}</small></div>{% endif %}
+                        <h3 class="mb-0 p-2">Blog Posts
+                            {% if blog_count > 0 %}<small> ({{ blog_count }})</small>{% endif %}
                         </h3>
                     </a>
                 </div>
             </div>
         </div>
         <!--Mobile Grid Display end-->
-
-        <!--Desktop Grid Display start-->
-        <div class="row d-none d-md-flex pr-1 pl-1">
-            <div class="col-3 p-0">
-                <div class="text-center p-0 border">
-                    <a href="{% url 'admin_messages' %}" class="standard-link text-dark">
-                        <h3 class="mb-0 p-2 bg-secondary">Messages 
-                            {% if message_count > 0 %}<div class="counter"><small>{{ message_count }}</small></div>{% endif %}
-                        </h3>
-                    </a>
-                </div>
-                <div class="text-center p-0 border">
-                    <a href="{% url 'admin_callbacks' %}" class="standard-link">
-                        <h3 class="mb-0 p-2">Callbacks 
-                            {% if callback_count > 0 %}<div class="counter"><small>{{ callback_count }}</small></div>{% endif %}
-                        </h3>
-                    </a>
-                </div>
-                <div class="text-center p-0 border">
-                    <a href="{% url 'admin_reviews' %}" class="standard-link">
-                        <h3 class="mb-0 p-2">Reviews 
-                            {% if review_count > 0 %}<div class="counter"><small>{{ review_count }}</small></div>{% endif %}
-                        </h3>
-                    </a>
-                </div>
-                <div class="text-center p-0 border">
-                    <a href="{% url 'admin_blog_posts' %}" class="standard-link">
-                        <h3 class="mb-0 p-2">Blog Posts 
-                            {% if blog_count > 0 %}<div class="counter"><small>{{ blog_count }}</small></div>{% endif %}
-                        </h3>
-                    </a>
-                </div>
-            </div>
-            <div class="col-9 p-0 border">
-                <table class="table bg-light table-hover mb-0">
-                    <tr class="bg-secondary">
-                        <th scope="col" class="w-13"><input type="checkbox" id="master-message-checkbox-desktop"></th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Responded</th>
-                        <th scope="col">Date</th>
-                    </tr>
-                    {% if not site_messages %}
-                        <tr>
-                            <td></td>
-                            <td> No Messages</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    {% endif %}
-                    {% for message in site_messages %}
-                        <tr>
-                            <td><input type="checkbox" data-id="{{ message.id }}" class="message-checkbox-desktop"></td>
-                            <td>
-                                {% if message.read %}
-                                    <a href="{% url 'view_message' message.id %}" class="text-secondary">{{ message.name }}</a>
-                                {% else %}
-                                    <strong><a href="{% url 'view_message' message.id %}">{{ message.name }}</a></strong>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if message.responded %}
-                                    <i class="fas fa-check fa-lg text-success"></i>
-                                {% else %}
-                                    <i class="fas fa-times fa-lg text-danger"></i>
-                                {% endif %}
-                            </td>
-                            <td><small>{{ message.received_on }}</small></td>
-                        </tr>
-                    {% endfor %}
-                </table>
-                <!-- message pagination bar start -->
-                {% if site_messages.paginator.page_range|length > 1 %}
-                    <div class="container-fluid pt-2 bg-off-white border-top">
-                        <div class="row">
-                            <nav class="mx-auto">
-                                <ul class="pagination mb-2">
-                                    {% if site_messages.has_previous %}
-                                        <li class="page-item">
-                                            <a class="page-link" href="?{% param_replace page=site_messages.previous_page_number %}" tabindex="-1">&laquo;</a>
-                                        </li>
-                                    {% else %}
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" tabindex="-1">&laquo;</a>
-                                        </li>
-                                    {% endif %}
-                                    {% for pg in site_messages.paginator.page_range %}
-                                        {% if site_messages.number == pg %}
-                                            <li class="page-item active"><a class="page-link" href="?{% param_replace page=pg %}">{{ pg }}</a></li>
-                                        {% elif pg > site_messages.number|add:-3 and pg < site_messages.number|add:3 %}
-                                            <li class="page-item"><a class="page-link" href="?{% param_replace page=pg %}">{{ pg }}</a></li>
-                                        {% endif %}
-                                    {% endfor %}
-                                    {% if site_messages.has_next %}
-                                        <li class="page-item">
-                                            <a class="page-link" href="?{% param_replace page=site_messages.next_page_number %}" tabindex="-1">&raquo;</a>
-                                        </li>
-                                    {% else %}
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" tabindex="-1">&raquo;</a>
-                                        </li>
-                                    {% endif %}
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                {% endif %}
-                <!-- message pagination bar end -->
-            </div>
-        </div>
-        <!--Desktop Grid Display end-->
     </div>
+</div>
 
 {% endblock %}
 
 {% block postload_js %}
 {{ block.super }}
 <script>
-    $(document).ready(function() {
-        $('#master-message-checkbox-mobile').click(function() {
-            checkAll('message', 'mobile')
-        });
-        $('#master-message-checkbox-desktop').click(function() {
-            checkAll('message', 'desktop')
+    $(document).ready(function () {
+        $('#master-message-checkbox').click(function () {
+            checkAll('message')
         });
 
-        function checkAll(type, platform) {
-            let master_string = '#master-' + type + '-checkbox-' + platform;
+        function checkAll(type) {
+            let master_string = '#master-' + type + '-checkbox';
             let master = $(master_string);
-            let checkbox_string = '.' + type + '-checkbox-' + platform;
+            let checkbox_string = '.' + type + '-checkbox';
             let checkbox = $(checkbox_string);
             if (master.is(':checked')) {
-                $('.' + type + '-checkbox-' + platform).prop('checked', true);
+                $('.' + type + '-checkbox').prop('checked', true);
             } else {
-                $('.' + type + '-checkbox-' + platform).prop('checked', false);
+                $('.' + type + '-checkbox').prop('checked', false);
             }
         }
     });

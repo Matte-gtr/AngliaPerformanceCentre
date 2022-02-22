@@ -100,7 +100,7 @@ def post_preview(request, blog_id):
         blog_post = get_object_or_404(BlogPost, pk=blog_id)
         refer = request.META.get('HTTP_REFERER')
         refer = refer.split('/')[-2]
-        if blog_post.publish == True:
+        if blog_post.publish is True:
             messages.info(request, f"Blog post {blog_id} is already \
                 published")
             return redirect(reverse('blog'))

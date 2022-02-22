@@ -90,6 +90,9 @@
                 <!--User options/cart button-->
                 <div class="btn-group">
                     <div class="btn-group dropleft" role="group">
+                        {% if total_ur_count > 0 %}
+                        <div class="total-count">{{ total_ur_count }}</div>
+                        {% endif %}
                         <button type="button" class="btn btn-pro-cart dropdown-toggle dropdown-toggle-split apc-border"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-user"></i>
@@ -100,7 +103,7 @@
                                 <a href="{% url 'account_logout' %}"><button class="dropdown-item" type="button">Sign Out</button></a>
                                 <a href="{% url 'profile' %}"><button class="dropdown-item" type="button">Profile</button></a>
                                 {% if user.is_staff %}
-                                    <a href="{% url 'admin_messages' %}"><button class="dropdown-item" type="button">Admin</button></a>
+                                    <a href="{% url 'admin_messages' %}"><button class="dropdown-item" type="button">Admin{% if total_ur_count > 0 %} ({{ total_ur_count }}){% endif %}</button></a>
                                 {% endif %}
                             {% else %}
                                 <a href="{% url 'account_login' %}"><button class="dropdown-item" type="button">Sign In</button></a>
@@ -133,6 +136,7 @@
                 <li class="p-0 ml-auto">
                     <div class="btn-group mobile-float">
                         <div class="btn-group dropleft" role="group">
+                            <div class="total-count">{{ total_ur_count }}</div>
                             <button type="button" class="btn btn-pro-cart dropdown-toggle dropdown-toggle-split apc-border"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-user"></i>
@@ -143,7 +147,7 @@
                                     <a href="{% url 'account_logout' %}"><button class="dropdown-item" type="button">Sign Out</button></a>
                                     <a href="{% url 'profile' %}"><button class="dropdown-item" type="button">Profile</button></a>
                                     {% if user.is_staff %}
-                                        <a href="{% url 'admin_messages' %}"><button class="dropdown-item" type="button">Admin</button></a>
+                                        <a href="{% url 'admin_messages' %}"><button class="dropdown-item" type="button">Admin ({{ total_ur_count }})</button></a>
                                     {% endif %}
                                 {% else %}
                                     <a href="{% url 'account_login' %}"><button class="dropdown-item" type="button">Sign In</button></a>

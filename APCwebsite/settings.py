@@ -119,6 +119,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
+                'home.context_processors.get_notifications_to_context',
             ],
             'builtins': [
                 'crispy_forms.templatetags.crispy_forms_tags',

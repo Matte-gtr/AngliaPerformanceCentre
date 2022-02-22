@@ -2,64 +2,81 @@
 {% load param_tags %}
 {% block content %}
 <div class="container-fluid bg-darker dark-content pt-3 pb-3">
+    <div class="container p-0">
 
-    <!--Mobile Grid Display start-->
-    <div class="row d-md-none pr-1 pl-1">
-        <div class="col-12 p-0 border border-bottom-0">
-            <div class="text-center p-0">
-                <a href="{% url 'admin_messages' %}" class="standard-link">
-                    <h3 class="mb-0 p-2">Messages 
-                        {% if message_count > 0 %}<div class="counter"><small>{{ message_count }}</small></div>{% endif %}
-                    </h3>
-                </a>
+        <!--Mobile Grid Display start-->
+        <div class="row pr-1 pl-1">
+            <div class="col-12 p-0 border border-bottom-0">
+                <div class="text-center p-0">
+                    <a href="{% url 'admin_messages' %}" class="standard-link">
+                        <h3 class="mb-0 p-2">Messages
+                            {% if message_count > 0 %}<div class="counter"><small>{{ message_count }}</small></div>
+                            {% endif %}
+                        </h3>
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="col-12 p-0 border border-bottom-0">
-            <div class="text-center p-0">
-                <a href="{% url 'admin_callbacks' %}" class="standard-link">
-                    <h3 class="mb-0 p-2">Callbacks 
-                        {% if callback_count > 0 %}<div class="counter"><small>{{ callback_count }}</small></div>{% endif %}
-                    </h3>
-                </a>
+            <div class="col-12 p-0 border border-bottom-0">
+                <div class="text-center p-0">
+                    <a href="{% url 'admin_callbacks' %}" class="standard-link">
+                        <h3 class="mb-0 p-2">Callbacks
+                            {% if callback_count > 0 %}<div class="counter"><small>{{ callback_count }}</small></div>
+                            {% endif %}
+                        </h3>
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="col-12 p-0 border border-bottom-0">
-            <div class="text-center p-0">
-                <a href="{% url 'admin_reviews' %}" class="standard-link">
-                    <h3 class="mb-0 p-2">Reviews 
-                        {% if review_count > 0 %}<div class="counter"><small>{{ review_count }}</small></div>{% endif %}
-                    </h3>
-                </a>
+            <div class="col-12 p-0 border border-bottom-0">
+                <div class="text-center p-0">
+                    <a href="{% url 'admin_reviews' %}" class="standard-link">
+                        <h3 class="mb-0 p-2">Reviews
+                            {% if review_count > 0 %}<div class="counter"><small>{{ review_count }}</small></div>{% endif %}
+                        </h3>
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="col-12 p-0 border border-bottom-0">
-            <div class="text-center p-0">
-                <a href="{% url 'admin_blog_posts' %}" class="standard-link text-dark">
-                    <h3 class="mb-0 p-2 bg-secondary">Blog Posts 
-                        {% if blog_count > 0 %}<div class="counter"><small>{{ blog_count }}</small></div>{% endif %}
-                    </h3>
-                </a>
+            <div class="col-12 p-0 border border-bottom-0">
+                <div class="text-center p-0">
+                    <a href="{% url 'admin_blog_posts' %}" class="standard-link text-dark">
+                        <h3 class="mb-0 p-2 bg-secondary">Blog Posts
+                            {% if blog_count > 0 %}<small> ({{ blog_count }})</small>{% endif %}
+                        </h3>
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="col-12 p-0 border border-top-0">
-            <table class="table bg-light table-hover mb-0">
-                <tr class="bg-secondary">
-                    <th scope="col" class="w-13"><input type="checkbox" id="master-blog_post-checkbox-mobile"></th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Date</th>
-                </tr>
-                {% if not blog_posts %}
+            <div class="col-12 p-0 border border-top-0">
+                <form id="ajax-form">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <select class="custom-select border-bottom-0" name="action" id="id-action">
+                            <option selected value="none">Select Action...</option>
+                            <option value="publish">Publish All</option>
+                            <option value="delete">Delete All</option>
+                        </select>
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary rounded-0 border-top border-left" type="button"
+                                id="id-ajax-go">Go</button>
+                        </div>
+                    </div>
+                </form>
+                <table class="table bg-light table-hover mb-0">
+                    <tr class="bg-secondary">
+                        <th scope="col" class="w-13"><input type="checkbox" id="master-blog-post-checkbox"></th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                    {% if not blog_posts %}
                     <tr>
                         <td></td>
                         <td> No Un-published Blog Posts</td>
                         <td></td>
                         <td></td>
                     </tr>
-                {% endif %}
-                {% for post in blog_posts %}
+                    {% endif %}
+                    {% for post in blog_posts %}
                     <tr>
-                        <td><input type="checkbox" data-id="{{ post.id }}" class="blog_post-checkbox-mobile"></td>
+                        <td><input type="checkbox" data-id="{{ post.id }}" class="blog-post-checkbox"></td>
                         <td>
                             <a href="{% url 'post_preview' post.id %}" class="font-weight-bold">{{ post.post_title }}</a>
                         </td>
@@ -68,176 +85,106 @@
                         </td>
                         <td><small>{{ post.added_on }}</small></td>
                     </tr>
-                {% endfor %}
-            </table>
-            <!-- blog_post pagination bar start -->
-            {% if blog_posts.paginator.page_range|length > 1 %}
+                    {% endfor %}
+                </table>
+                <!-- blog_post pagination bar start -->
+                {% if blog_posts.paginator.page_range|length > 1 %}
                 <div class="container-fluid pt-2 bg-off-white border-top">
                     <div class="row">
                         <nav class="mx-auto">
                             <ul class="pagination mb-2">
                                 {% if blog_posts.has_previous %}
-                                    <li class="page-item">
-                                        <a class="page-link" href="?{% param_replace page=blog_posts.previous_page_number %}#headingTwo" tabindex="-1">&laquo;</a>
-                                    </li>
+                                <li class="page-item">
+                                    <a class="page-link"
+                                        href="?{% param_replace page=blog_posts.previous_page_number %}#headingTwo"
+                                        tabindex="-1">&laquo;</a>
+                                </li>
                                 {% else %}
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1">&laquo;</a>
-                                    </li>
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">&laquo;</a>
+                                </li>
                                 {% endif %}
                                 {% for pg in blog_posts.paginator.page_range %}
-                                    {% if blog_posts.number == pg %}
-                                        <li class="page-item active"><a class="page-link" href="?{% param_replace page=pg %}#headingTwo">{{ pg }}</a></li>
-                                    {% elif pg > blog_posts.number|add:-3 and pg < blog_posts.number|add:3 %}
-                                        <li class="page-item"><a class="page-link" href="?{% param_replace page=pg %}#headingTwo">{{ pg }}</a></li>
-                                    {% endif %}
+                                {% if blog_posts.number == pg %}
+                                <li class="page-item active"><a class="page-link"
+                                        href="?{% param_replace page=pg %}#headingTwo">{{ pg }}</a></li>
+                                {% elif pg > blog_posts.number|add:-3 and pg < blog_posts.number|add:3 %}
+                                <li class="page-item"><a class="page-link"
+                                        href="?{% param_replace page=pg %}#headingTwo">{{ pg }}</a></li>
+                                {% endif %}
                                 {% endfor %}
                                 {% if blog_posts.has_next %}
-                                    <li class="page-item">
-                                        <a class="page-link" href="?{% param_replace page=blog_posts.next_page_number %}#headingTwo" tabindex="-1">&raquo;</a>
-                                    </li>
+                                <li class="page-item">
+                                    <a class="page-link"
+                                        href="?{% param_replace page=blog_posts.next_page_number %}#headingTwo"
+                                        tabindex="-1">&raquo;</a>
+                                </li>
                                 {% else %}
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1">&raquo;</a>
-                                    </li>
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">&raquo;</a>
+                                </li>
                                 {% endif %}
                             </ul>
                         </nav>
                     </div>
                 </div>
-            {% endif %}
-            <!-- blog_post pagination bar end -->
-        </div>
-    </div>
-    <!--Mobile Grid Display end-->
-
-    <!--Desktop Grid Display start-->
-    <div class="row d-none d-md-flex pr-1 pl-1">
-        <div class="col-3 p-0">
-            <div class="text-center p-0 border">
-                <a href="{% url 'admin_messages' %}" class="standard-link">
-                    <h3 class="mb-0 p-2">Messages 
-                        {% if message_count > 0 %}<div class="counter"><small>{{ message_count }}</small></div>{% endif %}
-                    </h3>
-                </a>
-            </div>
-            <div class="text-center p-0 border">
-                <a href="{% url 'admin_callbacks' %}" class="standard-link text-dark">
-                    <h3 class="mb-0 p-2 bg-secondary">Callbacks 
-                        {% if callback_count > 0 %}<div class="counter"><small>{{ callback_count }}</small></div>{% endif %}
-                    </h3>
-                </a>
-            </div>
-            <div class="text-center p-0 border">
-                <a href="{% url 'admin_reviews' %}" class="standard-link">
-                    <h3 class="mb-0 p-2">Reviews 
-                        {% if review_count > 0 %}<div class="counter"><small>{{ review_count }}</small></div>{% endif %}
-                    </h3>
-                </a>
-            </div>
-            <div class="text-center p-0 border">
-                <a href="{% url 'admin_blog_posts' %}" class="standard-link">
-                    <h3 class="mb-0 p-2">Blog Posts 
-                        {% if blog_count > 0 %}<div class="counter"><small>{{ blog_count }}</small></div>{% endif %}
-                    </h3>
-                </a>
-            </div>
-        </div>
-        <div class="col-9 p-0 border">
-            <table class="table bg-light table-hover mb-0">
-                <tr class="bg-secondary">
-                    <th scope="col" class="w-13"><input type="checkbox" id="master-blog_post-checkbox-desktop"></th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Date</th>
-                </tr>
-                {% if not blog_posts %}
-                    <tr>
-                        <td></td>
-                        <td> No Un-published Blog Posts</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
                 {% endif %}
-                {% for post in blog_posts %}
-                    <tr>
-                        <td><input type="checkbox" data-id="{{ post.id }}" class="blog_post-checkbox-desktop"></td>
-                        <td>
-                            <a href="{% url 'post_preview' post.id %}" class="font-weight-bold">{{ post.post_title }}</a>
-                        </td>
-                        <td>
-                            {{ post.category.friendly_name }}
-                        </td>
-                        <td><small>{{ post.added_on }}</small></td>
-                    </tr>
-                {% endfor %}
-            </table>
-            <!-- blog_post pagination bar start -->
-            {% if blog_posts.paginator.page_range|length > 1 %}
-                <div class="container-fluid pt-2 bg-off-white border-top">
-                    <div class="row">
-                        <nav class="mx-auto">
-                            <ul class="pagination mb-2">
-                                {% if blog_posts.has_previous %}
-                                    <li class="page-item">
-                                        <a class="page-link" href="?{% param_replace page=blog_posts.previous_page_number %}#headingTwo" tabindex="-1">&laquo;</a>
-                                    </li>
-                                {% else %}
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1">&laquo;</a>
-                                    </li>
-                                {% endif %}
-                                {% for pg in blog_posts.paginator.page_range %}
-                                    {% if blog_posts.number == pg %}
-                                        <li class="page-item active"><a class="page-link" href="?{% param_replace page=pg %}#headingTwo">{{ pg }}</a></li>
-                                    {% elif pg > blog_posts.number|add:-3 and pg < blog_posts.number|add:3 %}
-                                        <li class="page-item"><a class="page-link" href="?{% param_replace page=pg %}#headingTwo">{{ pg }}</a></li>
-                                    {% endif %}
-                                {% endfor %}
-                                {% if blog_posts.has_next %}
-                                    <li class="page-item">
-                                        <a class="page-link" href="?{% param_replace page=blog_posts.next_page_number %}#headingTwo" tabindex="-1">&raquo;</a>
-                                    </li>
-                                {% else %}
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1">&raquo;</a>
-                                    </li>
-                                {% endif %}
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            {% endif %}
-            <!-- blog_post pagination bar end -->
+                <!-- blog_post pagination bar end -->
             </div>
         </div>
-        <!--Desktop Grid Display end-->
+        <!--Mobile Grid Display end-->
     </div>
-
+</div>
 {% endblock %}
 
 {% block postload_js %}
 {{ block.super }}
 <script>
-    $(document).ready(function() {
-        $('#master-blog_post-checkbox-mobile').click(function() {
-            checkAll('blog_post', 'mobile')
-        });
-        $('#master-blog_post-checkbox-desktop').click(function() {
-            checkAll('blog_post', 'desktop')
+    $(document).ready(function () {
+        $('#master-blog-post-checkbox').click(function () {
+            checkAll('blog-post')
         });
 
-        function checkAll(type, platform) {
-            let master_string = '#master-' + type + '-checkbox-' + platform;
+        function checkAll(type) {
+            let master_string = '#master-' + type + '-checkbox';
             let master = $(master_string);
-            let checkbox_string = '.' + type + '-checkbox-' + platform;
+            let checkbox_string = '.' + type + '-checkbox';
             let checkbox = $(checkbox_string);
             if (master.is(':checked')) {
-                $('.' + type + '-checkbox-' + platform).prop('checked', true);
+                $('.' + type + '-checkbox').prop('checked', true);
             } else {
-                $('.' + type + '-checkbox-' + platform).prop('checked', false);
+                $('.' + type + '-checkbox').prop('checked', false);
             }
         }
+
+        $('#id-ajax-go').click(function () {
+            let idList = [];
+            let item = "blog-post" /* blog-post or messages or callbacks or reviews */
+            let csrf = $('#ajax-form').children('input[name=csrfmiddlewaretoken]').val();
+            let action = $('#id-action').val(); /* "none", "delete", "publish", "read", "respond", "approve" */
+
+            $(':checkbox:checked').not($('#master-blog-post-checkbox')).each(function (i) {
+                idList[i] = $(this).data('id');
+            });
+            console.log(idList);
+            console.log(item);
+            console.log(action);
+            console.log(csrf);
+            /*$.ajax({
+                    url: "",
+                    method: "POST",
+                    data: {
+                        item: item,
+                        action: action,
+                        id_list: idList,
+                        csrfToken: csrf,
+                    },
+                    success: function(response) {
+                        console.log("anything");
+                    }
+                })*/
+        });
+
     });
 </script>
 {% endblock %}
