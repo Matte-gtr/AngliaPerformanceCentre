@@ -54,7 +54,7 @@
                             <option value="delete">Delete All</option>
                         </select>
                         <div class="input-group-append">
-                            <button class="btn btn-secondary rounded-0 border-top border-left" type="button"
+                            <button class="btn btn-secondary rounded-0 border-top border-left" type="submit"
                                 id="id-ajax-go">Go</button>
                         </div>
                     </div>
@@ -157,34 +157,38 @@
             }
         }
 
-        $('#id-ajax-go').click(function () {
+        $('#id-ajax-go').click(function (e) {
+            e.preventDefault();
             let idList = [];
-            let item = "blog-post" /* blog-post or messages or callbacks or reviews */
+            let form = $('#ajax-form');
+            let item = "blog-post"; /* blog-post or message or callback or review */
             let csrf = $('#ajax-form').children('input[name=csrfmiddlewaretoken]').val();
             let action = $('#id-action').val(); /* "none", "delete", "publish", "read", "respond", "approve" */
+            let url = "";
 
             $(':checkbox:checked').not($('#master-blog-post-checkbox')).each(function (i) {
                 idList[i] = $(this).data('id');
             });
-            console.log(idList);
-            console.log(item);
-            console.log(action);
-            console.log(csrf);
-            /*$.ajax({
-                    url: "",
-                    method: "POST",
-                    data: {
-                        item: item,
-                        action: action,
-                        id_list: idList,
-                        csrfToken: csrf,
-                    },
-                    success: function(response) {
-                        console.log("anything");
-                    }
-                })*/
+            idList = JSON.stringify({ 'idList': idList});
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    item: item,
+                    action: action,
+                    id_list: idList,
+                    csrfmiddlewaretoken: csrf,
+                },
+                success: function(response) {
+                    console.log(response);
+                    location.reload();
+                },
+                error: function(error) {
+                    console.log(error);
+                    location.reload();
+                }
+            });
         });
-
     });
 </script>
 {% endblock %}

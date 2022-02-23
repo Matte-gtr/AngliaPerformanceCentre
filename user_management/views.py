@@ -5,11 +5,14 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.core.mail import send_mail, BadHeaderError
+from django.http import JsonResponse
 
 from contact.models import Message, Callback
 from testimonials.models import Review
 from blog.models import BlogPost
 from contact.forms import MessageResponseForm
+
+import json
 
 
 def paginator_helper(request, object_list, per_page):
@@ -17,6 +20,7 @@ def paginator_helper(request, object_list, per_page):
     page_number = request.GET.get('page')
     page_object = paginator.get_page(page_number)
     return page_object
+
 
 @login_required
 def profile(request):
@@ -123,26 +127,65 @@ def admin_reviews(request):
 def admin_blog_posts(request):
     """ a view to display a list of unpublished blog posts """
     if request.user.is_staff:
-        message_count = Message.objects.filter(read=False).count
-        callback_count = Callback.objects.filter(read=False).count
-        review_count = Review.objects.filter(read=False).count
-        blog_count = BlogPost.objects.filter(publish=False).count
-        blog_posts = paginator_helper(request,
-                                      BlogPost.objects.
-                                      filter(publish=False).
-                                      order_by('-added_on'),
-                                      10)
-        template = "user_management/admin_blog_posts.html"
-        context = {
-            'title': 'admin blog posts',
-            'section': 'user_management',
-            'message_count': message_count,
-            'callback_count': callback_count,
-            'review_count': review_count,
-            'blog_count': blog_count,
-            'blog_posts': blog_posts,
-        }
-        return render(request, template, context)
+        if request.is_ajax():
+            item = request.POST.get('item')  # blog-post
+            action = request.POST.get('action')  # delete, publish
+            id_list = request.POST.get('id_list')  # [1, 2 ,3 ]
+            id_object = json.loads(id_list)
+            for key, value in id_object.items():
+                id_final = value
+            count = 0
+            for obj_id in id_final:
+                if action == "delete":
+                    post = get_object_or_404(BlogPost, pk=obj_id)
+                    try:
+                        post.delete()
+                        count += 1
+                        result = "deleted"
+                    except Exception as err:
+                        messages.error(request, f"Error deleting post: {err}")
+                elif action == "publish":
+                    post = get_object_or_404(BlogPost, pk=obj_id)
+                    post.publish = True
+                    post.save(update_fields=['publish'])
+                    count += 1
+                    result = "published"
+                else:
+                    data = {}
+            data = {}
+            data[item] = item
+            data[action] = action
+            data[id_list] = id_list
+            if count > 1:
+                messages.success(request, f"{count} post {result}")
+            else:
+                messages.success(request, f"{count} posts {result}")
+            return JsonResponse(data)
+        else:
+            message_count = Message.objects.filter(read=False).count
+            callback_count = Callback.objects.filter(read=False).count
+            review_count = Review.objects.filter(read=False).count
+            blog_count = BlogPost.objects.filter(publish=False).count
+            blog_posts = paginator_helper(request,
+                                          BlogPost.objects.
+                                          filter(publish=False).
+                                          order_by('-added_on'),
+                                          10)
+            template = "user_management/admin_blog_posts.html"
+            context = {
+                'title': 'admin blog posts',
+                'section': 'user_management',
+                'message_count': message_count,
+                'callback_count': callback_count,
+                'review_count': review_count,
+                'blog_count': blog_count,
+                'blog_posts': blog_posts,
+            }
+            return render(request, template, context)
+    else:
+        messages.warning(request, "You don't have the required permissions to\
+                         view this page")
+        return redirect(reverse('home'))
 
 
 @login_required
