@@ -133,6 +133,13 @@
             </div>
         </div>
         <!--Mobile Grid Display end-->
+        <div class="row">
+            <div class="col-12">
+                <div id="error-container">
+    
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
@@ -169,6 +176,15 @@
             $(':checkbox:checked').not($('#master-blog-post-checkbox')).each(function (i) {
                 idList[i] = $(this).data('id');
             });
+            if (idList.length == 0) {
+                $('#error-container').text("No items have been selected")
+                console.log("No items have been selected");
+                return
+            } else if (action == "none") {
+                $('#error-container').text("No action has been selected")
+                console.log("No action has been selected")
+                return
+            }
             idList = JSON.stringify({ 'idList': idList});
             $.ajax({
                 type: "POST",
@@ -185,7 +201,6 @@
                 },
                 error: function(error) {
                     console.log(error);
-                    location.reload();
                 }
             });
         });

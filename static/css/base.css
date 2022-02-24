@@ -775,6 +775,11 @@ nav ul li {
     color: #1a1a18;
 }
 
+#error-container {
+    color: #bb1f1f;
+    padding-top: 17px;
+}
+
 /*----------SERVICES (GENERAL)----------*/
 
 .card {

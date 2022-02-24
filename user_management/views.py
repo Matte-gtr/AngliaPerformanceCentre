@@ -157,9 +157,9 @@ def admin_blog_posts(request):
             data[action] = action
             data[id_list] = id_list
             if count > 1:
-                messages.success(request, f"{count} post {result}")
-            else:
                 messages.success(request, f"{count} posts {result}")
+            else:
+                messages.success(request, f"{count} post {result}")
             return JsonResponse(data)
         else:
             message_count = Message.objects.filter(read=False).count
