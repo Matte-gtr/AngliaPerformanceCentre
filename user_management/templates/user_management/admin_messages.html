@@ -204,15 +204,21 @@
             } else if (action == "none") {
                 $('#error-container').text("No action has been selected");
                 return
-            } else {
+            } else if (action == "delete" || action == "approve" || action == "publish") {
                 $('#confirmAction').text(`${action} messages`);
                 $('#confirmBody').text(`Are you sure you want to ${action} these messages?`);
-                $("#confirmActionModal").modal("show");                                                
+                $("#confirmActionModal").modal("show");
+            } else {
+                sendAjaxRequest();                                          
             }
         });
 
         $('#id-ajax-go').click(function (e) {
             e.preventDefault();
+            sendAjaxRequest();
+        });
+
+        function sendAjaxRequest() {
             let idList = [];
             let form = $('#ajax-form');
             let item = "message"; /* blog-post or message or callback or review */
@@ -241,7 +247,7 @@
                     console.log(error);
                 }
             });
-        });
+        }
     });
 </script>
 {% endblock %}

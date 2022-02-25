@@ -196,23 +196,29 @@
             } else if (action == "none") {
                 $('#error-container').text("No action has been selected");
                 return
+            } else if (action == "delete" || action == "approve" || action == "publish") {
+                $('#confirmAction').text(`${action} blog posts`);
+                $('#confirmBody').text(`Are you sure you want to ${action} these blog posts?`);
+                $("#confirmActionModal").modal("show");
             } else {
-                $('#confirmAction').text(`${action} blog posts`);                                     /* CHANGE */
-                $('#confirmBody').text(`Are you sure you want to ${action} these blog posts?`);       /* CHANGE */
-                $("#confirmActionModal").modal("show");                                                
+                sendAjaxRequest();
             }
         });
 
         $('#id-ajax-go').click(function (e) {
             e.preventDefault();
+            sendAjaxRequest();
+        });
+
+        function sendAjaxRequest() {
             let idList = [];
             let form = $('#ajax-form');
-            let item = "blog-post"; /* blog-post or message or callback or review */                  /* CHANGE */
+            let item = "blog-post"; /* blog-post or message or callback or review */
             let csrf = $('#ajax-form').children('input[name=csrfmiddlewaretoken]').val();
             let action = $('#id-action').val(); /* "none", "delete", "publish", "read", "unread", "respond", "unrespond", "approve" */
             let url = "";
 
-            $(':checkbox:checked').not($('#master-blog-post-checkbox')).each(function (i) {               /* CHANGE */
+            $(':checkbox:checked').not($('#master-blog-post-checkbox')).each(function (i) {
                 idList[i] = $(this).data('id');
             });
             idList = JSON.stringify({ 'idList': idList});
@@ -233,7 +239,8 @@
                     console.log(error);
                 }
             });
-        });
+        }
+            
     });
 </script>
 {% endblock %}
