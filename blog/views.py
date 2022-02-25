@@ -151,11 +151,13 @@ def delete_blog_post(request, blog_id, next_url="blog"):
                     try:
                         video.delete()
                     except Exception as e:
-                        messages.error(request, f"error deleting image: {e}")
+                        messages.error(request, f"error deleting blog \
+                            video: {e}")
             blog_post.delete()
-            messages.success(request, f"Blog post {blog_id} successfully deleted")
-        except Exception as e:
-            messages.error(request, f"error deleting blog post: {e}")
+            messages.success(request, f"Blog post {blog_id} successfully \
+                deleted")
+        except Exception as err:
+            messages.error(request, f"error deleting blog post: {err}")
     else:
         messages.warning(request, "You don't have the required permission \
                        to complete this action")

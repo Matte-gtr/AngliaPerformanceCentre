@@ -90,7 +90,7 @@
                 <!--User options/cart button-->
                 <div class="btn-group">
                     <div class="btn-group dropleft" role="group">
-                        {% if total_ur_count > 0 %}
+                        {% if total_ur_count and user.is_staff > 0 %}
                         <div class="total-count">{{ total_ur_count }}</div>
                         {% endif %}
                         <button type="button" class="btn btn-pro-cart dropdown-toggle dropdown-toggle-split apc-border"
@@ -136,7 +136,9 @@
                 <li class="p-0 ml-auto">
                     <div class="btn-group mobile-float">
                         <div class="btn-group dropleft" role="group">
+                            {% if total_ur_count > 0 and user.is_staff %}
                             <div class="total-count">{{ total_ur_count }}</div>
+                            {% endif %}
                             <button type="button" class="btn btn-pro-cart dropdown-toggle dropdown-toggle-split apc-border"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-user"></i>

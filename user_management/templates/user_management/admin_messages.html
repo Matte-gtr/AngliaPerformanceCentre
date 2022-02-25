@@ -22,12 +22,13 @@
                         <select class="custom-select border-bottom-0" name="action" id="id-action">
                             <option selected value="none">Select Action...</option>
                             <option value="respond">Mark Responded</option>
+                            <option value="unrespond">Mark Not Responded</option>
                             <option value="read">Mark Read</option>
-                            <option value="delete">Delete All</option>
+                            <option value="unread">Mark Unread</option>
+                            <option value="delete">Delete</option>
                         </select>
                         <div class="input-group-append">
-                            <button class="btn btn-secondary rounded-0 border-top border-left" type="button"
-                                id="id-ajax-go">Go</button>
+                            <button id="ModalProcess" type="button" class="btn request-btn rounded-0 border-top border-left" data-target="#confirmActionModal">Go</button>
                         </div>
                     </div>
                 </form>
@@ -139,9 +140,35 @@
             </div>
         </div>
         <!--Mobile Grid Display end-->
+        <div class="row">
+            <div class="col-12">
+                <div id="error-container">
+    
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
+<!-- Modal -->
+<div class="modal fade" id="confirmActionModal" tabindex="-1" role="dialog" aria-labelledby="confirmAction" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmAction"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="confirmBody">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn send-btn" data-dismiss="modal">CANCEL</button>
+                <button class="btn request-btn rounded-0 border-top border-left" type="submit" id="id-ajax-go">CONTINUE</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block postload_js %}
@@ -163,6 +190,58 @@
                 $('.' + type + '-checkbox').prop('checked', false);
             }
         }
+
+        $('#ModalProcess').click(function(e) {
+            e.preventDefault();
+            let idList = [];
+            $(':checkbox:checked').not($('#master-message-checkbox')).each(function (i) {
+                idList[i] = $(this).data('id');
+            });
+            let action = $('#id-action').val();
+            if (idList.length == 0) {
+                $('#error-container').text("No items have been selected");
+                return
+            } else if (action == "none") {
+                $('#error-container').text("No action has been selected");
+                return
+            } else {
+                $('#confirmAction').text(`${action} messages`);
+                $('#confirmBody').text(`Are you sure you want to ${action} these messages?`);
+                $("#confirmActionModal").modal("show");                                                
+            }
+        });
+
+        $('#id-ajax-go').click(function (e) {
+            e.preventDefault();
+            let idList = [];
+            let form = $('#ajax-form');
+            let item = "message"; /* blog-post or message or callback or review */
+            let csrf = $('#ajax-form').children('input[name=csrfmiddlewaretoken]').val();
+            let action = $('#id-action').val(); /* "none", "delete", "publish", "read", "unread", "respond", "unrespond", "approve" */
+            let url = "";
+
+            $(':checkbox:checked').not($('#master-message-checkbox')).each(function (i) {
+                idList[i] = $(this).data('id');
+            });
+            idList = JSON.stringify({ 'idList': idList});
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    item: item,
+                    action: action,
+                    id_list: idList,
+                    csrfmiddlewaretoken: csrf,
+                },
+                success: function(response) {
+                    location.reload();
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
     });
 </script>
 {% endblock %}
