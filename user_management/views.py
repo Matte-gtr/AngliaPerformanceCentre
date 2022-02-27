@@ -56,6 +56,7 @@ def process_ids(request, item, action, id_final):
                             video = get_object_or_404(BlogPostVideo, pk=item.pk)
                             try:
                                 video.delete()
+                                messages.success(request, "video deleted")
                             except Exception as err:
                                 messages.error(request, f"error deleting blog \
                                     video: {err}")

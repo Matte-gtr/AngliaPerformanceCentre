@@ -318,7 +318,7 @@
     </footer>
 
     {% if messages %}
-    <div class="message-container">
+    <div class="toast-position">
         {% for message in messages %}
         {% with message.level as level %}
         {% if level == 40 %}
@@ -347,7 +347,7 @@
                 function hidetoast () {
                     $('.toast').toast('hide');
                 };
-                setTimeout(hidetoast, 5000); 
+                setTimeout(hidetoast, 5000);
             });
             
             let headerHeight = document.getElementById("base-header").offsetHeight;

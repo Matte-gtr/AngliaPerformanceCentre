@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid bg-car bg-fixed dark-content p-0">
+    <div class="container-fluid dark-shadow pl-0 pr-0">
+        <div class="container pt-4">
+            <h2 class="pt-5">Edit Team Member</h2>
+            <hr class="hr-gold-short hr-left mb-5">
+            <form action="{% url 'edit_team_member' member.id %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form }}
+                <center class="pt-1 pb-4">
+                    <a href="{% url 'the_team' %}"><div class="btn btn-secondary">Cancel</div></a>
+                    <button type="submit" class="btn send-btn mt-0">Update</button>
+                </center>
+            </form>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -95,6 +95,11 @@ body {
     margin-left: 0;
 }
 
+.hr-100-white {
+    width: 100%;
+    background-color: white;
+}
+
 .bg-header {
     background-color: #817346;
     background-size: cover;
@@ -108,6 +113,10 @@ body {
     padding: 10vw 0;
     text-align: center;
     max-height: 250px;
+}
+
+.bg-trans:focus {
+    background-color: transparent;
 }
 
 .header-container {
@@ -1139,7 +1148,8 @@ nav ul li {
     width: 100%;
     max-width: 510px;
     height: auto;
-    padding: 10px 0;
+    box-shadow: 3px 3px 6px black;
+    border: 5px solid #c6a86c;
 }
 
 /*----------Contact----------*/

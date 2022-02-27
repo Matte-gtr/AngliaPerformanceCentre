@@ -13,25 +13,75 @@
     </div>
     <div class="container-fluid bg-car bg-fixed dark-content p-0">
         <div class="container-fluid dark-shadow pl-0 pr-0">
-            <div class="container">
-                <div class="row">
-                    {% for member in members %}
-                        <div class="col-12 dark-content">
-                            <img src="{{ member.image.url }}" alt="{{ member.first_name }}">
-                            <h3>{{ member.first_name }} {{ member.surname }}</h3>
+            <main class="container pt-4">
+                <h2 class="pt-5">Meet the team</h2>
+                {% if request.user.is_staff %}
+                <hr class="hr-gold-short hr-left mb-2">
+                    <a href="{% url 'add_team_member' %}"><div class="mb-3 btn send-btn mt-less-50">Add Member</div></a>
+                {% else %}
+                <hr class="hr-gold-short hr-left mb-5">
+                {% endif %}
+                {% for member in members %}
+                    <div class="row">
+                        <div class="col-12 col-lg-4{% if forloop.counter|divisibleby:2 %} order-lg-2{% else %} order-lg-1{% endif %}">
+                            {% if member.image %}
+                            <img class="img-fluid border border-white" src="{{ member.image.url }}" alt="{{ member.first_name }}">
+                            {% else %}
+                            <img class="img-fluid border border-white" src="{{ MEDIA_URL }}defaults/APC-Logo.jpeg" alt="{{ member.first_name }}">
+                            {% endif %}
+                        </div>
+                        <div class="col-12 col-lg-8{% if forloop.counter|divisibleby:2 %} order-lg-1{% else %} order-lg-2{% endif %}">
+                            <h2 class="pt-2 pt-lg-0">{{ member.first_name }} {{ member.surname }}</h2>
                             <h4>{{ member.job }}</h4>
                             <p>{{ member.description }}</p>
                         </div>
-                    {% endfor %}
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            {% if request.user.is_staff %}
+                            <center>
+                                <a href="{% url 'edit_team_member' member.id %}"><div class="btn btn-primary mt-3">Edit</div></a>
+                                <button data-delete-url="{% url 'delete_team_member' member.id %}" type="button" class="btn btn-danger mt-3 modal-popup" data-target="#confirmActionModal">Delete</button>
+                            </center>
+                            {% endif %}
+                            <hr class="mb-5 hr-100-white">
+                        </div>
+                    </div>
+                {% endfor %}
+                </main>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="confirmActionModal" tabindex="-1" role="dialog" aria-labelledby="confirmAction" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmAction">Delete Member</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="confirmBody">
+                    Are you sure you want to delete this member?
+                </div>
+                <div class="modal-footer">
+                    <button id="modal-dismiss" type="button" class="btn send-btn" data-dismiss="modal">CANCEL</button>
+                    <a id="injector" href=""><button class="btn btn-danger">DELETE</button></a>
                 </div>
             </div>
         </div>
     </div>
-    <p class="text-white">Bartosz Jakubowski, the owner-director, 
-        Tom, Mastert technitian
-        Czeslaw Szklarz, master technitian
-        Mahmood Anuar, technitian/fabricator
-        David Batista, technitian
-        Mohammet Imran, workshop manager/mapping/the voice on the phone-customer liason
-    </p>
+{% endblock %}
+{% block postload_js %}
+    {{ block.super }}
+    <script>
+        $(document).ready(function() {
+            $('.modal-popup').click(function() {
+                let deleteurl = $(this).data('delete-url');
+                console.log(deleteurl);
+                $('#injector').attr('href', deleteurl);
+                $("#confirmActionModal").modal("show");
+            });
+        })
+    </script>
 {% endblock %}
