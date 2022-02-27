@@ -38,8 +38,9 @@ def add_team_member(request):
                 member = form.save(commit=False)
                 member.order = 12
                 member.save()
-                messages.success(request, "New team member added")
-                return redirect(reverse('the_team'))
+                messages.success(request, f"{member.first_name} \
+                    {member.surname} added")
+                return redirect(reverse('admin_members'))
             else:
                 messages.error(request, "Please update your form and \
                     re-submit")
@@ -55,6 +56,7 @@ def add_team_member(request):
     else:
         messages.warning(request, "You don't have the required \
             permissions to complete this action")
+        return redirect(reverse('the_team'))
 
 
 @login_required
@@ -62,13 +64,15 @@ def edit_team_member(request, member_id):
     """ a view to edit a team members details/photo """
     if request.user.is_staff:
         team_member = get_object_or_404(TeamMember, pk=member_id)
+        fname = team_member.first_name
+        lname = team_member.surname
         if request.method == "POST":
             form = TeamMemberForm(request.POST, request.FILES,
                                   instance=team_member)
             if form.is_valid():
                 form.save()
-                messages.success(request, "Team member updated")
-                return redirect(reverse('the_team'))
+                messages.success(request, f"{fname} {lname} updated")
+                return redirect(reverse('admin_members'))
             else:
                 messages.error(request, "Please check all field are filled out \
                     correctly and re-submit")
@@ -100,8 +104,8 @@ def delete_team_member(request, member_id):
             messages.success(request, f"{fname} {lname} successfully deleted")
         except Exception as err:
             messages.error(request, f"error deleting team \
-                            member: {e}")
-        return redirect(reverse('the_team'))
+                           member: {err}")
+        return redirect(reverse('admin_members'))
     else:
         messages.warning(request, "You don't have the required permissions \
             to complete this action")

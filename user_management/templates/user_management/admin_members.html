@@ -3,14 +3,61 @@
 {% block content %}
 <div class="container-fluid bg-darker dark-content pt-3 pb-3">
     <div class="container p-0">
+
         <!--Grid Display start-->
         <div class="row pr-1 pl-1">
             <div class="col-12 p-0 border border-bottom-0">
                 <div class="text-center p-0">
-                    <a href="{% url 'admin_messages' %}" class="standard-link text-dark">
-                        <h3 class="mb-0 p-2 bg-secondary">Messages
+                    <a href="{% url 'admin_messages' %}" class="standard-link">
+                        <h3 class="mb-0 p-2">Messages
                             {% if message_count > 0 %}<div class="counter"><small>{{ message_count }}</small></div>
                             {% endif %}
+                        </h3>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 p-0 border border-bottom-0">
+                <div class="text-center p-0">
+                    <a href="{% url 'admin_callbacks' %}" class="standard-link">
+                        <h3 class="mb-0 p-2">Callbacks
+                            {% if callback_count > 0 %}<div class="counter"><small>{{ callback_count }}</small></div>
+                            {% endif %}
+                        </h3>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 p-0 border border-bottom-0">
+                <div class="text-center p-0">
+                    <a href="{% url 'admin_reviews' %}" class="standard-link">
+                        <h3 class="mb-0 p-2">Reviews
+                            {% if review_count > 0 %}<div class="counter"><small>{{ review_count }}</small></div>{% endif %}
+                        </h3>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 p-0 border border-bottom-0">
+                <div class="text-center p-0">
+                    <a href="{% url 'admin_blog_posts' %}" class="standard-link">
+                        <h3 class="mb-0 p-2">Blog Posts
+                            {% if blog_count > 0 %}<small> ({{ blog_count }})</small>{% endif %}
+                        </h3>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 p-0 border border-bottom-0">
+                <div class="text-center p-0">
+                    <a href="{% url 'admin_adverts' %}" class="standard-link">
+                        <h3 class="mb-0 p-2">Adverts
+                            {% if advert_count > 0 %}<small> ({{ advert_count }})</small>{% endif %}
+                        </h3>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 p-0 border border-bottom-0">
+                <div class="text-center p-0">
+                    <a href="{% url 'admin_members' %}" class="standard-link text-dark">
+                        <h3 class="mb-0 p-2 bg-secondary">Team Members
+                            {% if member_count > 0 %}<small> ({{ member_count }})</small>{% endif %}
                         </h3>
                     </a>
                 </div>
@@ -21,10 +68,6 @@
                     <div class="input-group">
                         <select class="custom-select border-bottom-0" name="action" id="id-action">
                             <option selected value="none">Select Action...</option>
-                            <option value="respond">Mark Responded</option>
-                            <option value="unrespond">Mark Not Responded</option>
-                            <option value="read">Mark Read</option>
-                            <option value="unread">Mark Unread</option>
                             <option value="delete">Delete</option>
                         </select>
                         <div class="input-group-append">
@@ -34,49 +77,42 @@
                 </form>
                 <table class="table bg-light table-hover mb-0">
                     <tr class="bg-secondary">
-                        <th scope="col" class="w-13"><input type="checkbox" id="master-message-checkbox"></th>
+                        <th scope="col" class="w-13"><input type="checkbox" id="master-member-checkbox"></th>
                         <th scope="col">Name</th>
-                        <th scope="col">Responded</th>
-                        <th scope="col">Date</th>
+                        <th scope="col">Job Title</th>
+                        <th scope="col">Added on</th>
                     </tr>
-                    {% if not site_messages %}
+                    {% if not members %}
                     <tr>
                         <td></td>
-                        <td> No Messages</td>
+                        <td> No Team Members</td>
                         <td></td>
                         <td></td>
                     </tr>
                     {% endif %}
-                    {% for message in site_messages %}
+                    {% for member in members %}
                     <tr>
-                        <td><input type="checkbox" data-id="{{ message.id }}" class="message-checkbox"></td>
+                        <td><input type="checkbox" data-id="{{ member.id }}" class="member-checkbox"></td>
                         <td>
-                            {% if message.read %}
-                            <a href="{% url 'view_message' message.id %}" class="text-secondary">{{ message.name }}</a>
-                            {% else %}
-                            <strong><a href="{% url 'view_message' message.id %}">{{ message.name }}</a></strong>
-                            {% endif %}
+                            <a href="{% url 'edit_team_member' member.id %}" class="font-weight-bold">{{ member.first_name }} {{ member.surname }}</a>
                         </td>
                         <td>
-                            {% if message.responded %}
-                            <i class="fas fa-check fa-lg text-success"></i>
-                            {% else %}
-                            <i class="fas fa-times fa-lg text-danger"></i>
-                            {% endif %}
+                            {{ member.job }}
                         </td>
-                        <td><small>{{ message.received_on }}</small></td>
+                        <td><small>{{ member.added_on }}</small></td>
                     </tr>
                     {% endfor %}
                 </table>
-                <!-- message pagination bar start -->
-                {% if site_messages.paginator.page_range|length > 1 %}
+                <!-- members pagination bar start -->
+                {% if members.paginator.page_range|length > 1 %}
                 <div class="container-fluid pt-2 bg-off-white border-top">
                     <div class="row">
                         <nav class="mx-auto">
                             <ul class="pagination mb-2">
-                                {% if site_messages.has_previous %}
+                                {% if members.has_previous %}
                                 <li class="page-item">
-                                    <a class="page-link" href="?{% param_replace page=site_messages.previous_page_number %}"
+                                    <a class="page-link"
+                                        href="?{% param_replace page=members.previous_page_number %}#headingTwo"
                                         tabindex="-1">&laquo;</a>
                                 </li>
                                 {% else %}
@@ -84,18 +120,19 @@
                                     <a class="page-link" href="#" tabindex="-1">&laquo;</a>
                                 </li>
                                 {% endif %}
-                                {% for pg in site_messages.paginator.page_range %}
-                                {% if site_messages.number == pg %}
+                                {% for pg in members.paginator.page_range %}
+                                {% if members.number == pg %}
                                 <li class="page-item active"><a class="page-link"
-                                        href="?{% param_replace page=pg %}">{{ pg }}</a></li>
-                                {% elif pg > site_messages.number|add:-3 and pg < site_messages.number|add:3 %}
-                                <li class="page-item"><a class="page-link" href="?{% param_replace page=pg %}">{{ pg }}</a>
-                                </li>
+                                        href="?{% param_replace page=pg %}#headingTwo">{{ pg }}</a></li>
+                                {% elif pg > members.number|add:-3 and pg < members.number|add:3 %}
+                                <li class="page-item"><a class="page-link"
+                                        href="?{% param_replace page=pg %}#headingTwo">{{ pg }}</a></li>
                                 {% endif %}
                                 {% endfor %}
-                                {% if site_messages.has_next %}
+                                {% if members.has_next %}
                                 <li class="page-item">
-                                    <a class="page-link" href="?{% param_replace page=site_messages.next_page_number %}"
+                                    <a class="page-link"
+                                        href="?{% param_replace page=members.next_page_number %}#headingTwo"
                                         tabindex="-1">&raquo;</a>
                                 </li>
                                 {% else %}
@@ -108,53 +145,10 @@
                     </div>
                 </div>
                 {% endif %}
-                <!-- message pagination bar end -->
-            </div>
-            <div class="col-12 p-0 border border-top-0">
-                <div class="text-center p-0">
-                    <a href="{% url 'admin_callbacks' %}" class="standard-link">
-                        <h3 class="mb-0 p-2">Callbacks
-                            {% if callback_count > 0 %}<div class="counter"><small>{{ callback_count }}</small></div>
-                            {% endif %}
-                        </h3>
-                    </a>
-                </div>
-            </div>
-            <div class="col-12 p-0 border border-top-0">
-                <div class="text-center p-0">
-                    <a href="{% url 'admin_reviews' %}" class="standard-link">
-                        <h3 class="mb-0 p-2">Reviews
-                            {% if review_count > 0 %}<div class="counter"><small>{{ review_count }}</small></div>{% endif %}
-                        </h3>
-                    </a>
-                </div>
-            </div>
-            <div class="col-12 p-0 border border-top-0">
-                <div class="text-center p-0">
-                    <a href="{% url 'admin_blog_posts' %}" class="standard-link">
-                        <h3 class="mb-0 p-2">Blog Posts
-                            {% if blog_count > 0 %}<small> ({{ blog_count }})</small>{% endif %}
-                        </h3>
-                    </a>
-                </div>
-            </div>
-            <div class="col-12 p-0 border border-top-0">
-                <div class="text-center p-0">
-                    <a href="{% url 'admin_adverts' %}" class="standard-link">
-                        <h3 class="mb-0 p-2">Adverts
-                            {% if advert_count > 0 %}<small> ({{ advert_count }})</small>{% endif %}
-                        </h3>
-                    </a>
-                </div>
-            </div>
-            <div class="col-12 p-0 border border-top-0">
-                <div class="text-center p-0">
-                    <a href="{% url 'admin_members' %}" class="standard-link">
-                        <h3 class="mb-0 p-2">Team Members
-                            {% if member_count > 0 %}<small> ({{ member_count }})</small>{% endif %}
-                        </h3>
-                    </a>
-                </div>
+                <!-- members pagination bar end -->
+                <center>
+                    <a href="{% url 'add_team_member' %}"><div class="mb-1 btn send-btn">Add Team Member</div></a>
+                </center>
             </div>
             <div class="col-12 p-0 border border-top-0">
                 <div class="text-center p-0">
@@ -202,8 +196,8 @@
 {{ block.super }}
 <script>
     $(document).ready(function () {
-        $('#master-message-checkbox').click(function () {
-            checkAll('message')
+        $('#master-member-checkbox').click(function () {
+            checkAll('member')
         });
 
         function checkAll(type) {
@@ -221,7 +215,7 @@
         $('#ModalProcess').click(function(e) {
             e.preventDefault();
             let idList = [];
-            $(':checkbox:checked').not($('#master-message-checkbox')).each(function (i) {
+            $(':checkbox:checked').not($('#master-member-checkbox')).each(function (i) {
                 idList[i] = $(this).data('id');
             });
             let action = $('#id-action').val();
@@ -232,11 +226,11 @@
                 $('#error-container').text("No action has been selected");
                 return
             } else if (action == "delete" || action == "approve" || action == "publish") {
-                $('#confirmAction').text(`${action} messages`);
-                $('#confirmBody').text(`Are you sure you want to ${action} these messages?`);
+                $('#confirmAction').text(`${action} team members`);
+                $('#confirmBody').text(`Are you sure you want to ${action} these team members?`);
                 $("#confirmActionModal").modal("show");
             } else {
-                sendAjaxRequest();                                          
+                sendAjaxRequest();
             }
         });
 
@@ -248,12 +242,12 @@
         function sendAjaxRequest() {
             let idList = [];
             let form = $('#ajax-form');
-            let item = "message"; /* blog-post or message or callback or review */
+            let item = "member"; /* blog-post or message or callback or review of advert*/
             let csrf = $('#ajax-form').children('input[name=csrfmiddlewaretoken]').val();
             let action = $('#id-action').val(); /* "none", "delete", "publish", "read", "unread", "respond", "unrespond", "approve" */
             let url = "";
 
-            $(':checkbox:checked').not($('#master-message-checkbox')).each(function (i) {
+            $(':checkbox:checked').not($('#master-member-checkbox')).each(function (i) {
                 idList[i] = $(this).data('id');
             });
             idList = JSON.stringify({ 'idList': idList});
@@ -275,6 +269,7 @@
                 }
             });
         }
+            
     });
 </script>
 {% endblock %}

@@ -5,11 +5,14 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.core.mail import send_mail, BadHeaderError
 from django.http import JsonResponse
+from django.contrib.auth.models import User
 
 from contact.models import Message, Callback
 from testimonials.models import Review, ReviewImage
 from blog.models import BlogPost, BlogPostVideo
 from contact.forms import MessageResponseForm
+from home.models import Advert
+from about_us.models import TeamMember
 
 import json
 
@@ -45,6 +48,12 @@ def process_ids(request, item, action, id_final):
             obj = get_object_or_404(Callback, pk=obj_id)
         elif item == "review":
             obj = get_object_or_404(Review, pk=obj_id)
+        elif item == "advert":
+            obj = get_object_or_404(Advert, pk=obj_id)
+        elif item == "member":
+            obj = get_object_or_404(TeamMember, pk=obj_id)
+        elif item == "user":
+            obj = get_object_or_404(User, pk=obj_id)
         else:
             return {'count': count, 'result': result}
         if action == "delete":
@@ -60,7 +69,7 @@ def process_ids(request, item, action, id_final):
                             except Exception as err:
                                 messages.error(request, f"error deleting blog \
                                     video: {err}")
-                if hasattr(obj, "image"):
+                if hasattr(obj, "image") and item != "advert" and item != "member":
                     images = obj.image.all()
                     if images:
                         for item in images:
@@ -123,6 +132,22 @@ def process_ids(request, item, action, id_final):
                 result = "approved"
             except Exception as err:
                 messages.error(request, f"Error approving {item}: {err}")
+        elif action == "staff":
+            try:
+                obj.is_staff = True
+                obj.save(update_fields=['is_staff'])
+                count += 1
+                result = "marked as staff"
+            except Exception as err:
+                messages.error(request, f"Error marking {item}: {err}")
+        elif action == "unstaff":
+            try:
+                obj.is_staff = False
+                obj.save(update_fields=['is_staff'])
+                count += 1
+                result = "unmarked as staff"
+            except Exception as err:
+                messages.error(request, f"Error unmarking {item}: {err}")
         else:
             return {'count': count, 'result': result}
     return {'count': count, 'result': result}
@@ -161,6 +186,9 @@ def admin_messages(request):
             callback_count = Callback.objects.filter(read=False).count
             review_count = Review.objects.filter(read=False).count
             blog_count = BlogPost.objects.filter(publish=False).count
+            advert_count = Advert.objects.all().count
+            member_count = TeamMember.objects.all().count
+            user_count = User.objects.all().count
             template = "user_management/admin_messages.html"
             context = {
                 'title': 'admin messages',
@@ -170,6 +198,9 @@ def admin_messages(request):
                 'callback_count': callback_count,
                 'review_count': review_count,
                 'blog_count': blog_count,
+                'advert_count': advert_count,
+                'member_count': member_count,
+                'user_count': user_count,
             }
             return render(request, template, context)
     else:
@@ -211,6 +242,9 @@ def admin_callbacks(request):
                                             10)
             review_count = Review.objects.filter(read=False).count
             blog_count = BlogPost.objects.filter(publish=False).count
+            advert_count = Advert.objects.all().count
+            member_count = TeamMember.objects.all().count
+            user_count = User.objects.all().count
             template = "user_management/admin_callbacks.html"
             context = {
                 'title': 'admin callbacks',
@@ -220,6 +254,9 @@ def admin_callbacks(request):
                 'callback_count': callback_count,
                 'review_count': review_count,
                 'blog_count': blog_count,
+                'advert_count': advert_count,
+                'member_count': member_count,
+                'user_count': user_count,
             }
             return render(request, template, context)
     else:
@@ -256,6 +293,9 @@ def admin_reviews(request):
             callback_count = Callback.objects.filter(read=False).count
             review_count = Review.objects.filter(read=False).count
             blog_count = BlogPost.objects.filter(publish=False).count
+            advert_count = Advert.objects.all().count
+            member_count = TeamMember.objects.all().count
+            user_count = User.objects.all().count
             review_pag = paginator_helper(request,
                                         Review.objects.
                                         filter(authorised=False).
@@ -270,6 +310,9 @@ def admin_reviews(request):
                 'review_count': review_count,
                 'reviews': review_pag,
                 'blog_count': blog_count,
+                'advert_count': advert_count,
+                'member_count': member_count,
+                'user_count': user_count,
             }
             return render(request, template, context)
     else:
@@ -306,6 +349,9 @@ def admin_blog_posts(request):
             callback_count = Callback.objects.filter(read=False).count
             review_count = Review.objects.filter(read=False).count
             blog_count = BlogPost.objects.filter(publish=False).count
+            advert_count = Advert.objects.all().count
+            member_count = TeamMember.objects.all().count
+            user_count = User.objects.all().count
             blog_posts = paginator_helper(request,
                                           BlogPost.objects.
                                           filter(publish=False).
@@ -320,6 +366,168 @@ def admin_blog_posts(request):
                 'review_count': review_count,
                 'blog_count': blog_count,
                 'blog_posts': blog_posts,
+                'advert_count': advert_count,
+                'member_count': member_count,
+                'user_count': user_count,
+            }
+            return render(request, template, context)
+    else:
+        messages.warning(request, "You don't have the required permissions to\
+                         view this page")
+        return redirect(reverse('home'))
+
+
+@login_required
+def admin_adverts(request):
+    """ a view for the advert admin page """
+    if request.user.is_staff:
+        if request.is_ajax():
+            item = request.POST.get('item')  # advert
+            action = request.POST.get('action')  # delete
+            id_list = request.POST.get('id_list')  # [1, 2 ,3 ]
+            id_object = json.loads(id_list)
+            for key, value in id_object.items():
+                id_final = value
+            response = process_ids(request, item, action, id_final)
+            count = response['count']
+            result = response['result']
+            data = {}
+            data[item] = item
+            data[action] = action
+            data[id_list] = id_list
+            if count > 1:
+                messages.success(request, f"{count} {item}s {result}")
+            else:
+                messages.success(request, f"{count} {item} {result}")
+            return JsonResponse(data)
+        else:
+            message_count = Message.objects.filter(read=False).count
+            callback_count = Callback.objects.filter(read=False).count
+            review_count = Review.objects.filter(read=False).count
+            blog_count = BlogPost.objects.filter(publish=False).count
+            advert_count = Advert.objects.all().count
+            member_count = TeamMember.objects.all().count
+            user_count = User.objects.all().count
+            adverts = paginator_helper(request, Advert.objects.all(), 10)
+            template = "user_management/admin_adverts.html"
+            context = {
+                'title': 'admin blog posts',
+                'section': 'user_management',
+                'message_count': message_count,
+                'callback_count': callback_count,
+                'review_count': review_count,
+                'blog_count': blog_count,
+                'adverts': adverts,
+                'advert_count': advert_count,
+                'member_count': member_count,
+                'user_count': user_count,
+            }
+            return render(request, template, context)
+    else:
+        messages.warning(request, "You don't have the required permissions to\
+                         view this page")
+        return redirect(reverse('home'))
+
+
+@login_required
+def admin_members(request):
+    """ a view for the member admin page """
+    if request.user.is_staff:
+        if request.is_ajax():
+            item = request.POST.get('item')  # member
+            action = request.POST.get('action')  # delete
+            id_list = request.POST.get('id_list')  # [1, 2 ,3 ]
+            id_object = json.loads(id_list)
+            for key, value in id_object.items():
+                id_final = value
+            response = process_ids(request, item, action, id_final)
+            count = response['count']
+            result = response['result']
+            data = {}
+            data[item] = item
+            data[action] = action
+            data[id_list] = id_list
+            if count > 1:
+                messages.success(request, f"{count} {item}s {result}")
+            else:
+                messages.success(request, f"{count} {item} {result}")
+            return JsonResponse(data)
+        else:
+            message_count = Message.objects.filter(read=False).count
+            callback_count = Callback.objects.filter(read=False).count
+            review_count = Review.objects.filter(read=False).count
+            blog_count = BlogPost.objects.filter(publish=False).count
+            advert_count = Advert.objects.all().count
+            member_count = TeamMember.objects.all().count
+            user_count = User.objects.all().count
+            members = paginator_helper(request,
+                                          TeamMember.objects.
+                                          all().order_by('order'),
+                                          10)
+            template = "user_management/admin_members.html"
+            context = {
+                'title': 'admin blog posts',
+                'section': 'user_management',
+                'message_count': message_count,
+                'callback_count': callback_count,
+                'review_count': review_count,
+                'blog_count': blog_count,
+                'members': members,
+                'advert_count': advert_count,
+                'member_count': member_count,
+                'user_count': user_count,
+            }
+            return render(request, template, context)
+    else:
+        messages.warning(request, "You don't have the required permissions to\
+                         view this page")
+        return redirect(reverse('home'))
+
+
+@login_required
+def admin_users(request):
+    """ a view for the user admin page """
+    if request.user.is_staff:
+        if request.is_ajax():
+            item = request.POST.get('item')  # user
+            action = request.POST.get('action')  # delete
+            id_list = request.POST.get('id_list')  # [1, 2 ,3 ]
+            id_object = json.loads(id_list)
+            for key, value in id_object.items():
+                id_final = value
+            response = process_ids(request, item, action, id_final)
+            count = response['count']
+            result = response['result']
+            data = {}
+            data[item] = item
+            data[action] = action
+            data[id_list] = id_list
+            if count > 1:
+                messages.success(request, f"{count} {item}s {result}")
+            else:
+                messages.success(request, f"{count} {item} {result}")
+            return JsonResponse(data)
+        else:
+            message_count = Message.objects.filter(read=False).count
+            callback_count = Callback.objects.filter(read=False).count
+            review_count = Review.objects.filter(read=False).count
+            blog_count = BlogPost.objects.filter(publish=False).count
+            advert_count = Advert.objects.all().count
+            member_count = TeamMember.objects.all().count
+            user_count = User.objects.all().count
+            users = paginator_helper(request, User.objects.all(), 10)
+            template = "user_management/admin_users.html"
+            context = {
+                'title': 'admin blog posts',
+                'section': 'user_management',
+                'message_count': message_count,
+                'callback_count': callback_count,
+                'review_count': review_count,
+                'blog_count': blog_count,
+                'users': users,
+                'advert_count': advert_count,
+                'member_count': member_count,
+                'user_count': user_count,
             }
             return render(request, template, context)
     else:

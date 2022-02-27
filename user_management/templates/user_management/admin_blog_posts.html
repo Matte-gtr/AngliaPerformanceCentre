@@ -130,6 +130,33 @@
                 {% endif %}
                 <!-- blog_post pagination bar end -->
             </div>
+            <div class="col-12 p-0 border border-top-0">
+                <div class="text-center p-0">
+                    <a href="{% url 'admin_adverts' %}" class="standard-link">
+                        <h3 class="mb-0 p-2">Adverts
+                            {% if advert_count > 0 %}<small> ({{ advert_count }})</small>{% endif %}
+                        </h3>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 p-0 border border-top-0">
+                <div class="text-center p-0">
+                    <a href="{% url 'admin_members' %}" class="standard-link">
+                        <h3 class="mb-0 p-2">Team Members
+                            {% if member_count > 0 %}<small> ({{ member_count }})</small>{% endif %}
+                        </h3>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 p-0 border border-top-0">
+                <div class="text-center p-0">
+                    <a href="{% url 'admin_users' %}" class="standard-link">
+                        <h3 class="mb-0 p-2">Users
+                            {% if user_count > 0 %}<small> ({{ user_count }})</small>{% endif %}
+                        </h3>
+                    </a>
+                </div>
+            </div>
         </div>
         <!--Grid Display end-->
         <div class="row">
