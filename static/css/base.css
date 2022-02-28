@@ -752,6 +752,7 @@ nav ul li {
 .hr-100-grey {
     width: 100%;
     background-color: #837a7a;
+    margin-top: -1px;
 }
 
 /*----------Terms & Conditions----------*/

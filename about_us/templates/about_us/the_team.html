@@ -18,14 +18,14 @@
                 <hr class="hr-gold-short hr-left mb-5">
                 {% for member in members %}
                     <div class="row">
-                        <div class="col-12 col-lg-4{% if forloop.counter|divisibleby:2 %} order-lg-2{% else %} order-lg-1{% endif %}">
+                        <div class="col-12 col-lg-4">
                             {% if member.image %}
                             <img class="img-fluid border-l-grey" src="{{ member.image.url }}" alt="{{ member.first_name }}">
                             {% else %}
                             <img class="img-fluid border-l-grey" src="{{ MEDIA_URL }}defaults/APC-Logo.jpeg" alt="{{ member.first_name }}">
                             {% endif %}
                         </div>
-                        <div class="col-12 col-lg-8{% if forloop.counter|divisibleby:2 %} order-lg-1{% else %} order-lg-2{% endif %}">
+                        <div class="col-12 col-lg-8">
                             <h2 class="pt-2 pt-lg-0">{{ member.first_name }} {{ member.surname }}</h2>
                             <h4>{{ member.job }}</h4>
                             <p>{{ member.description }}</p>
@@ -33,12 +33,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            {% if members.count != forloop.counter %}
                             <hr class="mb-5 hr-100-grey">
-                            {% else %}
-                            <div class="pt-5"></div>
-                            <div class="pt-5"></div>
-                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}

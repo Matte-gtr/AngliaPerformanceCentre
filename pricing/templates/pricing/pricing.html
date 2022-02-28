@@ -16,23 +16,140 @@
             <div class="container pt-4 pb-5">
                 <div class="row pt-4 pb-4">
                     <div class="col pt-4">
-                        <h2>Pricing and Finance Options</h2>
+                        <h2>Finance Options</h2>
                         <hr class="hr-gold-short hr-left">
                         <section>
-                            We offer a 0% finance spread over 4, 6 and 12 convenient payments on all of our products/services.
-                            We also offer a pre paid service plan for any vehicle. Please contact us for more information.
-                            Hourly rate £70 per hour
-                            jobs done in industry standard autodata times.
-                            Chip tuning, starts from £199
-                            Engine rebuilds starting from £999
-                            minor service starting from £79
-                            major service starting from £129
-                            custom exhausts starting from £150 
+                            We offer a 0% finance spread over 4, 6 and 12 convenient payments on all of our products and services.
+                            We also offer a pre paid service plan for any vehicle. Please contact us for more to discuss your requirements.
+
+                            
+                             
                             wheel repair starting from £50
+                        </section>
+                    </div>
+                </div>
+                <div class="row pb-3">
+                    <div class="col-12 col-md-8">
+                        <h2>Pricing</h2>
+                        <hr class="hr-gold-short hr-left">
+                        <section id="accordion">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne"
+                                            aria-expanded="false" aria-controls="collapseOne">
+                                            <i class="fas fa-plus pr-4"></i>
+                                            Hourly rates
+                                        </button>
+                                    </h5>
+                                </div>
+
+                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                    <div class="card-body">
+                                        Our hourly rate is £70 per hour. All of our work is done in industry standard autodata times.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingTwo">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                                            aria-expanded="false" aria-controls="collapseTwo">
+                                            <i class="fas fa-plus pr-4"></i>
+                                            Chip tuning
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                    <div class="card-body">
+                                        Chip tuning starts from £199 but varies depending on the complexity of the tune.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingThree">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
+                                            aria-expanded="false" aria-controls="collapseThree">
+                                            <i class="fas fa-plus pr-4"></i>
+                                            Engine Rebuilds
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                                    <div class="card-body">
+                                        Engine rebuilds start from £999, the price will vary greatly depending on the condition of your engine and the purpose of your rebuild.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingFour">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour"
+                                            aria-expanded="false" aria-controls="collapseFour">
+                                            <i class="fas fa-plus pr-4"></i>
+                                            Servicing
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                                    <div class="card-body">
+                                        Minor servicing starts from £79, major servicing starts from £129, prices will vary depending on vehicle model.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingFive">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive"
+                                            aria-expanded="false" aria-controls="collapseFive">
+                                            <i class="fas fa-plus pr-4"></i>
+                                            Custom Exhausts
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                                    <div class="card-body">
+                                        Custom exhausts starting from £150. Prices will vary depending on material, complexity and size of system required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingSix">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix"
+                                            aria-expanded="false" aria-controls="collapseSix">
+                                            <i class="fas fa-plus pr-4"></i>
+                                            Wheel Repairs
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                                    <div class="card-body">
+                                        Wheel repairs start from £50. Price will vary depending on extent of damage/repairs.
+                                    </div>
+                                </div>
+                            </div>
                         </section>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+{% block postload_js %}
+{{ block.super }}
+    <script>
+        $(document).ready(function() {
+            $(".btn-link").click(function() {
+                target = $(this).attr("data-target");
+                if (!$(target).hasClass("show")) {
+                    $(".btn-link").find(".fas").addClass("fa-plus").removeClass("fa-minus");
+                    $(this).find(".fas").removeClass("fa-plus").addClass("fa-minus");
+                } else {
+                    $(".btn-link").find(".fas").addClass("fa-plus").removeClass("fa-minus");
+                }
+            });
+        });
+    </script>
 {% endblock %}

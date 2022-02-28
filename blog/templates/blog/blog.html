@@ -61,7 +61,11 @@
                         {% endfor %}
                         {% else %}
                             <article class="blog-container bg-off-white mb-4 py-2 px-2">
+                                {% if category.0.friendly_name == None %}
+                                <strong>Sorry! There are no Blog Posts yet.</strong>
+                                {% else %}
                                 <strong>Sorry! There are no "{{ category.0.friendly_name }}" Blog Posts yet.</strong>
+                                {% endif %}
                             </article>
                         {% endif %}
                     </div>
