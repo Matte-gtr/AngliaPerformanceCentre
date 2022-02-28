@@ -60,21 +60,21 @@
                     {% for callback in callbacks %}
                     <tr>
                         <td><input type="checkbox" data-id="{{ callback.id }}" class="callback-checkbox"></td>
-                        <td>
+                        <td class="text-break">
                             {% if callback.read %}
                             <a href="{% url 'view_callback' callback.id %}" class="text-secondary">{{ callback.name }}</a>
                             {% else %}
                             <strong><a href="{% url 'view_callback' callback.id %}">{{ callback.name }}</a></strong>
                             {% endif %}
                         </td>
-                        <td>
+                        <td class="text-break">
                             {% if callback.responded %}
                             <i class="fas fa-check fa-lg text-success"></i>
                             {% else %}
                             <i class="fas fa-times fa-lg text-danger"></i>
                             {% endif %}
                         </td>
-                        <td><small>{{ callback.received_on }}</small></td>
+                        <td class="text-break"><small>{{ callback.received_on }}</small></td>
                     </tr>
                     {% endfor %}
                 </table>

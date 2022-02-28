@@ -21,10 +21,31 @@
           {% if redirect_field_value %}
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
           {% endif %}
-          <button class="btn send-btn" type="submit">{% trans "Sign Up" %} &raquo;</button>
+          <div class="controls">
+            <input id="terms" type="checkbox" name="terms"> I accept the <a href="{% url 'terms_and_conditions' %}" target="_blank">Terms & Conditions</a>
+          </div>
+          <button id="signup-submit" class="btn send-btn" type="submit" disabled>{% trans "Sign Up" %} &raquo;</button>
         </form>
+        <div id="error-container">
+
+        </div>
       </div>
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block postload_js %}
+{{ block.super }}
+  <script>
+    $(document).ready(function() {
+      $('#terms').click(function() {
+        if ($('#terms').is(':checked')) {
+          $('#signup-submit').attr('disabled', false)
+        } else {
+          $('#signup-submit').attr('disabled', true)
+        }
+      });
+    });
+  </script>
 {% endblock %}

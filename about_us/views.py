@@ -32,8 +32,8 @@ def the_team(request):
 def add_team_member(request):
     """ a view to add a new team member """
     if request.user.is_staff:
-        form = TeamMemberForm(request.POST, request.FILES)
         if request.method == "POST":
+            form = TeamMemberForm(request.POST, request.FILES)
             if form.is_valid():
                 member = form.save(commit=False)
                 member.order = 12

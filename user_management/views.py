@@ -411,7 +411,7 @@ def admin_adverts(request):
             adverts = paginator_helper(request, Advert.objects.all(), 10)
             template = "user_management/admin_adverts.html"
             context = {
-                'title': 'admin blog posts',
+                'title': 'admin adverts',
                 'section': 'user_management',
                 'message_count': message_count,
                 'callback_count': callback_count,
@@ -466,7 +466,7 @@ def admin_members(request):
                                           10)
             template = "user_management/admin_members.html"
             context = {
-                'title': 'admin blog posts',
+                'title': 'admin team members',
                 'section': 'user_management',
                 'message_count': message_count,
                 'callback_count': callback_count,
@@ -518,7 +518,7 @@ def admin_users(request):
             users = paginator_helper(request, User.objects.all(), 10)
             template = "user_management/admin_users.html"
             context = {
-                'title': 'admin blog posts',
+                'title': 'admin users',
                 'section': 'user_management',
                 'message_count': message_count,
                 'callback_count': callback_count,

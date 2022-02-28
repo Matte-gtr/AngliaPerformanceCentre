@@ -76,13 +76,13 @@
                     {% for post in blog_posts %}
                     <tr>
                         <td><input type="checkbox" data-id="{{ post.id }}" class="blog-post-checkbox"></td>
-                        <td>
+                        <td class="text-break">
                             <a href="{% url 'post_preview' post.id %}" class="font-weight-bold">{{ post.post_title }}</a>
                         </td>
-                        <td>
+                        <td class="text-break">
                             {{ post.category.friendly_name }}
                         </td>
-                        <td><small>{{ post.added_on }}</small></td>
+                        <td class="text-break"><small>{{ post.added_on }}</small></td>
                     </tr>
                     {% endfor %}
                 </table>
@@ -129,6 +129,9 @@
                 </div>
                 {% endif %}
                 <!-- blog_post pagination bar end -->
+                <center class="form-extend">
+                    <a href="{% url 'add_post' %}"><div class="mb-1 btn send-btn">Add Blog Post</div></a>
+                </center>
             </div>
             <div class="col-12 p-0 border border-top-0">
                 <div class="text-center p-0">

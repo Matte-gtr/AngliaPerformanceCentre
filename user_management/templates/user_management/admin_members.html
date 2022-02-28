@@ -93,13 +93,13 @@
                     {% for member in members %}
                     <tr>
                         <td><input type="checkbox" data-id="{{ member.id }}" class="member-checkbox"></td>
-                        <td>
+                        <td class="text-break">
                             <a href="{% url 'edit_team_member' member.id %}" class="font-weight-bold">{{ member.first_name }} {{ member.surname }}</a>
                         </td>
-                        <td>
+                        <td class="text-break">
                             {{ member.job }}
                         </td>
-                        <td><small>{{ member.added_on }}</small></td>
+                        <td class="text-break"><small>{{ member.added_on }}</small></td>
                     </tr>
                     {% endfor %}
                 </table>
@@ -146,7 +146,7 @@
                 </div>
                 {% endif %}
                 <!-- members pagination bar end -->
-                <center>
+                <center class="form-extend">
                     <a href="{% url 'add_team_member' %}"><div class="mb-1 btn send-btn">Add Team Member</div></a>
                 </center>
             </div>

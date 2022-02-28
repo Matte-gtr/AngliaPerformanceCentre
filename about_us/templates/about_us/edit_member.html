@@ -8,7 +8,7 @@
             <form action="{% url 'edit_team_member' member.id %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form }}
-                <center class="pt-1 pb-4">
+                <center class="pt-3 pb-5">
                     <a href="{% url 'admin_members' %}"><div class="btn btn-secondary">Cancel</div></a>
                     <button type="submit" class="btn send-btn mt-0">Update</button>
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmActionModal">Delete</button>

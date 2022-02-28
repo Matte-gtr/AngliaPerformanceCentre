@@ -9,7 +9,7 @@
                 {% csrf_token %}
                 {{ form }}
                 <center class="pt-1 pb-4">
-                    <a href="{% url 'the_team' %}"><div class="btn btn-secondary">Cancel</div></a>
+                    <a href="{% url 'admin_members' %}"><div class="btn btn-secondary">Cancel</div></a>
                     <button type="submit" class="btn send-btn mt-0">Add Member</button>
                 </center>
             </form>

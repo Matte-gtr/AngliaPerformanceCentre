@@ -82,10 +82,10 @@
                     {% for advert in adverts %}
                     <tr>
                         <td><input type="checkbox" data-id="{{ advert.id }}" class="advert-checkbox"></td>
-                        <td>
-                            <a href="" class="font-weight-bold">{{ advert.name }}</a>
+                        <td class="text-break">
+                            <a href="{% url 'edit_advert' advert.id %}" class="font-weight-bold">{{ advert.name }}</a>
                         </td>
-                        <td>
+                        <td class="text-break">
                             {{ advert.url }}
                         </td>
                     </tr>
@@ -134,6 +134,9 @@
                 </div>
                 {% endif %}
                 <!-- adverts pagination bar end -->
+                <center class="form-extend">
+                    <a href="{% url 'add_advert' %}"><div class="mb-1 btn send-btn">Add Advert</div></a>
+                </center>
             </div>
             <div class="col-12 p-0 border border-top-0">
                 <div class="text-center p-0">

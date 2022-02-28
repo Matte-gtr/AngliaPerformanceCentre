@@ -104,13 +104,13 @@
                     {% for user in users %}
                     <tr>
                         <td><input type="checkbox" data-id="{{ user.id }}" class="user-checkbox"></td>
-                        <td>
+                        <td class="text-break">
                             <a href="" class="font-weight-bold">{{ user.username }}</a>
                         </td>
-                        <td>
+                        <td class="text-break">
                             {{ user.email }}
                         </td>
-                        <td>
+                        <td class="text-break">
                             {% if user.is_staff %}
                             <i class="fas fa-check fa-lg text-success"></i>
                             {% else %}

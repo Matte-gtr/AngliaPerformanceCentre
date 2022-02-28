@@ -95,11 +95,6 @@ body {
     margin-left: 0;
 }
 
-.hr-100-white {
-    width: 100%;
-    background-color: white;
-}
-
 .bg-header {
     background-color: #817346;
     background-size: cover;
@@ -186,6 +181,10 @@ body {
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
+}
+
+#sub-contain {
+    z-index: 1000;
 }
 
 .account-bg {
@@ -746,7 +745,14 @@ nav ul li {
 
 /*----------The Team----------*/
 
+.border-l-grey {
+    border: 1px solid #837a7a;
+}
 
+.hr-100-grey {
+    width: 100%;
+    background-color: #837a7a;
+}
 
 /*----------Terms & Conditions----------*/
 
@@ -1174,6 +1180,20 @@ nav ul li {
     -webkit-transition: all .2s linear;
 }
 
+.send-btn:disabled {
+    background-color: #7a756a;
+}
+
+.send-btn:disabled:hover {
+    background-color: #7a756a;
+    border: 1px solid #5a5959;
+    color: #202020;
+    font-weight: 600;
+    margin-top: 5px;
+    transition: all .2s linear;
+    -webkit-transition: all .2s linear;
+}
+
 .send-btn-active {
     background-color: #555adf;
     border: 1px solid #5a5959;
@@ -1260,6 +1280,11 @@ nav ul li {
 .response-block {
     background-color: #e1d9d9;
     padding: 2px;
+}
+
+.form-extend {
+    background-color: #fafafa;
+    border-top: 1px solid #dee2e6;
 }
 
 /*----------Keyframes----------*/

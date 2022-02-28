@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid bg-car bg-fixed dark-content p-0">
+    <div class="container-fluid dark-shadow pl-0 pr-0">
+        <div class="container pt-4">
+            <h2 class="pt-5">Edit Advert</h2>
+            <hr class="hr-gold-short hr-left mb-5">
+            <form action="{% url 'edit_advert' advert.id %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form }}
+                <center class="pt-3 pb-5">
+                    <a href="{% url 'admin_adverts' %}"><div class="btn btn-secondary">Cancel</div></a>
+                    <button type="submit" class="btn send-btn mt-0">Update</button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmActionModal">Delete</button>
+                </center>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmActionModal" tabindex="-1" role="dialog" aria-labelledby="confirmAction" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmAction">Delete Advert</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="confirmBody">
+                Are you sure you want to delete "{{ advert.name }}"?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn send-btn" data-dismiss="modal">CANCEL</button>
+                <a href="{% url 'delete_advert' advert.id %}"><div class="btn btn-danger">DELETE</div></a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

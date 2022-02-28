@@ -68,7 +68,7 @@
                     {% for review in reviews %}
                     <tr>
                         <td><input type="checkbox" data-id="{{ review.id }}" class="review-checkbox"></td>
-                        <td>
+                        <td class="text-break">
                             {% if review.read %}
                             <a href="{% url 'view_review' review.id %}" class="text-secondary">{{ review.user }}</a>
                             {% else %}
@@ -85,9 +85,9 @@
                             </p>
                         </td>
                         {% if review.updated_on %}
-                        <td><small>{{ review.updated_on }}</small></td>
+                        <td class="text-break"><small>{{ review.updated_on }}</small></td>
                         {% else %}
-                        <td><small>{{ review.created_on }}</small></td>
+                        <td class="text-break"><small>{{ review.created_on }}</small></td>
                         {% endif %}
                     </tr>
                     {% endfor %}
