@@ -46,10 +46,9 @@ def send_message(request):
             messages.success(request, 'Thanks for your message, \
                 we will get back to you shortly')
             return HttpResponseRedirect(page_location)
-        else:
-            messages.error(request, "Message failed, please check \
-                the form and resend")
-            return HttpResponseRedirect(page_location)
+        messages.error(request, "Message failed, please check \
+            the form and resend")
+        return HttpResponseRedirect(page_location)
     return redirect(reverse('home'))
 
 
@@ -64,8 +63,7 @@ def send_callback(request):
             messages.success(request, "Message Received, We will be \
                 in touch shortly")
             return HttpResponseRedirect(page_location)
-        else:
-            messages.error(request, "Error, please check the form \
-            and resend")
-            return HttpResponseRedirect(page_location)
+        messages.error(request, "Error, please check the form \
+        and resend")
+        return HttpResponseRedirect(page_location)
     return HttpResponseRedirect(page_location)

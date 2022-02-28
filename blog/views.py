@@ -1,3 +1,6 @@
+import re
+from datetime import datetime
+
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -5,9 +8,6 @@ from user_management.views import paginator_helper
 
 from .models import BlogPost, BlogCategory, BlogPostVideo
 from .forms import BlogPostForm
-
-import re
-from datetime import datetime
 
 
 def clean_snippet(text):
@@ -75,9 +75,8 @@ def add_post(request):
                 new_post.save()
                 return redirect(reverse('post_preview',
                                 kwargs={"blog_id": new_post.id}))
-            else:
-                messages.error(request, "Please check your file upload types \
-                               and blog content")
+            messages.error(request, "Please check your file upload types \
+                            and blog content")
         else:
             form = BlogPostForm()
     else:
@@ -132,10 +131,9 @@ def display_post(request, blog_id, setting):
             messages.success(request, "Your post has been removed from the \
                             Blog page")
         return redirect(reverse('blog'))
-    else:
-        messages.warning(request, "You don't have the required permissions \
-                       to complete this action")
-        return redirect(reverse('blog'))
+    messages.warning(request, "You don't have the required permissions \
+                    to complete this action")
+    return redirect(reverse('blog'))
 
 
 @login_required
@@ -150,9 +148,9 @@ def delete_blog_post(request, blog_id, next_url="blog"):
                     video = get_object_or_404(BlogPostVideo, pk=item.pk)
                     try:
                         video.delete()
-                    except Exception as e:
+                    except Exception as err:
                         messages.error(request, f"error deleting blog \
-                            video: {e}")
+                            video: {err}")
             blog_post.delete()
             messages.success(request, f"Blog post {blog_id} successfully \
                 deleted")
@@ -185,9 +183,9 @@ def edit_blog_post(request, blog_id):
                                                        pk=video_id)
                         try:
                             blog_video.delete()
-                        except Exception as e:
+                        except Exception as err:
                             messages.error(request, f"error deleting \
-                                           video: {e}")
+                                           video: {err}")
                 form_blog_post = form.save(commit=False)
                 form_blog_post.added_on = datetime.now()
                 form_blog_post.save()
@@ -200,9 +198,8 @@ def edit_blog_post(request, blog_id):
                 messages.success(request, "Blog post updated successfully")
                 return redirect(reverse('post_preview',
                                         args={blog_id: blog_id}))
-            else:
-                messages.error(request, "Update failed, Please ensure all fields \
-                                are filled in correctly")
+            messages.error(request, "Update failed, Please ensure all fields \
+                            are filled in correctly")
         else:
             form = BlogPostForm(instance=blog_post)
     else:

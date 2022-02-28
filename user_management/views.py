@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render, reverse, redirect, get_object_or_404,\
     HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -14,10 +16,9 @@ from contact.forms import MessageResponseForm
 from home.models import Advert
 from about_us.models import TeamMember
 
-import json
-
 
 def paginator_helper(request, object_list, per_page):
+    """ helper function for pagination of querysets """
     paginator = Paginator(object_list, per_page)
     page_number = request.GET.get('page')
     page_object = paginator.get_page(page_number)
@@ -61,8 +62,8 @@ def process_ids(request, item, action, id_final):
                 if hasattr(obj, "video"):
                     videos = obj.video.all()
                     if videos:
-                        for item in videos:
-                            video = get_object_or_404(BlogPostVideo, pk=item.pk)
+                        for vid in videos:
+                            video = get_object_or_404(BlogPostVideo, pk=vid.pk)
                             try:
                                 video.delete()
                                 messages.success(request, "video deleted")
@@ -72,8 +73,8 @@ def process_ids(request, item, action, id_final):
                 if hasattr(obj, "image") and item != "advert" and item != "member":
                     images = obj.image.all()
                     if images:
-                        for item in images:
-                            image = get_object_or_404(ReviewImage, pk=item.pk)
+                        for img in images:
+                            image = get_object_or_404(ReviewImage, pk=img.pk)
                             try:
                                 image.delete()
                             except Exception as err:
@@ -176,37 +177,35 @@ def admin_messages(request):
             else:
                 messages.success(request, f"{count} {item} {result}")
             return JsonResponse(data)
-        else:
-            message_count = Message.objects.filter(read=False).count
-            message_pag = paginator_helper(request,
-                                        Message.objects.
-                                        all().order_by("responded", "read",
-                                                        "-received_on"),
-                                        10)
-            callback_count = Callback.objects.filter(read=False).count
-            review_count = Review.objects.filter(read=False).count
-            blog_count = BlogPost.objects.filter(publish=False).count
-            advert_count = Advert.objects.all().count
-            member_count = TeamMember.objects.all().count
-            user_count = User.objects.all().count
-            template = "user_management/admin_messages.html"
-            context = {
-                'title': 'admin messages',
-                'section': 'user_management',
-                'site_messages': message_pag,
-                'message_count': message_count,
-                'callback_count': callback_count,
-                'review_count': review_count,
-                'blog_count': blog_count,
-                'advert_count': advert_count,
-                'member_count': member_count,
-                'user_count': user_count,
-            }
-            return render(request, template, context)
-    else:
-        messages.warning(request, "You don't have the required permissions to\
-                         view this page")
-        return redirect(reverse('home'))
+        message_count = Message.objects.filter(read=False).count
+        message_pag = paginator_helper(request,
+                                    Message.objects.
+                                    all().order_by("responded", "read",
+                                                    "-received_on"),
+                                    10)
+        callback_count = Callback.objects.filter(read=False).count
+        review_count = Review.objects.filter(read=False).count
+        blog_count = BlogPost.objects.filter(publish=False).count
+        advert_count = Advert.objects.all().count
+        member_count = TeamMember.objects.all().count
+        user_count = User.objects.all().count
+        template = "user_management/admin_messages.html"
+        context = {
+            'title': 'admin messages',
+            'section': 'user_management',
+            'site_messages': message_pag,
+            'message_count': message_count,
+            'callback_count': callback_count,
+            'review_count': review_count,
+            'blog_count': blog_count,
+            'advert_count': advert_count,
+            'member_count': member_count,
+            'user_count': user_count,
+        }
+        return render(request, template, context)
+    messages.warning(request, "You don't have the required permissions to\
+                        view this page")
+    return redirect(reverse('home'))
 
 
 @login_required
@@ -232,37 +231,35 @@ def admin_callbacks(request):
             else:
                 messages.success(request, f"{count} {item} {result}")
             return JsonResponse(data)
-        else:
-            message_count = Message.objects.filter(read=False).count
-            callback_count = Callback.objects.filter(read=False).count
-            callback_pag = paginator_helper(request,
-                                            Callback.objects.
-                                            all().order_by("responded", "read",
-                                                        "-received_on"),
-                                            10)
-            review_count = Review.objects.filter(read=False).count
-            blog_count = BlogPost.objects.filter(publish=False).count
-            advert_count = Advert.objects.all().count
-            member_count = TeamMember.objects.all().count
-            user_count = User.objects.all().count
-            template = "user_management/admin_callbacks.html"
-            context = {
-                'title': 'admin callbacks',
-                'section': 'user_management',
-                'message_count': message_count,
-                'callbacks': callback_pag,
-                'callback_count': callback_count,
-                'review_count': review_count,
-                'blog_count': blog_count,
-                'advert_count': advert_count,
-                'member_count': member_count,
-                'user_count': user_count,
-            }
-            return render(request, template, context)
-    else:
-        messages.warning(request, "You don't have the required permissions to\
-                         view this page")
-        return redirect(reverse('home'))
+        message_count = Message.objects.filter(read=False).count
+        callback_count = Callback.objects.filter(read=False).count
+        callback_pag = paginator_helper(request,
+                                        Callback.objects.
+                                        all().order_by("responded", "read",
+                                                    "-received_on"),
+                                        10)
+        review_count = Review.objects.filter(read=False).count
+        blog_count = BlogPost.objects.filter(publish=False).count
+        advert_count = Advert.objects.all().count
+        member_count = TeamMember.objects.all().count
+        user_count = User.objects.all().count
+        template = "user_management/admin_callbacks.html"
+        context = {
+            'title': 'admin callbacks',
+            'section': 'user_management',
+            'message_count': message_count,
+            'callbacks': callback_pag,
+            'callback_count': callback_count,
+            'review_count': review_count,
+            'blog_count': blog_count,
+            'advert_count': advert_count,
+            'member_count': member_count,
+            'user_count': user_count,
+        }
+        return render(request, template, context)
+    messages.warning(request, "You don't have the required permissions to\
+                        view this page")
+    return redirect(reverse('home'))
 
 
 @login_required
@@ -344,37 +341,35 @@ def admin_blog_posts(request):
             else:
                 messages.success(request, f"{count} {item} {result}")
             return JsonResponse(data)
-        else:
-            message_count = Message.objects.filter(read=False).count
-            callback_count = Callback.objects.filter(read=False).count
-            review_count = Review.objects.filter(read=False).count
-            blog_count = BlogPost.objects.filter(publish=False).count
-            advert_count = Advert.objects.all().count
-            member_count = TeamMember.objects.all().count
-            user_count = User.objects.all().count
-            blog_posts = paginator_helper(request,
-                                          BlogPost.objects.
-                                          filter(publish=False).
-                                          order_by('-added_on'),
-                                          10)
-            template = "user_management/admin_blog_posts.html"
-            context = {
-                'title': 'admin blog posts',
-                'section': 'user_management',
-                'message_count': message_count,
-                'callback_count': callback_count,
-                'review_count': review_count,
-                'blog_count': blog_count,
-                'blog_posts': blog_posts,
-                'advert_count': advert_count,
-                'member_count': member_count,
-                'user_count': user_count,
-            }
-            return render(request, template, context)
-    else:
-        messages.warning(request, "You don't have the required permissions to\
-                         view this page")
-        return redirect(reverse('home'))
+        message_count = Message.objects.filter(read=False).count
+        callback_count = Callback.objects.filter(read=False).count
+        review_count = Review.objects.filter(read=False).count
+        blog_count = BlogPost.objects.filter(publish=False).count
+        advert_count = Advert.objects.all().count
+        member_count = TeamMember.objects.all().count
+        user_count = User.objects.all().count
+        blog_posts = paginator_helper(request,
+                                        BlogPost.objects.
+                                        filter(publish=False).
+                                        order_by('-added_on'),
+                                        10)
+        template = "user_management/admin_blog_posts.html"
+        context = {
+            'title': 'admin blog posts',
+            'section': 'user_management',
+            'message_count': message_count,
+            'callback_count': callback_count,
+            'review_count': review_count,
+            'blog_count': blog_count,
+            'blog_posts': blog_posts,
+            'advert_count': advert_count,
+            'member_count': member_count,
+            'user_count': user_count,
+        }
+        return render(request, template, context)
+    messages.warning(request, "You don't have the required permissions to\
+                        view this page")
+    return redirect(reverse('home'))
 
 
 @login_required
@@ -400,33 +395,31 @@ def admin_adverts(request):
             else:
                 messages.success(request, f"{count} {item} {result}")
             return JsonResponse(data)
-        else:
-            message_count = Message.objects.filter(read=False).count
-            callback_count = Callback.objects.filter(read=False).count
-            review_count = Review.objects.filter(read=False).count
-            blog_count = BlogPost.objects.filter(publish=False).count
-            advert_count = Advert.objects.all().count
-            member_count = TeamMember.objects.all().count
-            user_count = User.objects.all().count
-            adverts = paginator_helper(request, Advert.objects.all(), 10)
-            template = "user_management/admin_adverts.html"
-            context = {
-                'title': 'admin adverts',
-                'section': 'user_management',
-                'message_count': message_count,
-                'callback_count': callback_count,
-                'review_count': review_count,
-                'blog_count': blog_count,
-                'adverts': adverts,
-                'advert_count': advert_count,
-                'member_count': member_count,
-                'user_count': user_count,
-            }
-            return render(request, template, context)
-    else:
-        messages.warning(request, "You don't have the required permissions to\
-                         view this page")
-        return redirect(reverse('home'))
+        message_count = Message.objects.filter(read=False).count
+        callback_count = Callback.objects.filter(read=False).count
+        review_count = Review.objects.filter(read=False).count
+        blog_count = BlogPost.objects.filter(publish=False).count
+        advert_count = Advert.objects.all().count
+        member_count = TeamMember.objects.all().count
+        user_count = User.objects.all().count
+        adverts = paginator_helper(request, Advert.objects.all(), 10)
+        template = "user_management/admin_adverts.html"
+        context = {
+            'title': 'admin adverts',
+            'section': 'user_management',
+            'message_count': message_count,
+            'callback_count': callback_count,
+            'review_count': review_count,
+            'blog_count': blog_count,
+            'adverts': adverts,
+            'advert_count': advert_count,
+            'member_count': member_count,
+            'user_count': user_count,
+        }
+        return render(request, template, context)
+    messages.warning(request, "You don't have the required permissions to\
+                        view this page")
+    return redirect(reverse('home'))
 
 
 @login_required
@@ -452,36 +445,34 @@ def admin_members(request):
             else:
                 messages.success(request, f"{count} {item} {result}")
             return JsonResponse(data)
-        else:
-            message_count = Message.objects.filter(read=False).count
-            callback_count = Callback.objects.filter(read=False).count
-            review_count = Review.objects.filter(read=False).count
-            blog_count = BlogPost.objects.filter(publish=False).count
-            advert_count = Advert.objects.all().count
-            member_count = TeamMember.objects.all().count
-            user_count = User.objects.all().count
-            members = paginator_helper(request,
-                                          TeamMember.objects.
-                                          all().order_by('order'),
-                                          10)
-            template = "user_management/admin_members.html"
-            context = {
-                'title': 'admin team members',
-                'section': 'user_management',
-                'message_count': message_count,
-                'callback_count': callback_count,
-                'review_count': review_count,
-                'blog_count': blog_count,
-                'members': members,
-                'advert_count': advert_count,
-                'member_count': member_count,
-                'user_count': user_count,
-            }
-            return render(request, template, context)
-    else:
-        messages.warning(request, "You don't have the required permissions to\
-                         view this page")
-        return redirect(reverse('home'))
+        message_count = Message.objects.filter(read=False).count
+        callback_count = Callback.objects.filter(read=False).count
+        review_count = Review.objects.filter(read=False).count
+        blog_count = BlogPost.objects.filter(publish=False).count
+        advert_count = Advert.objects.all().count
+        member_count = TeamMember.objects.all().count
+        user_count = User.objects.all().count
+        members = paginator_helper(request,
+                                        TeamMember.objects.
+                                        all().order_by('order'),
+                                        10)
+        template = "user_management/admin_members.html"
+        context = {
+            'title': 'admin team members',
+            'section': 'user_management',
+            'message_count': message_count,
+            'callback_count': callback_count,
+            'review_count': review_count,
+            'blog_count': blog_count,
+            'members': members,
+            'advert_count': advert_count,
+            'member_count': member_count,
+            'user_count': user_count,
+        }
+        return render(request, template, context)
+    messages.warning(request, "You don't have the required permissions to\
+                        view this page")
+    return redirect(reverse('home'))
 
 
 @login_required
@@ -507,33 +498,31 @@ def admin_users(request):
             else:
                 messages.success(request, f"{count} {item} {result}")
             return JsonResponse(data)
-        else:
-            message_count = Message.objects.filter(read=False).count
-            callback_count = Callback.objects.filter(read=False).count
-            review_count = Review.objects.filter(read=False).count
-            blog_count = BlogPost.objects.filter(publish=False).count
-            advert_count = Advert.objects.all().count
-            member_count = TeamMember.objects.all().count
-            user_count = User.objects.all().count
-            users = paginator_helper(request, User.objects.all(), 10)
-            template = "user_management/admin_users.html"
-            context = {
-                'title': 'admin users',
-                'section': 'user_management',
-                'message_count': message_count,
-                'callback_count': callback_count,
-                'review_count': review_count,
-                'blog_count': blog_count,
-                'users': users,
-                'advert_count': advert_count,
-                'member_count': member_count,
-                'user_count': user_count,
-            }
-            return render(request, template, context)
-    else:
-        messages.warning(request, "You don't have the required permissions to\
-                         view this page")
-        return redirect(reverse('home'))
+        message_count = Message.objects.filter(read=False).count
+        callback_count = Callback.objects.filter(read=False).count
+        review_count = Review.objects.filter(read=False).count
+        blog_count = BlogPost.objects.filter(publish=False).count
+        advert_count = Advert.objects.all().count
+        member_count = TeamMember.objects.all().count
+        user_count = User.objects.all().count
+        users = paginator_helper(request, User.objects.all(), 10)
+        template = "user_management/admin_users.html"
+        context = {
+            'title': 'admin users',
+            'section': 'user_management',
+            'message_count': message_count,
+            'callback_count': callback_count,
+            'review_count': review_count,
+            'blog_count': blog_count,
+            'users': users,
+            'advert_count': advert_count,
+            'member_count': member_count,
+            'user_count': user_count,
+        }
+        return render(request, template, context)
+    messages.warning(request, "You don't have the required permissions to\
+                        view this page")
+    return redirect(reverse('home'))
 
 
 @login_required
@@ -550,10 +539,9 @@ def view_review(request, review_id):
             'review': review,
         }
         return render(request, template, context)
-    else:
-        messages.warning(request, "You don't have the required permissions to\
-                         view this page")
-        return redirect(reverse('home'))
+    messages.warning(request, "You don't have the required permissions to\
+                        view this page")
+    return redirect(reverse('home'))
 
 
 @login_required
@@ -574,10 +562,9 @@ def view_message(request, message_id):
             'message': message,
         }
         return render(request, template, context)
-    else:
-        messages.warning(request, "You don't have the required permissions to\
-                         view this page")
-        return redirect(reverse('home'))
+    messages.warning(request, "You don't have the required permissions to\
+                        view this page")
+    return redirect(reverse('home'))
 
 
 @login_required
@@ -594,10 +581,9 @@ def view_callback(request, callback_id):
             'callback': callback,
         }
         return render(request, template, context)
-    else:
-        messages.warning(request, "You don't have the required permissions to\
-                         view this page")
-        return redirect(reverse('home'))
+    messages.warning(request, "You don't have the required permissions to\
+                        view this page")
+    return redirect(reverse('home'))
 
 
 @login_required
@@ -610,10 +596,9 @@ def approve_review(request, review_id):
         review.save(update_fields=['authorised'])
         messages.success(request, f"Review {review_id} has been authorised")
         return redirect(reverse('admin_reviews'))
-    else:
-        messages.warning(request, "You don't have the required permissions to\
-                         approve reviews")
-        return redirect(reverse('home'))
+    messages.warning(request, "You don't have the required permissions to\
+                        approve reviews")
+    return redirect(reverse('home'))
 
 
 @login_required
@@ -681,9 +666,8 @@ def reply_to_message(request, message_id):
                 except BadHeaderError:
                     HttpResponse('Bad Header Found')
                 return redirect('view_message', message_id=message_id)
-            else:
-                messages.error(request, "Please check all fields are filled \
-                               out and resend your response")
+            messages.error(request, "Please check all fields are filled \
+                            out and resend your response")
         else:
             messages.warning(request, "You don't have the required permissions to \
                              message customers")
@@ -701,13 +685,12 @@ def delete_message(request, message_id):
             message.delete()
             messages.success(request, f"Successfully deleted \
                              message {message_id}")
-        except Exception as e:
-            messages.error(request, f"error deleting image: {e}")
+        except Exception as err:
+            messages.error(request, f"error deleting image: {err}")
         return redirect(reverse('admin_messages'))
-    else:
-        messages.warning(request, "You don't have the required \
-                         permissions to delete messages")
-        return redirect(reverse('home'))
+    messages.warning(request, "You don't have the required \
+                        permissions to delete messages")
+    return redirect(reverse('home'))
 
 
 @login_required
@@ -719,10 +702,9 @@ def delete_callback(request, callback_id):
             callback.delete()
             messages.success(request, f"Successfully deleted \
                              callback {callback_id}")
-        except Exception as e:
-            messages.error(request, f"error deleting image: {e}")
+        except Exception as err:
+            messages.error(request, f"error deleting image: {err}")
         return redirect(reverse('admin_callbacks'))
-    else:
-        messages.warning(request, "You don't have the required permissions to delete \
-                         callbacks")
-        return redirect(reverse('home'))
+    messages.warning(request, "You don't have the required permissions to delete \
+                        callbacks")
+    return redirect(reverse('home'))

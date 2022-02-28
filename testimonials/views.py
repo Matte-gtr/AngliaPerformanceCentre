@@ -1,14 +1,13 @@
+from datetime import datetime
+
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.db.models import Avg
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 
+from user_management.views import paginator_helper
 from .forms import ReviewForm
 from .models import ReviewImage, Review
-from user_management.views import paginator_helper
-
-from datetime import datetime
 
 
 def testimonials(request):
@@ -57,10 +56,9 @@ def post_review(request):
                 messages.success(request, 'Thanks for your review, it has been\
                         submitted for approval')
                 return redirect(reverse("testimonials"))
-            else:
-                messages.error(request, "you can't upload this\
-                               filetype")
-                return redirect(reverse('testimonials'))
+            messages.error(request, "you can't upload this\
+                            filetype")
+            return redirect(reverse('testimonials'))
         else:
             next_redirect = request.POST.get("next")
             messages.info(request, "Please log in to post a review")
@@ -82,20 +80,19 @@ def delete_review(request, review_id):
                     image = get_object_or_404(ReviewImage, pk=item.pk)
                     try:
                         image.delete()
-                    except Exception as e:
-                        messages.error(request, f"error deleting image: {e}")
+                    except Exception as err:
+                        messages.error(request, f"error deleting image: {err}")
             review.delete()
             messages.success(request, 'Your review by has been successfully \
                              deleted')
-        except Exception as e:
-            messages.error(request, f'Error deleting review: {e}')
+        except Exception as err:
+            messages.error(request, f'Error deleting review: {err}')
     else:
         messages.warning(request, 'You are only able to delete your own \
                          reviews')
     if next_url:
         return redirect(reverse('admin_reviews'))
-    else:
-        return redirect(reverse("testimonials"))
+    return redirect(reverse("testimonials"))
 
 
 @login_required
@@ -118,8 +115,9 @@ def edit_review(request, review_id):
                                                              pk=image_id)
                             try:
                                 review_image.delete()
-                            except Exception as e:
-                                messages.error(request, f"error deleting image: {e}")
+                            except Exception as err:
+                                messages.error(request, f"error deleting \
+                                    image: {err}")
                     form_review = form.save(commit=False)
                     form_review.updated_on = datetime.now()
                     form_review.authorised = False
@@ -133,9 +131,8 @@ def edit_review(request, review_id):
                     messages.success(request, "Your Review has been \
                                      successfully updated awaiting approval")
                     return redirect(reverse('testimonials'))
-                else:
-                    messages.error(request, "Update failed, Please ensure all fields \
-                                are filled in and re-submit")
+                messages.error(request, "Update failed, Please ensure all fields \
+                            are filled in and re-submit")
             else:
                 messages.warning(request, "You cannot edit someone elses \
                                  review")
@@ -166,7 +163,6 @@ def unauth_review(request, review_id):
         review.save(update_fields=['read', 'authorised'])
         messages.success(request, f"Review {review_id} has been de-authorised")
         return redirect(reverse('testimonials'))
-    else:
-        messages.warning(request, "You do not have the required \
-                         permissions to complete this action")
-        return redirect(reverse('testimonials'))
+    messages.warning(request, "You do not have the required \
+                        permissions to complete this action")
+    return redirect(reverse('testimonials'))

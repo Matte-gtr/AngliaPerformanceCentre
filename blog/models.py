@@ -1,6 +1,6 @@
 from django.db import models
-from .validators import validate_video_file
 from ckeditor_uploader.fields import RichTextUploadingField
+from .validators import validate_video_file
 
 
 class BlogCategory(models.Model):

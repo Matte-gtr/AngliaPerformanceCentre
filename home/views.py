@@ -33,9 +33,8 @@ def add_advert(request):
                 form.save()
                 messages.success(request, "Your advert has been saved")
                 return redirect(reverse('admin_adverts'))
-            else:
-                messages.error(request, "Please check your form and \
-                               re-submit")
+            messages.error(request, "Please check your form and \
+                           re-submit")
         else:
             form = AdvertForm()
         template = 'home/add_advert.html'
@@ -45,10 +44,9 @@ def add_advert(request):
             'form': form,
         }
         return render(request, template, context)
-    else:
-        messages.warning(request, "You don't have the required \
-            permissions to complete this action")
-        return redirect(reverse('home'))
+    messages.warning(request, "You don't have the required \
+        permissions to complete this action")
+    return redirect(reverse('home'))
 
 
 @login_required
@@ -62,8 +60,7 @@ def edit_advert(request, advert_id):
                 form.save()
                 messages.success(request, "Your advert has been updated")
                 return redirect(reverse('admin_adverts'))
-            else:
-                messages.error(request, "Please check your form and re-submit")
+            messages.error(request, "Please check your form and re-submit")
         else:
             form = AdvertForm(instance=advert)
         template = 'home/edit_advert.html'
@@ -74,10 +71,9 @@ def edit_advert(request, advert_id):
             'advert': advert,
         }
         return render(request, template, context)
-    else:
-        messages.warning(request, "You don't have the required \
-            permissions to complete this action")
-        return redirect(reverse('home'))
+    messages.warning(request, "You don't have the required \
+        permissions to complete this action")
+    return redirect(reverse('home'))
 
 
 @login_required
@@ -91,7 +87,6 @@ def delete_advert(request, advert_id):
         except Exception as err:
             messages.error(request, f'Delete advert "{advert.name}" failed: {err}')
         return redirect(reverse('admin_adverts'))
-    else:
-        messages.warning(request, "You don't have the required \
-            permissions to complete this action")
-        return redirect(reverse('home'))
+    messages.warning(request, "You don't have the required \
+        permissions to complete this action")
+    return redirect(reverse('home'))
