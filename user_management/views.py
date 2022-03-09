@@ -28,10 +28,12 @@ def paginator_helper(request, object_list, per_page):
 @login_required
 def profile(request):
     """ a view to display a users profile """
+    user = get_object_or_404(User, pk=request.user.id)
     template = "user_management/profile.html"
     context = {
         'title': 'profile',
         'section': 'user_management',
+        'user': user,
     }
     return render(request, template, context)
 
@@ -70,7 +72,8 @@ def process_ids(request, item, action, id_final):
                             except Exception as err:
                                 messages.error(request, f"error deleting blog \
                                     video: {err}")
-                if hasattr(obj, "image") and item != "advert" and item != "member":
+                if hasattr(obj, "image") and item != "advert" and \
+                        item != "member":
                     images = obj.image.all()
                     if images:
                         for img in images:
@@ -159,8 +162,8 @@ def admin_messages(request):
     """ a view to display the admin panel """
     if request.user.is_staff:
         if request.is_ajax():
-            item = request.POST.get('item')  # message
-            action = request.POST.get('action')  # respond, unrespond, read, unread, delete
+            item = request.POST.get('item')
+            action = request.POST.get('action')
             id_list = request.POST.get('id_list')  # [1, 2 ,3 ]
             id_object = json.loads(id_list)
             for key, value in id_object.items():
@@ -213,8 +216,8 @@ def admin_callbacks(request):
     """ a view to display the admin panel """
     if request.user.is_staff:
         if request.is_ajax():
-            item = request.POST.get('item')  # callback
-            action = request.POST.get('action')  # respond, unrespond, read, unread, delete
+            item = request.POST.get('item')
+            action = request.POST.get('action')
             id_list = request.POST.get('id_list')  # [1, 2 ,3 ]
             id_object = json.loads(id_list)
             for key, value in id_object.items():
@@ -236,7 +239,7 @@ def admin_callbacks(request):
         callback_pag = paginator_helper(request,
                                         Callback.objects.
                                         all().order_by("responded", "read",
-                                                    "-received_on"),
+                                                       "-received_on"),
                                         10)
         review_count = Review.objects.filter(read=False).count
         blog_count = BlogPost.objects.filter(publish=False).count
@@ -267,9 +270,9 @@ def admin_reviews(request):
     """ a view to display the admin panel """
     if request.user.is_staff:
         if request.is_ajax():
-            item = request.POST.get('item')  # message
-            action = request.POST.get('action')  # respond, unrespond, read, unread, delete
-            id_list = request.POST.get('id_list')  # [1, 2 ,3 ]
+            item = request.POST.get('item')
+            action = request.POST.get('action')
+            id_list = request.POST.get('id_list')
             id_object = json.loads(id_list)
             for key, value in id_object.items():
                 id_final = value
@@ -294,10 +297,10 @@ def admin_reviews(request):
             member_count = TeamMember.objects.all().count
             user_count = User.objects.all().count
             review_pag = paginator_helper(request,
-                                        Review.objects.
-                                        filter(authorised=False).
-                                        order_by("read", "-created_on"),
-                                        10)
+                                          Review.objects.
+                                          filter(authorised=False).
+                                          order_by("read", "-created_on"),
+                                          10)
             template = "user_management/admin_reviews.html"
             context = {
                 'title': 'admin reviews',
@@ -377,9 +380,9 @@ def admin_adverts(request):
     """ a view for the advert admin page """
     if request.user.is_staff:
         if request.is_ajax():
-            item = request.POST.get('item')  # advert
-            action = request.POST.get('action')  # delete
-            id_list = request.POST.get('id_list')  # [1, 2 ,3 ]
+            item = request.POST.get('item')
+            action = request.POST.get('action')
+            id_list = request.POST.get('id_list')
             id_object = json.loads(id_list)
             for key, value in id_object.items():
                 id_final = value
@@ -427,9 +430,9 @@ def admin_members(request):
     """ a view for the member admin page """
     if request.user.is_staff:
         if request.is_ajax():
-            item = request.POST.get('item')  # member
-            action = request.POST.get('action')  # delete
-            id_list = request.POST.get('id_list')  # [1, 2 ,3 ]
+            item = request.POST.get('item')
+            action = request.POST.get('action')
+            id_list = request.POST.get('id_list')
             id_object = json.loads(id_list)
             for key, value in id_object.items():
                 id_final = value
@@ -453,9 +456,9 @@ def admin_members(request):
         member_count = TeamMember.objects.all().count
         user_count = User.objects.all().count
         members = paginator_helper(request,
-                                        TeamMember.objects.
-                                        all().order_by('order'),
-                                        10)
+                                   TeamMember.objects.
+                                   all().order_by('order'),
+                                   10)
         template = "user_management/admin_members.html"
         context = {
             'title': 'admin team members',
