@@ -29,7 +29,7 @@ else:
     SECRET_KEY = os.environ.get('SECRET_KEY')
     DEBUG = False
 
-ALLOWED_HOSTS = ['109.74.202.25']
+ALLOWED_HOSTS = ['64.227.41.135']
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
