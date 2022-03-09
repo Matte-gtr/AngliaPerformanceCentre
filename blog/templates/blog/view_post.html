@@ -21,11 +21,9 @@
                             </div>
                             <hr class="w-100">
                             {% if blog_post.header_image %}
-                            <div id="img-contain" class="full-blog-image-container">
                                 <a data-fancybox="image-1" href="{{ blog_post.header_image.url }}">
-                                    <img id="header-img" class="blog-header-image" src="{{ blog_post.header_image.url }}" alt="{{ blog_post.header_image.url }}">
+                                    <div id="img-contain" class="full-blog-image-container"><img id="header-img" class="blog-header-image" src="{{ blog_post.header_image.url }}" alt="{{ blog_post.header_image.url }}"></div>
                                 </a>
-                            </div>
                             {% endif %}
                             <div class="pt-2">
                                 {{ blog_post.post_body|safe }}
@@ -64,9 +62,9 @@
             let hImage = $("#header-img");
             let container = $("#img-contain");
             if (hImage.height() > hImage.width()) {
-                container.addClass('portrait');
+                hImage.addClass('portrait');
             } else {
-                container.addClass('landscape');
+                hImage.addClass('landscape');
             }
         });
     </script>
