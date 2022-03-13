@@ -153,7 +153,7 @@ else:
             'USER': 'msnell89',
             'PASSWORD': 'bUried123*apC',
             'HOST': 'localhost',
-            'PORT': '8000',
+            'PORT': '',
         }
     }
 
