@@ -151,7 +151,7 @@ else:
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'apcDB',
             'USER': 'msnell89',
-            'PASSWORD': 'bUried123*apC',
+            'PASSWORD': 'Better123*',
             'HOST': 'localhost',
             'PORT': '',
         }
