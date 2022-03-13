@@ -149,7 +149,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'apcDB',
+            'NAME': 'apcdb',
             'USER': 'msnell89',
             'PASSWORD': 'Better123*',
             'HOST': 'localhost',
