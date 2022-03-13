@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +25,8 @@ if 'DEVELOPMENT' in os.environ:
     SECRET_KEY = 'django-insecure-j*bm-73hpdlt-d)#i(t+b4a#y2k)grgv1s0+(p9b@9*+at8-xz'
     DEBUG = True
 else:
-    SECRET_KEY = os.environ.get('SECRET_KEY')
+    # SECRET_KEY = os.environ.get('SECRET_KEY')
+    SECRET_KEY = 'django-insecure-j*bm-73hpdlt-d)#i(t+b4a#y2k)grgv1s0+(p9b@9*+at8-xz'
     DEBUG = False
 
 ALLOWED_HOSTS = ['64.227.41.135']
@@ -138,18 +138,24 @@ WSGI_APPLICATION = 'APCwebsite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-if 'DATABASE_URL' in os.environ:
-    DATABASES = {
-        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
-    }
-else:
+if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'apcDB',
+            'USER': 'msnell89',
+            'PASSWORD': 'bUried123*apC',
+            'HOST': 'localhost',
+            'PORT': '',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -210,6 +216,6 @@ else:
     EMAIL_USE_TLS = True
     EMAIL_PORT = 587
     EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER') # unset
-    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASS') # unset
-    DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL') # unset
+    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASS')
+    DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
