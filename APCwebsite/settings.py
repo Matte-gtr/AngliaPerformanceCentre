@@ -25,8 +25,7 @@ if 'DEVELOPMENT' in os.environ:
     SECRET_KEY = 'django-insecure-j*bm-73hpdlt-d)#i(t+b4a#y2k)grgv1s0+(p9b@9*+at8-xz'
     DEBUG = True
 else:
-    # SECRET_KEY = os.environ.get('SECRET_KEY')
-    SECRET_KEY = 'django-insecure-j*bm-73hpdlt-d)#i(t+b4a#y2k)grgv1s0+(p9b@9*+at8-xz'
+    SECRET_KEY = os.environ.get('SECRET_KEY')
     DEBUG = False
 
 ALLOWED_HOSTS = ['64.227.41.135']
