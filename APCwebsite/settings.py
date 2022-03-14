@@ -31,7 +31,7 @@ if 'DEVELOPMENT' in os.environ:
     DEBUG = True
 else:
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    DEBUG = True
+    DEBUG = False
 
 ALLOWED_HOSTS = ['64.227.41.135', 'localhost']
 
