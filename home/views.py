@@ -85,7 +85,8 @@ def delete_advert(request, advert_id):
             advert.delete()
             messages.success(request, f'Advert for "{advert.name} deleted"')
         except Exception as err:
-            messages.error(request, f'Delete advert "{advert.name}" failed: {err}')
+            messages.error(request, f'Delete advert "{advert.name}" \
+                failed: {err}')
         return redirect(reverse('admin_adverts'))
     messages.warning(request, "You don't have the required \
         permissions to complete this action")

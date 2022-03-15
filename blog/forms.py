@@ -38,6 +38,7 @@ class BlogPostForm(forms.ModelForm):
             if field != 'post_body':
                 self.fields[field].widget.attrs['class'] = 'form-control mb-2'
             if field == 'header_image' or field == 'video':
-                self.fields[field].widget.attrs['class'] = 'form-control mb-2 border-0'
+                self.fields[field].widget.attrs['class'] = 'form-control \
+                mb-2 border-0'
         self.fields['post_title'].widget.attrs['placeholder'] = "Title"
         self.fields['post_body'].label = ""

@@ -15,5 +15,6 @@ class AdvertForm(forms.ModelForm):
             self.fields[field].widget.attrs['class'] = 'form-control mb-2'
 
         self.fields['image'].widget.attrs = {
-            'class': 'form-control-file mb-2 bg-trans border-0 pl-0 text-white',
+            'class': 'form-control-file mb-2 bg-trans border-0 pl-0 \
+                text-white',
             }

@@ -27,7 +27,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # DEVELOPMENT Unset
 if 'DEVELOPMENT' in os.environ:
-    SECRET_KEY = 'django-insecure-j*bm-73hpdlt-d)#i(t+b4a#y2k)grgv1s0+(p9b@9*+at8-xz'
+    SECRET_KEY = 'django-insecure-j*bm-73hpdlt-d)#i(t+b4a#y2k)grgv1s0+(p9b@9*\
+    +at8-xz'
     DEBUG = True
 else:
     SECRET_KEY = os.environ.get('SECRET_KEY')
@@ -153,9 +154,9 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'apcdb',
-            'USER': 'msnell89',
-            'PASSWORD': 'Better123*',
+            'NAME': os.environ.get('DATABASE_NAME'),
+            'USER': os.environ.get('DATABASE_USER'),
+            'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
             'HOST': 'localhost',
             'PORT': '',
         }

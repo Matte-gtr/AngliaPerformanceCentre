@@ -182,10 +182,10 @@ def admin_messages(request):
             return JsonResponse(data)
         message_count = Message.objects.filter(read=False).count
         message_pag = paginator_helper(request,
-                                    Message.objects.
-                                    all().order_by("responded", "read",
-                                                    "-received_on"),
-                                    10)
+                                       Message.objects.
+                                       all().order_by("responded", "read",
+                                                      "-received_on"),
+                                       10)
         callback_count = Callback.objects.filter(read=False).count
         review_count = Review.objects.filter(read=False).count
         blog_count = BlogPost.objects.filter(publish=False).count
@@ -352,10 +352,10 @@ def admin_blog_posts(request):
         member_count = TeamMember.objects.all().count
         user_count = User.objects.all().count
         blog_posts = paginator_helper(request,
-                                        BlogPost.objects.
-                                        filter(publish=False).
-                                        order_by('-added_on'),
-                                        10)
+                                      BlogPost.objects.
+                                      filter(publish=False).
+                                      order_by('-added_on'),
+                                      10)
         template = "user_management/admin_blog_posts.html"
         context = {
             'title': 'admin blog posts',

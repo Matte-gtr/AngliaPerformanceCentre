@@ -91,7 +91,6 @@ def add_post(request):
     return render(request, template, context)
 
 
-
 @login_required
 def post_preview(request, blog_id):
     """ a view to preview a blog post before it is made public """
