@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+
+{% block extra_meta %}
+<meta name="description" content="{{ blog_post.short_body }}..."/>
+{% endblock %}
+
 {% block content %}
     <!--Content-->
     <div class="container-fluid bg-engine bg-fixed dark-content p-0">

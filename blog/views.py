@@ -49,11 +49,13 @@ def blog(request):
 def view_post(request, blog_id):
     """a view to show a full blog post write-up"""
     blog_post = get_object_or_404(BlogPost, pk=blog_id)
+    short_body = clean_snippet(blog_post.post_body).replace("&nbsp;", "")
     template = "blog/view_post.html"
     context = {
         'title': blog_post.post_title,
         'section': 'blog',
         'blog_post': blog_post,
+        'short_body': short_body,
     }
     return render(request, template, context)
 
