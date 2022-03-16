@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.conf import settings
 
 from .models import TeamMember
 from .forms import TeamMemberForm
@@ -8,10 +9,12 @@ from .forms import TeamMemberForm
 
 def about_us(request):
     """ a view for the about us page """
+    tester = settings.DEFAULT_FROM_EMAIL_TEST
     template = 'about_us/about_us.html'
     context = {
         'title': 'about us',
         'section': 'about',
+        'tester': tester,
     }
     return render(request, template, context)
 

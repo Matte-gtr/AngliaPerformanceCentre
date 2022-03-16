@@ -25,13 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# DEVELOPMENT Unset
 if 'DEVELOPMENT' in os.environ:
     SECRET_KEY = 'django-insecure-j*bm-73hpdlt-d)#i(t+b4a#y2k)grgv1s0+(p9b@9*+at8-xz'
     DEBUG = True
 else:
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    DEBUG = False
+    DEBUG = True
 
 ALLOWED_HOSTS = ['64.227.41.135', 'localhost']
 
@@ -142,7 +141,7 @@ WSGI_APPLICATION = 'APCwebsite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-if DEBUG:
+if 'DEVELOPMENT' in os.environ:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -213,16 +212,23 @@ CKEDITOR_UPLOAD_PATH = "blogs/ckeditor/"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 if 'DEVELOPMENT' in os.environ:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    # DEFAULT_FROM_EMAIL = 'contact@apcperformance.co.uk'
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_USE_TLS = False
+    EMAIL_PORT = 465
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASS')
     DEFAULT_FROM_EMAIL = 'contact@apcperformance.co.uk'
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_USE_TLS = True
     EMAIL_PORT = 587
     EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASS')
-    DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER_TEST')
+    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASS_TEST')
+    DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL_TEST')
 
 if 'USE_AWS' in os.environ:
     # Cache control
