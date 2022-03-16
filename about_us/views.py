@@ -9,7 +9,7 @@ from .forms import TeamMemberForm
 
 def about_us(request):
     """ a view for the about us page """
-    tester = settings.DEFAULT_FROM_EMAIL_TEST
+    tester = settings.DEFAULT_FROM_EMAIL
     template = 'about_us/about_us.html'
     context = {
         'title': 'about us',
