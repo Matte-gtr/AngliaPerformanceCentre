@@ -212,23 +212,16 @@ CKEDITOR_UPLOAD_PATH = "blogs/ckeditor/"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 if 'DEVELOPMENT' in os.environ:
-    # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    # DEFAULT_FROM_EMAIL = 'contact@apcperformance.co.uk'
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_USE_TLS = False
-    EMAIL_PORT = 465
-    EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASS')
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     DEFAULT_FROM_EMAIL = 'contact@apcperformance.co.uk'
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_USE_TLS = True
     EMAIL_PORT = 587
     EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER_TEST')
-    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASS_TEST')
-    DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL_TEST')
+    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER_TEST')
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASS_TEST')
+    DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL_TEST')
 
 if 'USE_AWS' in os.environ:
     # Cache control
