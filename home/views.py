@@ -1,15 +1,28 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db.models import Avg
 
 from contact.forms import MessageForm, CallbackForm
 from .models import Advert
 from .forms import AdvertForm
+from testimonials.models import Review
 
 
 def home(request):
     """ a view for the home page """
     adverts = Advert.objects.all()
+    reviews = Review.objects.filter(authorised=True).\
+        order_by('-created_on')[:2]
+    review_count = Review.objects.filter(authorised=True).count()
+    average = Review.objects.filter(authorised=True).\
+        aggregate(Avg('stars'))['stars__avg']
+    if review_count > 0:
+        average_rating = round(average, 1)
+    else:
+        average_rating = "No Ratings yet"
+    for review in reviews:
+        review.clip = review.review[:90]
     form = MessageForm(request.POST or None)
     miniform = CallbackForm(request.POST or None)
     template = 'home/home.html'
@@ -19,6 +32,9 @@ def home(request):
         'adverts': adverts,
         'form': form,
         'miniform': miniform,
+        'reviews': reviews,
+        'review_count': review_count,
+        'average_rating': average_rating,
     }
     return render(request, template, context)
 
