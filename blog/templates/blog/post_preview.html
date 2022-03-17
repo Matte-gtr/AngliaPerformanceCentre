@@ -28,9 +28,21 @@
                                 </a>
                             </div>
                             {% endif %}
-                            <div class="pt-2">
+                            <div id="ckeditor-content" class="pt-2">
                                 {{ blog_post.post_body|safe }}
                             </div>
+                            {% if blog_post.youtube_link %}
+                            <iframe 
+                                class="mw-100"
+                                width="560" 
+                                height="315" 
+                                src="https://www.youtube.com/embed/{{ youtube_clip }}" 
+                                title="YouTube video player" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                            {% endif %}
                             {% if blog_post.video.count > 0 %}
                                 {% for vid in blog_post.video.all %}
                                 <a data-fancybox="group-1" href="{{ vid.video.url }}">
@@ -93,6 +105,20 @@
             } else {
                 container.addClass('landscape');
             }
+
+            let ckContent = $('#ckeditor-content');
+            ckContent.children().each(function() {
+                if ($(this).is('img')) {
+                    $(this).addClass('img-fluid');
+                    $(this).css('height', 'auto');
+                }
+                $(this).children().each(function() {
+                    if ($(this).is('img')) {
+                    $(this).addClass('img-fluid');
+                    $(this).css('height', 'auto');
+                }
+                });
+            });
         });
     </script>
 {% endblock %}

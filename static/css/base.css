@@ -1153,10 +1153,12 @@ nav ul li {
 
 .video_default {
     width: 100%;
-    max-width: 510px;
+    max-width: 559px;
     height: auto;
     box-shadow: 3px 3px 6px black;
     border: 5px solid #c6a86c;
+    margin-bottom: 20px;
+    margin-top: 15px;
 }
 
 /*----------Contact----------*/

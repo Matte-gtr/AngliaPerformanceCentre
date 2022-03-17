@@ -131,7 +131,8 @@ def process_ids(request, item, action, id_final):
         elif action == "approve":
             try:
                 obj.authorised = True
-                obj.save(update_fields=['authorised'])
+                obj.read = True
+                obj.save(update_fields=['authorised', 'read'])
                 count += 1
                 result = "approved"
             except Exception as err:

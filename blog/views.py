@@ -50,12 +50,16 @@ def view_post(request, blog_id):
     """a view to show a full blog post write-up"""
     blog_post = get_object_or_404(BlogPost, pk=blog_id)
     short_body = clean_snippet(blog_post.post_body).replace("&nbsp;", "")
+    youtube_clip = ""
+    if blog_post.youtube_link:
+        youtube_clip = blog_post.youtube_link.split('=')[-1]
     template = "blog/view_post.html"
     context = {
         'title': blog_post.post_title,
         'section': 'blog',
         'blog_post': blog_post,
         'short_body': short_body,
+        'youtube_clip': youtube_clip,
     }
     return render(request, template, context)
 
@@ -100,6 +104,9 @@ def post_preview(request, blog_id):
         blog_post = get_object_or_404(BlogPost, pk=blog_id)
         refer = request.META.get('HTTP_REFERER')
         refer = refer.split('/')[-2]
+        youtube_clip = ""
+        if blog_post.youtube_link:
+            youtube_clip = blog_post.youtube_link.split('=')[-1]
         if blog_post.publish is True:
             messages.info(request, f"Blog post {blog_id} is already \
                 published")
@@ -114,6 +121,7 @@ def post_preview(request, blog_id):
         'section': 'blog',
         'blog_post': blog_post,
         'refer': refer,
+        'youtube_clip': youtube_clip,
     }
     return render(request, template, context)
 

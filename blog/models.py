@@ -1,6 +1,7 @@
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
 from .validators import validate_video_file
+from testimonials.models import compress
 
 
 class BlogCategory(models.Model):
@@ -25,10 +26,18 @@ class BlogPost(models.Model):
     header_image = models.ImageField(upload_to="blogs/header_images",
                                      blank=True, null=True)
     video = models.ManyToManyField('BlogPostVideo', blank=True)
+    youtube_link = models.CharField(blank=True, max_length=500)
     publish = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.post_title)
+
+    def save(self, *args, **kwargs):
+        if self.header_image:
+            if self.header_image.size > (300 * 1024):
+                new_image = compress(self.header_image)
+                self.header_image = new_image
+        super().save(*args, **kwargs)
 
 
 class BlogPostVideo(models.Model):

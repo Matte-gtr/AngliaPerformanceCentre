@@ -29,6 +29,7 @@ class BlogPostForm(forms.ModelForm):
             'post_title',
             'post_body',
             'header_image',
+            'youtube_link',
         ]
 
     def __init__(self, *args, **kwargs):
@@ -41,4 +42,6 @@ class BlogPostForm(forms.ModelForm):
                 self.fields[field].widget.attrs['class'] = 'form-control \
                 mb-2 border-0'
         self.fields['post_title'].widget.attrs['placeholder'] = "Title"
+        self.fields['video'].label = "Video (Not Recommended)"
+        self.fields['youtube_link'].widget.attrs['placeholder'] = "Recommended"
         self.fields['post_body'].label = ""
