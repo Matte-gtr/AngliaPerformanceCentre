@@ -13,7 +13,8 @@ from .models import ReviewImage, Review
 def testimonials(request):
     """ a view for the testimonials page """
     auth_reviews = paginator_helper(request, Review.objects.
-                                    filter(authorised=True), 10)
+                                    filter(authorised=True).order_by(
+                                        '-created_on'), 10)
     review_count = Review.objects.filter(authorised=True).count()
     average = Review.objects.filter(authorised=True).\
         aggregate(Avg('stars'))['stars__avg']

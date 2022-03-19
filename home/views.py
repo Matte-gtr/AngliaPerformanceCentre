@@ -13,7 +13,7 @@ def home(request):
     """ a view for the home page """
     adverts = Advert.objects.all()
     reviews = Review.objects.filter(authorised=True).\
-        order_by('-created_on')[:2]
+        order_by('-created_on')[:11]
     review_count = Review.objects.filter(authorised=True).count()
     average = Review.objects.filter(authorised=True).\
         aggregate(Avg('stars'))['stars__avg']
@@ -22,7 +22,7 @@ def home(request):
     else:
         average_rating = "No Ratings yet"
     for review in reviews:
-        review.clip = review.review[:90]
+        review.clip = review.review[:80]
     form = MessageForm(request.POST or None)
     miniform = CallbackForm(request.POST or None)
     template = 'home/home.html'

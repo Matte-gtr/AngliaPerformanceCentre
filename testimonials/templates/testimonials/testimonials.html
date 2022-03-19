@@ -38,7 +38,7 @@
                 <div class="row">
                     <div class="col-12">
                         {% for review in reviews %}
-                            <article class="review">
+                            <article class="review" id="review-{{ review.id }}">
                                 {% if review.anon == False %}
                                     <h5 class="font-weight-bold d-inline-block">{{ review.user }}</h5>
                                     {% with user=request.user %}

@@ -147,7 +147,7 @@ services ranging from oil services, to custom made exhausts and chip tuning/rema
         </div>
       </div>
     </section>]
-    {% if review_count %}
+    {% if review_count > 5 %}
     <section class="container-fluid pt-4">
       <div class="row">
         <div class="col">
@@ -157,8 +157,8 @@ services ranging from oil services, to custom made exhausts and chip tuning/rema
         </div>
       </div>
       <div class="row">
-        <div class="col-12 col-sm-6 col-md-4 col-xl-3 text-center text-grey">
-          <span class="font-weight-bold h5">Reviews</span></br>
+        <div class="col-12 col-md-3 col-xl-3 text-center text-grey my-auto pb-5">
+          <span class="font-weight-bold h4 text-white">Reviews</span></br>
           <p class="m-0">
               <span class="fa fa-star text-orange"></span>
               <span class="fa fa-star{% if average_rating >= 1 %} text-orange{% endif %}"></span>
@@ -169,26 +169,33 @@ services ranging from oil services, to custom made exhausts and chip tuning/rema
           <span class="font-weight-bold">{{ review_count }} Reviews</span><br/>
           <span class="font-weight-bold">{{ average_rating }} Average Rating</span>
         </div>
-        {% for review in reviews %}
-        <div class="col-12 col-sm-6 col-md-4 col-xl-3 text-center">
-          <div class="mini-review">
-            <span>{{ review.user }}</span>
-          <p class="m-0 small">
-              <span class="fa fa-star fa-sm{% if review.stars >= 1 %} text-orange{% endif %}"></span>
-              <span class="fa fa-star fa-sm{% if review.stars >= 2 %} text-orange{% endif %}"></span>
-              <span class="fa fa-star fa-sm{% if review.stars >= 3 %} text-orange{% endif %}"></span>
-              <span class="fa fa-star fa-sm{% if review.stars >= 4 %} text-orange{% endif %}"></span>
-              <span class="fa fa-star fa-sm{% if review.stars >= 5 %} text-orange{% endif %}"></span>
-          </p>
-          <p>{{ review.clip }}{% if review.review|length > review.clip|length %}...{% endif %}</p>
-          <span class="small">{{ review.created_on }}</span>
+        <div class="col-12 col-md-8 col-xl-8">
+          <div class="horizontal-snap pb-2" id="snap-container">
+            {% for review in reviews %}
+            <div class="text-center">
+              <div class="mini-review">
+                <a href="{% url 'testimonials' %}#review-{{ review.id }}" class="plain-link">
+                  <span class="font-weight-bold">{% if review.anon %}Anonymous{% else %}{{ review.user }}{% endif %}</span>
+                  <p class="m-0 small">
+                      <span class="fa fa-star fa-sm{% if review.stars >= 1 %} text-orange{% endif %}"></span>
+                      <span class="fa fa-star fa-sm{% if review.stars >= 2 %} text-orange{% endif %}"></span>
+                      <span class="fa fa-star fa-sm{% if review.stars >= 3 %} text-orange{% endif %}"></span>
+                      <span class="fa fa-star fa-sm{% if review.stars >= 4 %} text-orange{% endif %}"></span>
+                      <span class="fa fa-star fa-sm{% if review.stars >= 5 %} text-orange{% endif %}"></span>
+                  </p>
+                  <p>{{ review.clip }}{% if review.review|length > review.clip|length %}...{% endif %}</p>
+                  <span class="small">{{ review.created_on }}</span>
+                </a>
+              </div>
+            </div>
+            {% endfor %}
           </div>
-        </div>
-        {% endfor %}
-      </div>
-      <div class="row">
-        <div class="col text-center mt-5">
-          <button class="btn send-btn">View All Testimonials</button>
+          <span class="pl-2 pr-2 pb-3 pointer align-left">
+            <i id="scrollLeft" class=" text-white fas fa-chevron-left fa-lg"></i>
+          </span>
+          <span class="pl-2 pr-2 pb-3 pointer align-right">
+            <i id="scrollRight" class="text-white fas fa-chevron-right fa-lg"></i>
+          </span>
         </div>
       </div>
     </section>
@@ -246,9 +253,36 @@ services ranging from oil services, to custom made exhausts and chip tuning/rema
 {% block postload_js %}
 {{ block.super }}
 <script>
-  $(document).ready(
-    function () {
-      $('.ad-description').slideDown();
-    });
+  $(document).ready(function() {
+    $('.ad-description').slideDown();
+
+    const buttonRight = document.getElementById('scrollRight');
+    const buttonLeft = document.getElementById('scrollLeft');
+
+    function sideScroll(element, direction, speed, distance, step){
+      scrollAmount = 0;
+      var slideTimer = setInterval(function(){
+        if(direction == 'left'){
+            element.scrollLeft -= step;
+        } else {
+            element.scrollLeft += step;
+        }
+        scrollAmount += step;
+        if(scrollAmount >= distance){
+            window.clearInterval(slideTimer);
+        }
+      }, speed);
+    }
+
+    buttonRight.onclick = function () {
+      let snapper = document.getElementById('snap-container')
+      sideScroll(snapper,'right',25,200,10);
+    };
+
+    buttonLeft.onclick = function () {
+      let snapper = document.getElementById('snap-container');
+      sideScroll(snapper,'left',25,200,10);
+    };
+  });
 </script>
 {% endblock %}
