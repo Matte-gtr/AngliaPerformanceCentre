@@ -293,7 +293,8 @@
                                 <h3 class="uppercase">Ts & Cs</h3>
                                 <hr class="footer-hr">
                                 <div class="footer-content">
-                                    <p>View our <a class="standard-link" href="{% url 'terms_and_conditions' %}">Terms and Conditions</a> page for details.</p>
+                                    <p>View our <a class="standard-link" href="{% url 'terms_and_conditions' %}">Terms and Conditions</a>.</p>
+                                    <p>View our <a target="_blank" class="standard-link" href="{{ MEDIA_URL }}Privacy-Policy.pdf">Privacy Policy</a>.</p>
                                 </div>
                             </div>
                         </div>
@@ -319,6 +320,11 @@
             </div>
         </div>
     </footer>
+
+    <div class="cookie-consent-container">
+        <p class="m-0">This site uses cookies. See our <a target="_blank" href="{{ MEDIA_URL }}Privacy-Policy.pdf">Privacy Policy</a> for details.</p>
+        <button class="btn send-btn px-3 cookie-consent">OK</button>
+    </div>
 
     {% if messages %}
     <div class="toast-position">
@@ -346,12 +352,12 @@
     <script>
         $(document).ready(function () {
             $('.toast').toast('show');
-            $('.toast').on('shown.bs.toast', function () {
+            /*$('.toast').on('shown.bs.toast', function () {
                 function hidetoast () {
                     $('.toast').toast('hide');
                 };
                 setTimeout(hidetoast, 5000);
-            });
+            });*/
             
             let headerHeight = document.getElementById("base-header").offsetHeight;
             let bannerHeight = 0;
@@ -404,6 +410,19 @@
             $(".mobile-dropdown-btn").click(function () {
                 $(this).children().last().slideToggle();
             });
+
+            const cookieConsentContainer = $('.cookie-consent-container');
+            const cookieConsentButton = $('.cookie-consent');
+
+            cookieConsentButton.click(function() {
+                cookieConsentContainer.removeClass('bottom-0');
+                localStorage.setItem("cookieConsent", "true");
+            });
+            if (!localStorage.getItem("cookieConsent")) {
+                setTimeout(function() {
+                    cookieConsentContainer.addClass('bottom-0');
+                }, 2000);
+            }
         });
     </script>
     {% endblock %}
