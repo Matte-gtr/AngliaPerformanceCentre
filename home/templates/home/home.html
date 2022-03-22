@@ -202,7 +202,7 @@ services ranging from oil services, to custom made exhausts and chip tuning/rema
     {% endif %}
   </div>
 </div>
-<section class="container-fluid">
+<section class="container-fluid bg-off-white">
   <div class="row">
     <div class="col-12">
       <div>
@@ -247,11 +247,28 @@ services ranging from oil services, to custom made exhausts and chip tuning/rema
     </div>
   </div>
 </section>
+<section class="container-fluid bg-car bg-fixed p-0">
+  <div class="container-fluid light-bg-shadow section-padding">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h3 class="section-header text-grey">Find us on Instagram</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="embedsocial-hashtag" data-ref="0e94df409e517a019b53d369d92ea630b272e1e2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 {% endblock %}
 
 {% block postload_js %}
 {{ block.super }}
+<script>(function(d, s, id){var js; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "https://embedsocial.com/cdn/ht.js"; d.getElementsByTagName("head")[0].appendChild(js);}(document, "script", "EmbedSocialHashtagScript"));</script>
 <script>
   $(document).ready(function() {
     $('.ad-description').slideDown();

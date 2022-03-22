@@ -32,7 +32,8 @@ else:
     SECRET_KEY = os.environ.get('SECRET_KEY')
     DEBUG = True
 
-ALLOWED_HOSTS = ['64.227.41.135', 'localhost']
+ALLOWED_HOSTS = ['64.227.41.135', 'localhost', 'apcperformance.co.uk',
+                 'www.apcperformance.co.uk']
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
