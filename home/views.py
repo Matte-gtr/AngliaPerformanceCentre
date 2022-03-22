@@ -13,7 +13,7 @@ def home(request):
     """ a view for the home page """
     adverts = Advert.objects.all()
     reviews = Review.objects.filter(authorised=True).\
-        order_by('-created_on')[:11]
+        order_by('-created_on')[:10]
     review_count = Review.objects.filter(authorised=True).count()
     average = Review.objects.filter(authorised=True).\
         aggregate(Avg('stars'))['stars__avg']
