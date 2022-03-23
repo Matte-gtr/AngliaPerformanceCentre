@@ -1,4 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Custom 404 Page</h1>
+<div class="container-fluid bg-car bg-fixed dark-content p-0">
+    <div class="container-fluid dark-shadow pl-0 pr-0">
+        <div class="container pt-4 pb-5">
+            <div class="row pt-4 pb-4">
+                <div class="col pt-5">
+                    <h1 class="h2">404 Page Not Found</h1>
+                    <hr class="hr-gold-short hr-left">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="back-button-container mt-5">
+                        <a href="{% url 'home' %}" class="standard-link i-move"><i class="fas fa-arrow-circle-left"></i> Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
