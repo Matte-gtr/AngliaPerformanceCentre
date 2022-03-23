@@ -6,7 +6,7 @@
             <div class="container pt-4 pb-5">
                 <div class="row pt-4 pb-lg-1">
                     <div class="col-12 pt-4 pb-4 blog-container px-lg-5 bg-off-white">
-                        <h2>Edit Blog Post {{ blog_post.id }}</h2>
+                        <h1 class="h2">Edit Blog Post {{ blog_post.id }}</h1>
                         <hr class="hr-gold-short hr-left">
                         <form action="{% url 'edit_blog_post' blog_post.id %}" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}

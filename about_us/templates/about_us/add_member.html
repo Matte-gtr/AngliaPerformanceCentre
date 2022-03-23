@@ -3,7 +3,7 @@
 <div class="container-fluid bg-car bg-fixed dark-content p-0">
     <div class="container-fluid dark-shadow pl-0 pr-0">
         <div class="container pt-4">
-            <h2 class="pt-5">Add Team Member</h2>
+            <h1 class="pt-5 h2">Add Team Member</h1>
             <hr class="hr-gold-short hr-left mb-5">
             <form action="{% url 'add_team_member' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -13,7 +13,6 @@
                     <button type="submit" class="btn send-btn mt-0">Add Member</button>
                 </center>
             </form>
-            
         </div>
     </div>
 </div>
