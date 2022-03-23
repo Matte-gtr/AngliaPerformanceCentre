@@ -24,7 +24,7 @@
             <div class="container pt-4 pb-5">
                 <div class="row pt-4 pb-lg-1">
                     <div class="col pt-4">
-                        <h1 class="h2">APC Blog</h1>
+                        <h1 class="h2"><a class="plain-link" href="{% url 'blog' %}">APC Blog</a>{% if param_title != "All" %} / {{ param_title }}{% endif %}</h1>
                         <hr class="hr-gold-short hr-left">
                     </div>
                 </div>

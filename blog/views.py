@@ -35,6 +35,10 @@ def blog(request):
     for post in blog_posts:
         short_body = clean_snippet(post.post_body).replace("&nbsp;", "")
         post.short_body = short_body[:200]
+    if not category == "All":
+        param_title = category[0]
+    else:
+        param_title = category
     template = "blog/blog.html"
     context = {
         'title': 'blog',
@@ -42,7 +46,7 @@ def blog(request):
         'blog_posts': blog_posts,
         'categories': categories,
         'category': category,
-        'param_title': category,
+        'param_title': param_title,
     }
     return render(request, template, context)
 
