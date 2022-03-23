@@ -47,6 +47,16 @@
 
     {% block page_header %}
     {% endblock %}
+    <div id="banner">
+        <div class="container">
+            <span class="float-left p-1">
+                <i class="fas fa-phone"></i><a class="plain-link font-weight-bold" href="tel:07919094120"> 07919 094120</a><br/>
+            </span>
+            <span class="float-right p-1 d-none d-md-inline">
+                <i class="far fa-envelope"></i><a class="plain-link font-weight-bold" target="_blank" href="mailto:contact@apcperformance.co.uk"> contact@apcperformance.co.uk</a>
+            </span>
+        </div>
+    </div>
 
     <header id="base-header"><a href="{% url 'home' %}"><img src="{{ MEDIA_URL }}defaults/APC-Logo.jpeg" alt="APC Website Logo"
                 class="main-logo"></a></header>
@@ -352,12 +362,12 @@
     <script>
         $(document).ready(function () {
             $('.toast').toast('show');
-            /*$('.toast').on('shown.bs.toast', function () {
+            $('.toast').on('shown.bs.toast', function () {
                 function hidetoast () {
                     $('.toast').toast('hide');
                 };
                 setTimeout(hidetoast, 5000);
-            });*/
+            });
             
             let headerHeight = document.getElementById("base-header").offsetHeight;
             let bannerHeight = 0;
