@@ -644,7 +644,7 @@ nav ul li {
 
 .ad-name {
     color: #fafafa;
-    font-size: 8vw;
+    font-size: 7.5vw;
     text-shadow: 3px 3px black;
     font-family: 'Dancing Script', sans-serif;
 }
@@ -786,6 +786,14 @@ nav ul li {
 
 .pointer {
     cursor: pointer;
+}
+
+.off-gold-text {
+    color: #9b8f67;
+}
+
+.s19 {
+    font-size: 19px;
 }
 
 /*----------ABOUT (GENERAL)----------*/
@@ -1424,7 +1432,7 @@ nav ul li {
 
 @media (min-width: 1197px) {
     .ad-name {
-        font-size: 96px;
+        font-size: 88px;
     }
 }
 
