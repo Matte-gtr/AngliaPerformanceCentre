@@ -42,6 +42,7 @@ def blog(request):
         'blog_posts': blog_posts,
         'categories': categories,
         'category': category,
+        'param_title': category,
     }
     return render(request, template, context)
 

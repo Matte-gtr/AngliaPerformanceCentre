@@ -40,7 +40,7 @@
     {% block extra_js %}
     {% endblock %}
 
-    <title>{% block extra_title %}{% endblock %}{% if title %}{{ title|title }} | Anglia Performance Centre{% else %}Anglia Performance Centre{% endif %}</title>
+    <title>{% block extra_title %}{% endblock %}{% if title %}{{ title|title }} | Anglia Performance Centre{% else %}Anglia Performance Centre{% endif %}{% if param_title %} | {{ param_title }}{% endif %}</title>
 </head>
 
 <body>
