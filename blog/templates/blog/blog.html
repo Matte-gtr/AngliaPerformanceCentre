@@ -67,9 +67,9 @@
                         {% else %}
                             <article class="blog-container bg-off-white mb-4 py-2 px-2">
                                 {% if category.0.friendly_name == None %}
-                                <strong>Sorry! There are no Blog Posts yet.</strong>
+                                <span class="font-weight-bold">Sorry! There are no Blog Posts yet.</span>
                                 {% else %}
-                                <strong>Sorry! There are no "{{ category.0.friendly_name }}" Blog Posts yet.</strong>
+                                <span class="font-weight-bold">Sorry! There are no "{{ category.0.friendly_name }}" Blog Posts yet.</span>
                                 {% endif %}
                             </article>
                         {% endif %}
@@ -77,7 +77,7 @@
                     <div class="col-12 col-lg-4 order-1 order-lg-2 mb-3">
                         <div class="blog-container bg-off-white">
                             <div class="d-block d-lg-none p-3">
-                                <strong>Filter </strong>
+                                <span class="font-weight-bold">Filter </span>
                                 <select name="cat-filter" id="cat-filter">
                                     <option value="All">All</option>
                                     {% for cat in categories %}
@@ -86,7 +86,7 @@
                                 </select>
                             </div>
                             <div class="d-none d-lg-block p-3">
-                                <strong class="d-block">Filter</strong>
+                                <span class="font-weight-bold" class="d-block">Filter</span>
                                 <a href="?{% param_replace category=None %}" class="control-link {% if category == "All" %}font-weight-bold{% endif %}">All</a><br/>
                                 {% for cat in categories %}
                                 <a href="?{% param_replace category=cat.category %}" class="control-link {% if category.0.friendly_name == cat.friendly_name %}font-weight-bold{% endif %}">{{ cat.friendly_name }}</a><br/>
