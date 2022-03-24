@@ -38,7 +38,7 @@ def blog(request):
     if not category == "All":
         param_title = category[0]
     else:
-        param_title = category
+        param_title = None
     template = "blog/blog.html"
     context = {
         'title': 'blog',
@@ -54,6 +54,9 @@ def blog(request):
 def view_post(request, blog_id):
     """a view to show a full blog post write-up"""
     blog_post = get_object_or_404(BlogPost, pk=blog_id)
+    if not blog_post.publish:
+        messages.error(request, f"Post {blog_id} has not been published")
+        return redirect(reverse('blog'))
     short_body = clean_snippet(blog_post.post_body).replace("&nbsp;", "")
     youtube_clip = ""
     if blog_post.youtube_link:

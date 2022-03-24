@@ -24,7 +24,7 @@
             <div class="container pt-4 pb-5">
                 <div class="row pt-4 pb-lg-1">
                     <div class="col pt-4">
-                        <h1 class="h2"><a class="plain-link" href="{% url 'blog' %}">APC Blog</a>{% if param_title != "All" %} / {{ param_title }}{% endif %}</h1>
+                        <h1 class="h2"><a class="plain-link" href="{% url 'blog' %}">APC Blog</a>{% if param_title != None %} / {{ param_title }}{% endif %}</h1>
                         <hr class="hr-gold-short hr-left">
                     </div>
                 </div>
@@ -86,10 +86,10 @@
                                 </select>
                             </div>
                             <div class="d-none d-lg-block p-3">
-                                <span class="font-weight-bold" class="d-block">Filter</span>
-                                <a href="?{% param_replace category=None %}" class="control-link {% if category == "All" %}font-weight-bold{% endif %}">All</a><br/>
+                                <span class="font-weight-bold" class="d-block">Filter</span><br/>
+                                <a href="{% url 'blog' %}" class="control-link {% if category == "All" %}font-weight-bold{% endif %}">All</a><br/>
                                 {% for cat in categories %}
-                                <a href="?{% param_replace category=cat.category %}" class="control-link {% if category.0.friendly_name == cat.friendly_name %}font-weight-bold{% endif %}">{{ cat.friendly_name }}</a><br/>
+                                <a href="{% url 'blog' %}?category={{ cat.category }}" class="control-link {% if category.0.friendly_name == cat.friendly_name %}font-weight-bold{% endif %}">{{ cat.friendly_name }}</a><br/>
                                 {% endfor %}
                             </div>
                         </div>
