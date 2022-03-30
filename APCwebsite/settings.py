@@ -81,6 +81,7 @@ INSTALLED_APPS = [
     'cart',
     'user_management',
     'django_social_share',
+    'captcha',
     'storages',
     'django_cleanup.apps.CleanupConfig',
 ]
@@ -248,3 +249,9 @@ if "USE_AWS" in os.environ:
     # Override static and media URLs in production
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
+
+RECAPTCHA_PUBLIC_KEY = os.environ.get('RECAPTCHA_PUBLIC_KEY_V2', 'xyz')
+RECAPTCHA_PRIVATE_KEY = os.environ.get('RECAPTCHA_PRIVATE_KEY_V2', 'xyz')
+RECAPTCHA_REQUIRED_SCORE = 0.85
+RECAPTCHA_USE_SSL = True
+ACCOUNT_FORMS = {'signup': 'contact.forms.AllAuthSignupForm'}

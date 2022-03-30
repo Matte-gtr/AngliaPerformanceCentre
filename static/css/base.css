@@ -329,6 +329,10 @@ body {
     transition: background-color 5000s ease-in-out 0s;
 }
 
+.help-block {
+    color: #e11313;
+}
+
 /*----------Footer----------*/
 
 .footer-hr {
@@ -1346,6 +1350,14 @@ nav ul li {
     padding: 10px;
     height: 100%;
     border-radius: 5px;
+}
+
+#div_id_captcha {
+    display: flex;
+    max-width: 100%;
+    overflow-x: auto;
+    justify-content: center;
+    margin-top: 20px;
 }
 
 /*----------Admin----------*/
