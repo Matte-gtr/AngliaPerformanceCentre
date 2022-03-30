@@ -60,11 +60,6 @@ def post_review(request):
             messages.error(request, "you can't upload this\
                             filetype")
             return redirect(reverse('testimonials'))
-        else:
-            next_redirect = request.POST.get("next")
-            messages.info(request, "Please log in to post a review")
-            return redirect(reverse("account_login",
-                                    kwargs={"next": next_redirect}))
     else:
         return redirect('{}#post-review'.format(reverse('testimonials')))
 

@@ -1,12 +1,15 @@
 import re
+import json
 from datetime import datetime
 
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib import messages
+from django.http import JsonResponse
 from user_management.views import paginator_helper
 
-from .models import BlogPost, BlogCategory, BlogPostVideo
+from .models import BlogPost, BlogCategory, BlogPostVideo, BlogPostComment
 from .forms import BlogPostForm
 
 
@@ -231,3 +234,73 @@ def edit_blog_post(request, blog_id):
         'form': form,
     }
     return render(request, template, context)
+
+
+@login_required
+def post_comment(request, blog_id):
+    """ post a comment on a blog post via ajax """
+    if request.is_ajax():
+        if request.user.is_authenticated:
+            blog_post = get_object_or_404(BlogPost, pk=blog_id)
+            comment = request.POST.get('comment')
+            user_obj = get_object_or_404(User, pk=request.user.pk)
+            username = user_obj.username
+            newblog = BlogPostComment.objects.create(
+                    blogpost=blog_post,
+                    user=user_obj,
+                    comment=comment
+            )
+            date = newblog.date_added.strftime("%B %d, %Y, %I:%M %p")
+            data = {}
+            data['comment'] = comment
+            data['user'] = username
+            data['date'] = date
+            data['comment_id'] = newblog.id
+            return JsonResponse(data)
+    elif request.method == 'POST':
+        if request.user.is_authenticated:
+            return redirect(reverse('view_post', kwargs={'blog_id': blog_id}))           
+    return redirect(reverse('view_post', kwargs={'blog_id': blog_id}))
+
+
+@login_required
+def delete_comment(request, blog_id):
+    """ delete a comment on a blog post via ajax """
+    if request.is_ajax():
+        if request.user.is_authenticated:
+            user = get_object_or_404(User, pk=request.user.pk)
+            if user.is_authenticated:
+                comment_id = request.POST.get('comment_id')
+                comment = get_object_or_404(BlogPostComment, pk=comment_id)
+                data = {}
+                if user.username == comment.user.username or user.is_staff:
+                    comment.delete()
+                    status = 'update'
+                else:
+                    messages.error(request, "You can't delete other users \
+                                   comments")
+                    status = 'reload'
+                data['comment_id'] = comment_id
+                data['status'] = status
+                return JsonResponse(data)
+    return redirect(reverse('view_post', kwargs={'blog_id': blog_id}))
+
+
+@login_required
+def like_unlike_post(request, blog_id):
+    """ view to like or unlike a blog post """
+    if request.is_ajax():
+        user = get_object_or_404(User, pk=request.user.id)
+        blog_post = get_object_or_404(BlogPost, pk=blog_id)
+        if user.is_authenticated:
+            if user in blog_post.likes.all():
+                blog_post.likes.remove(user)
+                status = 'dislike'
+            else:
+                blog_post.likes.add(user)
+                status = 'like'
+            blog_post.save()
+            data = {}
+            data['status'] = status
+            return JsonResponse(data)
+    return redirect(reverse('view_post', kwargs={'blog_id': blog_id}))

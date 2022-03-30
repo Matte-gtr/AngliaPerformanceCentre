@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load social_share %}
 
 {% block extra_meta %}
 <meta name="description" content="{{ blog_post.short_body }}..."/>
@@ -10,7 +11,7 @@
         <div class="container-fluid dark-shadow pl-0 pr-0">
             <div class="container pt-4 pb-5">
                 <div class="row pt-4 pb-lg-1">
-                    <div class="col-12 pt-4 pb-4 blog-container px-lg-5 bg-off-white">
+                    <div class="col-12 pt-4 pb-3 blog-container px-lg-5 bg-off-white">
                         <article>
                             <h1>{{ blog_post.post_title }}</h1>
                             <hr class="hr-gold-short hr-left">
@@ -56,6 +57,31 @@
                                 {% endfor %}
                             {% endif %}
                         </article>
+                        <div class="text-grey mt-3">
+                            <div id="alt-comments" data-count="{{ blog_post.comments.all|length }}" class="align-left d-inline-block pointer">{% if blog_post.comments.all|length > 0 %}{{ blog_post.comments.all|length }} {% if blog_post.comments.all|length == 1 %}comment{% else %}comments{% endif %}{% endif %}</div>
+                            <div id="like-display" data-count="{{ blog_post.likes.all|length }}" class="align-right d-inline-block {% if user in blog_post.likes.all %}text-primary{% endif %}">{% if blog_post.likes.all|length > 0 %}<i class="fas fa-thumbs-up"></i> {{ blog_post.likes.all|length }}{% endif %}</div>
+                        </div>
+                        
+                        <hr class="w-100 mt-2">
+                        <div class="d-flex justify-content-around">
+                            <div id="view-comments" class="d-inline-block reverse-link pointer"><i class="fas fa-comment"></i> Comments </div>
+                            <div class="dropdown">
+                                <div class="d-inline-block reverse-link pointer">
+                                    <i class="fas fa-share"></i> Share </a>
+                                </div>
+                                <div class="dropdown-content text-dark">
+                                    {% post_to_facebook object_or_url "Facebook" %}
+                                    {% post_to_twitter "APC Performance: {{ blog_post.post_title }}." object_or_url "Twitter" %}
+                                    {% post_to_whatsapp object_or_url "Whatsapp" %}
+                                </div>
+                            </div>
+                            <div class="d-inline-block reverse-link pointer">
+                                <form id="like-form" action="{% url 'like_unlike_post' blog_post.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <button id="submit-like" type="submit" class="bg-off-white focus-borderless border-0 p-0 reverse-link"><i class="fas fa-thumbs-up"></i>{% if user in blog_post.likes.all %} Unlike {% else %} Like {% endif %}</button>
+                                </form>
+                            </div>
+                        </div>
                         {% if request.user.is_staff %}
                         <center>
                             <a href="{% url 'display_post' blog_id=blog_post.id setting=False %}"><button class="btn send-btn mt-3">Remove</button></a>
@@ -63,12 +89,66 @@
                         {% endif %}
                     </div>
                 </div>
+                <div id="comment-container" class="row blog-container border border-dark bg-off-white">
+                    <div id="comment-col" class="col px-lg-5 pt-3">
+                        {% if blog_post.comments %}
+                        {% for comment in blog_post.comments.all %}
+                        <div id="comment-{{ comment.id }}" class="mb-2 p-1 comment">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="font-weight-bold">{{ comment.user }}</div>
+                                </div>
+                                {% if user.username == comment.user.username or user.is_staff %}
+                                <div class="col-2 align-right">
+                                    <form class="comment-del-form" action="{% url 'delete_comment' blog_post.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <input class="comment-id" type="hidden" name="comment-id" value="{{ comment.id }}">
+                                        <button id="del-{{ comment.id }}" class="del-submit border-0 text-danger" type="submit" ><div><i class="fas fa-trash"></i></div></button>
+                                    </form>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="small text-grey">{{ comment.date_added }}</div>
+                            <div>{{ comment.comment }}</div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col my-3 px-lg-5">
+                        <form id="post-comment-form" action="{% url 'post_comment' blog_post.id %}" method="POST">
+                            {% csrf_token %}
+                            <input data-user="{{ request.user.id }}" id="pcf-comment" type="text" name="comment" class="form-control" placeholder="Write a comment" required>
+                            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                            <button id="comment-send" type="submit" class="btn send-btn py-1">POST</button>
+                        </form>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col">
-                        <div class="back-button-container p-0 mt-5">
+                        <div class="back-button-container p-0 mt-5 pl-3">
                             <a href="{% url 'blog' %}" class="standard-link i-move"><i class="fas fa-arrow-circle-left"></i> Blog</a>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="confirmActionModal" tabindex="-1" role="dialog" aria-labelledby="confirmAction" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 data-id="blank" class="modal-title" id="confirmAction">Delete Comment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="confirmBody">
+                    Are you sure you want to delete this comment?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn send-btn" data-dismiss="modal">CANCEL</button>
+                    <button class="btn request-btn rounded-0 border-top border-left" data-dismiss="modal" type="submit" id="id-ajax-go">DELETE</button>
                 </div>
             </div>
         </div>
@@ -99,6 +179,188 @@
                 }
                 });
             });
+            $('#view-comments').click(function() {
+                $('#view-comments').toggleClass('active');
+                $('#comment-container').slideToggle();
+            });
+            $('#alt-comments').click(function() {
+                $('#view-comments').toggleClass('active');
+                $('#comment-container').slideToggle();
+            });
+
+            // post a comment
+            $('#comment-send').click(function(e) {
+                if ($('#pcf-comment').val() != '') {
+                    e.preventDefault();
+                    ajaxPostComment();
+                }
+            });
+
+            function ajaxPostComment() {
+                let form = $('#post-comment-form');
+                let csrf = $('#post-comment-form').children('input[name=csrfmiddlewaretoken]').val();
+                let url = form.attr('action');
+                let user = $('#pcf-comment').data('user');
+                let comment = $('#pcf-comment').val();
+
+                if (user == 'None') {
+                    form.submit();
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: {
+                            comment: comment,
+                            csrfmiddlewaretoken: csrf,
+                        },
+                        success: function(response) {
+                            let date = response['date'];
+                            $('#comment-col').append( 
+                            `<div id="comment-${response['comment_id']}" class="mb-2 p-1 comment">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="font-weight-bold">${response['user']}</div>
+                                    </div>
+                                    <div class="col-2 align-right">
+                                        <form class="comment-del-form" action="{% url 'delete_comment' blog_post.id %}" method="POST">
+                                            {% csrf_token %}
+                                            <input class="comment-id" type="hidden" name="comment-id" value="${response['comment_id']}">
+                                            <button id="del-${response['comment_id']}" class="del-submit border-0 text-danger" type="submit" ><div><i class="fas fa-trash"></i></div></button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="small text-grey">${date}</div>
+                                <div>${response['comment']}</div>
+                            </div>`);
+                            document.getElementById('pcf-comment').value = '';
+                            commentCount = $('#alt-comments').data('count');
+                            if (commentCount == 0) {
+                                commentCount += 1;
+                                $('#alt-comments').html(`${commentCount} comment`);
+                                $('#alt-comments').data('count', commentCount);
+                            } else {
+                                commentCount += 1;
+                                $('#alt-comments').html(`${commentCount} comments`);
+                                $('#alt-comments').data('count', commentCount);
+                            }
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+                }
+            }
+
+            // delete comment (incl Modal popup)
+            $('#comment-col').on('click', 'button.del-submit', function(e) {
+                e.preventDefault();
+                let user = $('#pcf-comment').data('user');
+                commentId = $(this).attr('id');
+                if (user == 'None') {
+                    $('#post-comment-form').submit();
+                } else {
+                    $('#confirmAction').data('id', commentId);
+                    $("#confirmActionModal").modal("show");
+                }
+            })
+
+            $('#id-ajax-go').on('click', function() {
+                commentId = $('#confirmAction').data('id');
+                ajaxDeleteComment($('#' + commentId).parent());
+            });
+
+            function ajaxDeleteComment(form) {
+                let csrf = form.children('input[name=csrfmiddlewaretoken]').val();
+                let url = form.attr('action');
+                let user = $('#pcf-comment').data('user');
+                let comment_id = form.find('.comment-id').val();
+
+                $.ajax({
+                    type:"POST",
+                    url: url,
+                    data: {
+                        comment_id: comment_id,
+                        csrfmiddlewaretoken: csrf,
+                    }, 
+                    success: function(response) {
+                        if (response['status'] == 'update') {
+                            comment_id = response['comment_id'];
+                            $('#comment-' + comment_id).addClass('d-none');
+
+                            commentCount = $('#alt-comments').data('count');
+                            if (commentCount == 1) {
+                                commentCount -= 1;
+                                $('#alt-comments').html('');
+                            } else if (commentCount == 2) {
+                                commentCount -= 1;
+                                $('#alt-comments').html(`${commentCount} comment`);
+                            } else {
+                                commentCount -= 1;
+                                $('#alt-comments').html(`${commentCount} comments`);
+                            }
+                            $('#alt-comments').data('count', commentCount);
+                        } else {
+                            location.reload();
+                        }
+                    },
+                    error: function(error) {
+                        console.log("error", error);
+                    }
+                });
+            }
+
+            $('#submit-like').on('click', function(e) {
+                e.preventDefault();
+                ajaxLikePost();
+            })
+
+            function ajaxLikePost() {
+                let form = $('#like-form');
+                let csrf = form.children('input[name=csrfmiddlewaretoken]').val();
+                let url = form.attr('action');
+                let user = $('#pcf-comment').data('user');
+
+                if (user == 'None') {
+                    form.submit();
+                } else {
+                    $.ajax({
+                        type:"POST",
+                        url: url,
+                        data: {
+                            csrfmiddlewaretoken: csrf,
+                        }, 
+                        success: function(response) {
+                            display = $('#like-display');
+                            likeCount = display.data('count');
+                            status = response['status'];
+                            if (status == 'like') {
+                                likeCount += 1;
+                                display.addClass('swell');
+                                display.html(`<i class="fas fa-thumbs-up"></i> ${likeCount}`);
+                                $('#submit-like').html('<i class="fas fa-thumbs-up"></i> Unlike ');
+                                display.data('count', likeCount);
+                                display.addClass('text-primary');
+                                setTimeout(function() {
+                                    display.removeClass('swell');
+                                }, 1000)
+                            } else {
+                                likeCount -= 1;
+                                if (likeCount == 0) {
+                                    display.html('');
+                                } else {
+                                    display.html(`<i class="fas fa-thumbs-up"></i> ${likeCount}`);
+                                }
+                                $('#submit-like').html('<i class="fas fa-thumbs-up"></i> Like ');
+                                display.data('count', likeCount);
+                                display.removeClass('text-primary');
+                            }
+                        },
+                        error: function(error) {
+                            console.log("error", error);
+                        }
+                    });
+                }
+            }
         });
     </script>
 {% endblock %}

@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     'contact',
     'cart',
     'user_management',
+    'django_social_share',
     'storages',
     'django_cleanup.apps.CleanupConfig',
 ]
