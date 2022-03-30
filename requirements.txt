@@ -30,6 +30,7 @@ django-cleanup==5.2.0
 django-crispy-forms==1.13.0
 django-dotenv==1.4.2
 django-js-asset==2.0.0
+django-social-share==2.2.1
 django-storages==1.12.3
 docutils==0.17
 dulwich==0.19.15
@@ -96,7 +97,6 @@ pylint-django==2.5.2
 pylint-plugin-utils==0.7
 pyparsing==2.4.7
 pyrsistent==0.17.3
-python-apt==2.0.0+ubuntu0.20.4.7
 python-dateutil==2.8.1
 python-dotenv==0.19.2
 python3-openid==3.2.0
