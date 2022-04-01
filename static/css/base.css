@@ -1261,6 +1261,11 @@ nav ul li {
     border-radius: 5px;
 }
 
+.btn-right {
+    right: 31px;
+    padding: 1px 0.25rem;
+}
+
 /*----------Contact----------*/
 
 .contact-header {

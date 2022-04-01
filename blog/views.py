@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.http import JsonResponse
+from django.db.models import Q
 from user_management.views import paginator_helper
 
 from .models import BlogPost, BlogCategory, BlogPostVideo, BlogPostComment
@@ -22,6 +23,7 @@ def clean_snippet(text):
 def blog(request):
     """ a view to display the blog page """
     category = "All"
+    searched = None
     filter_cat = None
     blog_posts = BlogPost.objects.filter(publish=True).order_by('-added_on')
     for post in blog_posts:
@@ -30,9 +32,14 @@ def blog(request):
 
     if request.method == 'GET':
         if 'category' in request.GET:
-            filter_cat = request.GET['category']
+            filter_cat = request.GET.get('category')
             blog_posts = blog_posts.filter(category__category=filter_cat)
             category = BlogCategory.objects.filter(category=filter_cat)
+
+        if 'search' in request.GET:
+            searched = request.GET.get('search')
+            blog_posts = blog_posts.filter(Q(post_body__icontains=searched) | 
+                                           Q(post_title__icontains=searched))
 
     blog_posts = paginator_helper(request, blog_posts, 8)
     for post in blog_posts:
@@ -50,6 +57,7 @@ def blog(request):
         'categories': categories,
         'category': category,
         'param_title': param_title,
+        'searched': searched,
     }
     return render(request, template, context)
 

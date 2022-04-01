@@ -24,7 +24,9 @@
             <div class="container pt-4 pb-5">
                 <div class="row pt-4 pb-lg-1">
                     <div class="col pt-4">
-                        <h1 class="h2"><a class="plain-link" href="{% url 'blog' %}">APC Blog</a>{% if param_title != None %} / {{ param_title }}{% endif %}</h1>
+                        <h1 class="h2"><a class="plain-link" href="{% url 'blog' %}">APC Blog</a>{% if param_title != None %} / {{ param_title }}{% endif %}
+                            {% if searched != None %} / Results for "{{ searched }}"{% endif %}
+                        </h1>
                         <hr class="hr-gold-short hr-left">
                     </div>
                 </div>
@@ -67,9 +69,13 @@
                         {% else %}
                             <article class="blog-container bg-off-white mb-4 py-2 px-2">
                                 {% if category.0.friendly_name == None %}
-                                <span class="font-weight-bold">Sorry! There are no Blog Posts yet.</span>
+                                    {% if searched == None %}
+                                        <span class="font-weight-bold">Sorry! There are no Blog Posts yet.</span>
+                                    {% else %}
+                                        <span class="font-weight-bold">Sorry! There are no results for "{{ searched }}"</span>
+                                    {% endif %}
                                 {% else %}
-                                <span class="font-weight-bold">Sorry! There are no "{{ category.0.friendly_name }}" Blog Posts yet.</span>
+                                    <span class="font-weight-bold">Sorry! There are no "{{ category.0.friendly_name }}" Blog Posts yet.</span>
                                 {% endif %}
                             </article>
                         {% endif %}
@@ -77,8 +83,14 @@
                     <div class="col-12 col-lg-4 order-1 order-lg-2 mb-3">
                         <div class="blog-container bg-off-white">
                             <div class="d-block d-lg-none p-3">
+                                <span class="font-weight-bold">Search</span>
+                                <form class="form-inline mb-3" action="{% url 'blog' %}" method="GET">
+                                    <label class="sr-only" for="search">search</label>
+                                    <input type="text" name="search" class="blog-search border border-secondary rounded w-100 pl-2 pr-4">
+                                    <button type="submit" class="blog-search-button btn send-btn mt-0 rounded position-absolute btn-right"><i class="fas fa-search"></i></button>
+                                </form>
                                 <span class="font-weight-bold">Filter </span>
-                                <select name="cat-filter" id="cat-filter">
+                                <select name="cat-filter" id="cat-filter" class="w-100 rounded py-1 pl-1">
                                     <option value="All">All</option>
                                     {% for cat in categories %}
                                     <option value="{{ cat.category }}" {% if category.0.category == cat.category %}selected{% endif %}>{{ cat.friendly_name }}</option>
@@ -86,7 +98,13 @@
                                 </select>
                             </div>
                             <div class="d-none d-lg-block p-3">
-                                <span class="font-weight-bold" class="d-block">Filter</span><br/>
+                                <span class="font-weight-bold">Search</span>
+                                <form class="form-inline mb-3" action="{% url 'blog' %}" method="GET">
+                                    <label class="sr-only" for="search">search</label>
+                                    <input type="text" name="search" class="blog-search border border-secondary rounded w-100 pl-2 pr-4">
+                                    <button type="submit" class="blog-search-button btn send-btn mt-0 rounded position-absolute btn-right"><i class="fas fa-search"></i></button>
+                                </form>
+                                <span class="font-weight-bold">Filter</span><br/>
                                 <a href="{% url 'blog' %}" class="control-link {% if category == "All" %}font-weight-bold{% endif %}">All</a><br/>
                                 {% for cat in categories %}
                                 <a href="{% url 'blog' %}?category={{ cat.category }}" class="control-link {% if category.0.friendly_name == cat.friendly_name %}font-weight-bold{% endif %}">{{ cat.friendly_name }}</a><br/>
@@ -150,17 +168,28 @@
 {% block postload_js %}
 {{ block.super }}
     <script>
-        $('#cat-filter').change(function() {
-            let selector = $(this);
-            let currentUrl = new URL(window.location);
-            let selectedVal = selector.val();
-            let filter = selectedVal
-            if (selectedVal == "All") {
-                currentUrl.searchParams.delete("category");
-            } else {
-                currentUrl.searchParams.set("category", filter);
-            }
-            window.location.replace(currentUrl);
+        $(document).ready(function() {
+            $('#cat-filter').change(function() {
+                let selector = $(this);
+                let currentUrl = new URL(window.location);
+                let selectedVal = selector.val();
+                let filter = selectedVal
+                if (selectedVal == "All") {
+                    currentUrl.searchParams.delete("category");
+                } else {
+                    currentUrl.searchParams.set("category", filter);
+                }
+                window.location.replace(currentUrl);
+            });
+
+            $('.blog-search').focus(function() {
+                $('.blog-search-button').addClass('request-btn border-dark');
+                $('.blog-search-button').removeClass('send-btn');
+            });
+            $('.blog-search').focusout(function() {
+                $('.blog-search-button').removeClass('request-btn border-dark');
+                $('.blog-search-button').addClass('send-btn');
+            });
         });
     </script>
 {% endblock %}
