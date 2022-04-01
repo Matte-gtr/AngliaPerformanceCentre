@@ -38,8 +38,11 @@ def blog(request):
 
         if 'search' in request.GET:
             searched = request.GET.get('search')
-            blog_posts = blog_posts.filter(Q(post_body__icontains=searched) | 
-                                           Q(post_title__icontains=searched))
+            blog_posts = blog_posts.filter(
+                Q(post_body__icontains=searched) |
+                Q(post_title__icontains=searched) |
+                Q(category__friendly_name__icontains=searched)
+                )
 
     blog_posts = paginator_helper(request, blog_posts, 8)
     for post in blog_posts:

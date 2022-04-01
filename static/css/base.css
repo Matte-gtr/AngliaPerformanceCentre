@@ -1261,11 +1261,6 @@ nav ul li {
     border-radius: 5px;
 }
 
-.btn-right {
-    right: 31px;
-    padding: 1px 0.25rem;
-}
-
 /*----------Contact----------*/
 
 .contact-header {
@@ -1401,6 +1396,11 @@ nav ul li {
 .form-extend {
     background-color: #fafafa;
     border-top: 1px solid #dee2e6;
+}
+
+.btn-right-admin {
+    right: 0;
+    padding: 1px 0.9rem;
 }
 
 /*----------Keyframes----------*/

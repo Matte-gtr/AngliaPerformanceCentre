@@ -14,9 +14,17 @@
                         </h3>
                     </a>
                 </div>
-                <div id="error-container" class="pl-1 text-danger">
-
-                </div>
+            </div>
+            <div class="col-12 p-0 border border-bottom-0">
+                <form class="form-inline" action="{% url 'admin_messages' %}" method="GET">
+                    <label class="sr-only" for="search">search</label>
+                    <input type="text" name="search" class="admin-search border border-secondary rounded w-100 pl-2 pr-4" placeholder="Search" {% if searched != None %}value="{{ searched }}"{% endif %}>
+                    <button type="submit" class="admin-search-button btn send-btn mt-0 rounded position-absolute btn-right-admin"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+            <div class="col-12 p-0 border border-bottom-0">
+                <div id="search-container" class="pl-1">{% if searched %}Results for "{{ searched }}". <a href="{% url 'admin_messages' %}">Clear</a>{% endif %}</div>
+                <div id="error-container" class="pl-1 text-danger"></div>
             </div>
             <div class="col-12 p-0 border border-top-0">
                 <form id="ajax-form">
@@ -45,7 +53,11 @@
                     {% if not site_messages %}
                     <tr>
                         <td></td>
-                        <td> No Messages</td>
+                        {% if searched != None %}
+                            <td> No Results for <span class="font-weight-bold">"{{ searched }}"</span></td>
+                        {% else %}
+                            <td> No Messages</td>
+                        {% endif %}
                         <td></td>
                         <td></td>
                     </tr>
@@ -271,6 +283,15 @@
                 }
             });
         }
+
+        $('.admin-search').focus(function() {
+            $('.admin-search-button').addClass('request-btn border-dark');
+            $('.admin-search-button').removeClass('send-btn');
+        });
+        $('.admin-search').focusout(function() {
+            $('.admin-search-button').removeClass('request-btn border-dark');
+            $('.admin-search-button').addClass('send-btn');
+        }); 
     });
 </script>
 {% endblock %}

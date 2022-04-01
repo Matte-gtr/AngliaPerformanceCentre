@@ -8,6 +8,7 @@ from django.core.paginator import Paginator
 from django.core.mail import send_mail, BadHeaderError
 from django.http import JsonResponse
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 from contact.models import Message, Callback
 from testimonials.models import Review, ReviewImage
@@ -162,6 +163,7 @@ def process_ids(request, item, action, id_final):
 def admin_messages(request):
     """ a view to display the admin panel """
     if request.user.is_staff:
+        searched = None
         if request.is_ajax():
             item = request.POST.get('item')
             action = request.POST.get('action')
@@ -182,11 +184,20 @@ def admin_messages(request):
                 messages.success(request, f"{count} {item} {result}")
             return JsonResponse(data)
         message_count = Message.objects.filter(read=False).count
-        message_pag = paginator_helper(request,
-                                       Message.objects.
-                                       all().order_by("responded", "read",
-                                                      "-received_on"),
-                                       10)
+        message_objects = Message.objects.all().order_by("responded", "read",
+                                                         "-received_on")
+        
+        if request.method == "GET":
+            if 'search' in request.GET:
+                searched = request.GET.get('search')
+                message_objects = message_objects.filter(
+                    Q(name__icontains=searched) |
+                    Q(phone__icontains=searched) |
+                    Q(email__icontains=searched) |
+                    Q(message__icontains=searched)
+                )
+
+        message_pag = paginator_helper(request, message_objects, 10)
         callback_count = Callback.objects.filter(read=False).count
         review_count = Review.objects.filter(read=False).count
         blog_count = BlogPost.objects.filter(publish=False).count
@@ -205,6 +216,7 @@ def admin_messages(request):
             'advert_count': advert_count,
             'member_count': member_count,
             'user_count': user_count,
+            'searched': searched,
         }
         return render(request, template, context)
     messages.warning(request, "You don't have the required permissions to\
@@ -216,6 +228,7 @@ def admin_messages(request):
 def admin_callbacks(request):
     """ a view to display the admin panel """
     if request.user.is_staff:
+        searched = None
         if request.is_ajax():
             item = request.POST.get('item')
             action = request.POST.get('action')
@@ -237,11 +250,15 @@ def admin_callbacks(request):
             return JsonResponse(data)
         message_count = Message.objects.filter(read=False).count
         callback_count = Callback.objects.filter(read=False).count
-        callback_pag = paginator_helper(request,
-                                        Callback.objects.
-                                        all().order_by("responded", "read",
-                                                       "-received_on"),
-                                        10)
+        callbacks = Callback.objects.all().order_by("responded", "read",
+                                                    "-received_on")
+        
+        if request.method == "GET":
+            if 'search' in request.GET:
+                searched = request.GET.get('search')
+                callbacks = callbacks.filter(name__icontains=searched)
+
+        callback_pag = paginator_helper(request, callbacks, 10)
         review_count = Review.objects.filter(read=False).count
         blog_count = BlogPost.objects.filter(publish=False).count
         advert_count = Advert.objects.all().count
@@ -259,6 +276,7 @@ def admin_callbacks(request):
             'advert_count': advert_count,
             'member_count': member_count,
             'user_count': user_count,
+            'searched': searched,
         }
         return render(request, template, context)
     messages.warning(request, "You don't have the required permissions to\
@@ -270,6 +288,7 @@ def admin_callbacks(request):
 def admin_reviews(request):
     """ a view to display the admin panel """
     if request.user.is_staff:
+        searched = None
         if request.is_ajax():
             item = request.POST.get('item')
             action = request.POST.get('action')
@@ -289,33 +308,41 @@ def admin_reviews(request):
             else:
                 messages.success(request, f"{count} {item} {result}")
             return JsonResponse(data)
-        else:
-            message_count = Message.objects.filter(read=False).count
-            callback_count = Callback.objects.filter(read=False).count
-            review_count = Review.objects.filter(read=False).count
-            blog_count = BlogPost.objects.filter(publish=False).count
-            advert_count = Advert.objects.all().count
-            member_count = TeamMember.objects.all().count
-            user_count = User.objects.all().count
-            review_pag = paginator_helper(request,
-                                          Review.objects.
-                                          filter(authorised=False).
-                                          order_by("read", "-created_on"),
-                                          10)
-            template = "user_management/admin_reviews.html"
-            context = {
-                'title': 'admin reviews',
-                'section': 'user_management',
-                'message_count': message_count,
-                'callback_count': callback_count,
-                'review_count': review_count,
-                'reviews': review_pag,
-                'blog_count': blog_count,
-                'advert_count': advert_count,
-                'member_count': member_count,
-                'user_count': user_count,
-            }
-            return render(request, template, context)
+        message_count = Message.objects.filter(read=False).count
+        callback_count = Callback.objects.filter(read=False).count
+        review_count = Review.objects.filter(read=False).count
+        blog_count = BlogPost.objects.filter(publish=False).count
+        advert_count = Advert.objects.all().count
+        member_count = TeamMember.objects.all().count
+        user_count = User.objects.all().count
+        reviews = Review.objects.filter(authorised=False)\
+            .order_by("read", "-created_on")
+        
+        if request.method == "GET":
+            if 'search' in request.GET:
+                searched = request.GET.get('search')
+                reviews = reviews.filter(
+                    Q(review__icontains=searched) |
+                    Q(user__username__icontains=searched) |
+                    Q(user__first_name__icontains=searched) |
+                    Q(user__last_name__icontains=searched))
+
+        review_pag = paginator_helper(request, reviews, 10)
+        template = "user_management/admin_reviews.html"
+        context = {
+            'title': 'admin reviews',
+            'section': 'user_management',
+            'message_count': message_count,
+            'callback_count': callback_count,
+            'review_count': review_count,
+            'reviews': review_pag,
+            'blog_count': blog_count,
+            'advert_count': advert_count,
+            'member_count': member_count,
+            'user_count': user_count,
+            'searched': searched,
+        }
+        return render(request, template, context)
     else:
         messages.warning(request, "You don't have the required permissions to\
                          view this page")
@@ -326,6 +353,7 @@ def admin_reviews(request):
 def admin_blog_posts(request):
     """ a view to display a list of unpublished blog posts """
     if request.user.is_staff:
+        searched = None
         if request.is_ajax():
             item = request.POST.get('item')  # blog-post
             action = request.POST.get('action')  # delete, publish
@@ -352,11 +380,17 @@ def admin_blog_posts(request):
         advert_count = Advert.objects.all().count
         member_count = TeamMember.objects.all().count
         user_count = User.objects.all().count
-        blog_posts = paginator_helper(request,
-                                      BlogPost.objects.
-                                      filter(publish=False).
-                                      order_by('-added_on'),
-                                      10)
+        blog_posts = BlogPost.objects.filter(publish=False)\
+            .order_by('-added_on')
+
+        if request.method == "GET":
+            if 'search' in request.GET:
+                searched = request.GET.get('search')
+                blog_posts = blog_posts.filter(
+                    Q(post_title__icontains=searched) |
+                    Q(post_body__icontains=searched))
+
+        blog_posts = paginator_helper(request, blog_posts, 10)
         template = "user_management/admin_blog_posts.html"
         context = {
             'title': 'admin blog posts',
@@ -369,6 +403,7 @@ def admin_blog_posts(request):
             'advert_count': advert_count,
             'member_count': member_count,
             'user_count': user_count,
+            'searched': searched,
         }
         return render(request, template, context)
     messages.warning(request, "You don't have the required permissions to\
@@ -380,6 +415,7 @@ def admin_blog_posts(request):
 def admin_adverts(request):
     """ a view for the advert admin page """
     if request.user.is_staff:
+        searched = None
         if request.is_ajax():
             item = request.POST.get('item')
             action = request.POST.get('action')
@@ -399,6 +435,7 @@ def admin_adverts(request):
             else:
                 messages.success(request, f"{count} {item} {result}")
             return JsonResponse(data)
+        
         message_count = Message.objects.filter(read=False).count
         callback_count = Callback.objects.filter(read=False).count
         review_count = Review.objects.filter(read=False).count
@@ -406,7 +443,15 @@ def admin_adverts(request):
         advert_count = Advert.objects.all().count
         member_count = TeamMember.objects.all().count
         user_count = User.objects.all().count
-        adverts = paginator_helper(request, Advert.objects.all(), 10)
+        adverts = Advert.objects.all()
+
+        if request.method == "GET":
+            if 'search' in request.GET:
+                searched = request.GET.get('search')
+                adverts = adverts.filter(name__icontains=searched)
+
+        adverts = paginator_helper(request, adverts, 10)
+
         template = "user_management/admin_adverts.html"
         context = {
             'title': 'admin adverts',
@@ -419,6 +464,7 @@ def admin_adverts(request):
             'advert_count': advert_count,
             'member_count': member_count,
             'user_count': user_count,
+            'searched': searched,
         }
         return render(request, template, context)
     messages.warning(request, "You don't have the required permissions to\
@@ -430,6 +476,7 @@ def admin_adverts(request):
 def admin_members(request):
     """ a view for the member admin page """
     if request.user.is_staff:
+        searched = None
         if request.is_ajax():
             item = request.POST.get('item')
             action = request.POST.get('action')
@@ -456,10 +503,17 @@ def admin_members(request):
         advert_count = Advert.objects.all().count
         member_count = TeamMember.objects.all().count
         user_count = User.objects.all().count
-        members = paginator_helper(request,
-                                   TeamMember.objects.
-                                   all().order_by('order'),
-                                   10)
+        members = TeamMember.objects.all().order_by('order')
+
+        if request.method == "GET":
+            if 'search' in request.GET:
+                searched = request.GET.get('search')
+                members = members.filter(
+                    Q(first_name__icontains=searched) |
+                    Q(surname__icontains=searched) |
+                    Q(job__icontains=searched))
+
+        members = paginator_helper(request, members, 10)
         template = "user_management/admin_members.html"
         context = {
             'title': 'admin team members',
@@ -472,6 +526,7 @@ def admin_members(request):
             'advert_count': advert_count,
             'member_count': member_count,
             'user_count': user_count,
+            'searched': searched,
         }
         return render(request, template, context)
     messages.warning(request, "You don't have the required permissions to\
@@ -483,6 +538,7 @@ def admin_members(request):
 def admin_users(request):
     """ a view for the user admin page """
     if request.user.is_staff:
+        searched = None
         if request.is_ajax():
             item = request.POST.get('item')  # user
             action = request.POST.get('action')  # delete
@@ -509,7 +565,18 @@ def admin_users(request):
         advert_count = Advert.objects.all().count
         member_count = TeamMember.objects.all().count
         user_count = User.objects.all().count
-        users = paginator_helper(request, User.objects.all(), 10)
+        users = User.objects.all()
+
+        if request.method == "GET":
+            if 'search' in request.GET:
+                searched = request.GET.get('search')
+                users = users.filter(
+                    Q(username__icontains=searched) |
+                    Q(first_name__icontains=searched) |
+                    Q(last_name__icontains=searched)
+                )
+
+        users = paginator_helper(request, users, 10)
         template = "user_management/admin_users.html"
         context = {
             'title': 'admin users',
@@ -522,6 +589,7 @@ def admin_users(request):
             'advert_count': advert_count,
             'member_count': member_count,
             'user_count': user_count,
+            'searched': searched,
         }
         return render(request, template, context)
     messages.warning(request, "You don't have the required permissions to\
