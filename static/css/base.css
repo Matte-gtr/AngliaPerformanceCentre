@@ -1403,6 +1403,11 @@ nav ul li {
     padding: 1px 0.9rem;
 }
 
+.btn-right {
+    right: 30px;
+    padding: 1px 5px;
+}
+
 /*----------Keyframes----------*/
 
 @keyframes zoom-in-out {
