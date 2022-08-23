@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.db.models import Avg
@@ -8,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from user_management.views import paginator_helper
 from .forms import ReviewForm
 from .models import ReviewImage, Review
+from user_management.models import UserOptions
 
 
 def testimonials(request):
@@ -54,6 +56,24 @@ def post_review(request):
                     new_review.image.add(img)
 
                 new_review.save()
+
+                update_users = UserOptions.objects.filter(update=True)
+                email_list = []
+                new_line = '\n'
+                subject = "APCPerformance Review Posted"
+                name = request.user
+                final_message = f'APC Performance has received a Review from: \
+                    {new_line}{name}'
+                for usr in update_users:
+                    email_list.append(usr.email.email)
+                if len(email_list) > 0:
+                    try:
+                        send_mail(subject, final_message,
+                                'contact@apcperformance.co.uk',
+                                email_list)
+                    except BadHeaderError:
+                        HttpResponse('Bad Header Found')
+
                 messages.success(request, 'Thanks for your review, it has been\
                         submitted for approval')
                 return redirect(reverse("testimonials"))
@@ -125,6 +145,24 @@ def edit_review(request, review_id):
                         img.save()
                         review.image.add(img)
                     form.save()
+
+                    update_users = UserOptions.objects.filter(update=True)
+                    email_list = []
+                    new_line = '\n'
+                    subject = "APCPerformance Review Updated"
+                    name = request.user
+                    final_message = f'APC Performance has had a Review updated from: \
+                        {new_line}{name}'
+                    for usr in update_users:
+                        email_list.append(usr.email.email)
+                    if len(email_list) > 0:
+                        try:
+                            send_mail(subject, final_message,
+                                    'contact@apcperformance.co.uk',
+                                    email_list)
+                        except BadHeaderError:
+                            HttpResponse('Bad Header Found')
+
                     messages.success(request, "Your Review has been \
                                      successfully updated awaiting approval")
                     return redirect(reverse('testimonials'))
