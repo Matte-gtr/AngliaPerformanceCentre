@@ -154,6 +154,24 @@ def process_ids(request, item, action, id_final):
                 result = "unmarked as staff"
             except Exception as err:
                 messages.error(request, f"Error unmarking {item}: {err}")
+
+        elif action == "update":
+            try:
+                obj.user_options.update = True
+                obj.user_options.save(update_fields=['update'])
+                count += 1
+                result = "marked for updates"
+            except Exception as err:
+                messages.error(request, f"Error marking {item}: {err}")
+
+        elif action == "unupdate":
+            try:
+                obj.user_options.update = False
+                obj.user_options.save(update_fields=['update'])
+                count += 1
+                result = "unmarked for updates"
+            except Exception as err:
+                messages.error(request, f"Error unmarking {item}: {err}")
         else:
             return {'count': count, 'result': result}
     return {'count': count, 'result': result}

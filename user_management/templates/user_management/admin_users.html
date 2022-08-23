@@ -91,6 +91,8 @@
                             <option value="delete">Delete</option>
                             <option value="staff">Give Staff Status</option>
                             <option value="unstaff">Remove Staff Status</option>
+                            <option value="update">Add Notifications</option>
+                            <option value="unupdate">Remove Notifications</option>
                         </select>
                         <div class="input-group-append">
                             <button id="ModalProcess" type="button" class="btn request-btn rounded-0 border-top border-left" data-target="#confirmActionModal">Go</button>
@@ -103,6 +105,7 @@
                         <th scope="col">Username</th>
                         <th scope="col">Email</th>
                         <th scope="col">Staff</th>
+                        <th scope="col">Updates</th>
                     </tr>
                     {% if not users %}
                     <tr>
@@ -127,6 +130,13 @@
                         </td>
                         <td class="text-break">
                             {% if user.is_staff %}
+                            <i class="fas fa-check fa-lg text-success"></i>
+                            {% else %}
+                            <i class="fas fa-times fa-lg text-danger"></i>
+                            {% endif %}
+                        </td>
+                        <td class="text-break">
+                            {% if user.user_options.update %}
                             <i class="fas fa-check fa-lg text-success"></i>
                             {% else %}
                             <i class="fas fa-times fa-lg text-danger"></i>
@@ -238,7 +248,7 @@
             } else if (action == "none") {
                 $('#error-container').text("No action has been selected");
                 return
-            } else if (action == "delete" || action == "staff" || action == "unstaff") {
+            } else if (action == "delete" || action == "staff" || action == "unstaff" || action == "update" || action == "unupdate") {
                 $('#confirmAction').text(`${action} users`);
                 $('#confirmBody').text(`Are you sure you want to ${action} these users?`);
                 $("#confirmActionModal").modal("show");

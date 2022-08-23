@@ -1,6 +1,7 @@
 from django import forms
 from captcha.fields import ReCaptchaField
 from allauth.account.forms import SignupForm
+from user_management.models import UserOptions
 
 from .models import Message, Callback, MessageResponse
 
@@ -90,4 +91,5 @@ class AllAuthSignupForm(SignupForm):
 
     def save(self, request):
         user = super(AllAuthSignupForm, self).save(request)
+        UserOptions.objects.create(email=user.email)
         return user
