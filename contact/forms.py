@@ -91,5 +91,5 @@ class AllAuthSignupForm(SignupForm):
 
     def save(self, request):
         user = super(AllAuthSignupForm, self).save(request)
-        UserOptions.objects.create(email=user.email)
+        UserOptions.objects.create(email=user)
         return user
