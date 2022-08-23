@@ -1,0 +1,54 @@
+<div class="container-fluid bg-engine bg-fixed dark-content p-0 d-none">
+    <div class="container-fluid dark-shadow pl-0 pr-0">
+        <div class="container pt-4 pb-5">
+
+            <div class="row pt-4 pb-lg-1">
+                <div class="col pt-4">
+                    <h1 class="h2"><a class="plain-link" href="{% url 'blog' %}">Parts</a>{% if param_title != None %} / {{ param_title }}{% endif %}
+                        {% if searched != None %} / Results for "{{ searched }}"{% endif %}
+                    </h1>
+                    <hr class="hr-gold-short hr-left">
+                </div>
+            </div>
+
+            <div class="row pt-4 pb-4 lg-expand">
+                
+                    {% if products %}
+                        {% for product in products %}
+                        <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                            <div class="product-container">
+                            {% if product.images.all|length > 0 %}
+                                {% for img in product.images.all %}
+                                    {% if forloop.counter == 1 %}
+                                        <div class="product-img-container">
+                                            <a href="{% url 'product_detail' product.id %}">
+                                                <div class="product-img-square">
+                                                    <img src="{{ img.image.url }}" alt="{{ img.image.url }}" class="product-image">
+                                                </div>
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <div class="product-img-container">
+                                    <a href="{% url 'product_detail' product.id %}">
+                                        <div class="product-img-square">
+                                            <img src="{{ MEDIA_URL }}defaults/car-cover-done.png" alt="default image" class="product-image">
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endif %}
+                            <a class="latte-hover" href="{% url 'product_detail' product.id %}">
+                                <h3 class="h4 line-clamp-2 pointer">{{ product.name }}</h3>
+                            </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    {% else %}  
+                        <p>Sorry, there are no products available at the moment.</p>
+                    {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
