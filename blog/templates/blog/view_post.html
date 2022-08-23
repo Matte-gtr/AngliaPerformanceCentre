@@ -9,6 +9,15 @@
     <!--Content-->
     <div class="container-fluid bg-engine bg-fixed dark-content p-0">
         <div class="container-fluid dark-shadow pl-0 pr-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="back-button-container p-0 mt-5 pl-3">
+                            <a href="{% url 'blog' %}" class="standard-link i-move"><i class="fas fa-arrow-circle-left"></i> Blog</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="container pt-4 pb-5">
                 <div class="row pt-4 pb-lg-1">
                     <div class="col-12 pt-4 pb-3 blog-container px-lg-5 bg-off-white">
@@ -93,7 +102,7 @@
                     <div id="comment-col" class="col px-lg-5 pt-3">
                         {% if blog_post.comments %}
                         {% for comment in blog_post.comments.all %}
-                        <div id="comment-{{ comment.id }}" class="mb-2 p-1 comment">
+                        <div id="comment-{{ comment.id }}" class="mb-2 p-2 comment">
                             <div class="row">
                                 <div class="col">
                                     <div class="font-weight-bold">{{ comment.user }}</div>
@@ -123,13 +132,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="back-button-container p-0 mt-5 pl-3">
-                            <a href="{% url 'blog' %}" class="standard-link i-move"><i class="fas fa-arrow-circle-left"></i> Blog</a>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>

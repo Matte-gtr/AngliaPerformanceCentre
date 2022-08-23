@@ -88,6 +88,6 @@ class AllAuthSignupForm(SignupForm):
             if field == 'captcha':
                 self.fields[field].label = ''
 
-    def save(self, request, user):
+    def save(self, request):
         user = super(AllAuthSignupForm, self).save(request)
         return user
