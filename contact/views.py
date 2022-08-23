@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 
 from .forms import MessageForm, CallbackForm
+from user_management.models import UserOptions
 
 
 def contact(request):
@@ -38,11 +39,18 @@ def send_message(request):
             else:
                 final_message = f'Message from: {subject} ({from_email})\
                     {new_line}{message}'
-            try:
-                send_mail(subject, final_message, from_email,
-                          ['contact@apcperformance.co.uk'])
-            except BadHeaderError:
-                HttpResponse('Bad Header Found')
+
+            update_users = UserOptions.objects.filter(update=True)
+            email_list = []
+            for usr in update_users:
+                email_list.append(usr.email.email)
+            if len(email_list) > 0:
+                try:
+                    send_mail(subject, final_message, from_email,
+                            email_list)
+                except BadHeaderError:
+                    HttpResponse('Bad Header Found')
+
             messages.success(request, 'Thanks for your message, \
                 we will get back to you shortly')
             return HttpResponseRedirect(page_location)
@@ -59,6 +67,25 @@ def send_callback(request):
         form = CallbackForm(request.POST or None)
         if form.is_valid():
             form.save()
+
+            update_users = UserOptions.objects.filter(update=True)
+            email_list = []
+            new_line = '\n'
+            subject = "APCPerformance Callback Request"
+            name = form.cleaned_data['name']
+            phone = form.cleaned_data['phone']
+            final_message = f'APC Performance has received a Callback request from: \
+                {new_line}{name} ({phone})'
+            for usr in update_users:
+                email_list.append(usr.email.email)
+            if len(email_list) > 0:
+                try:
+                    send_mail(subject, final_message,
+                              'contact@apcperformance.co.uk',
+                              email_list)
+                except BadHeaderError:
+                    HttpResponse('Bad Header Found')
+
             # Send SMS to be added?
             messages.success(request, "Message Received, We will be \
                 in touch shortly")
