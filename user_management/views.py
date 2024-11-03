@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 from django.shortcuts import render, reverse, redirect, get_object_or_404,\
     HttpResponse
@@ -13,6 +14,7 @@ from django.db.models import Q
 from contact.models import Message, Callback
 from testimonials.models import Review, ReviewImage
 from blog.models import BlogPost, BlogPostVideo
+from .models import VehicleBooking
 from contact.forms import MessageResponseForm
 from home.models import Advert
 from about_us.models import TeamMember
@@ -222,6 +224,9 @@ def admin_messages(request):
         advert_count = Advert.objects.all().count
         member_count = TeamMember.objects.all().count
         user_count = User.objects.all().count
+        bookings = VehicleBooking.objects.all()
+        for booking in bookings:
+            booking.format_date = booking.date.strftime('%d-%m-%Y')
         template = "user_management/admin_messages.html"
         context = {
             'title': 'admin messages',
@@ -235,6 +240,7 @@ def admin_messages(request):
             'member_count': member_count,
             'user_count': user_count,
             'searched': searched,
+            'bookings': bookings,
         }
         return render(request, template, context)
     messages.warning(request, "You don't have the required permissions to\
