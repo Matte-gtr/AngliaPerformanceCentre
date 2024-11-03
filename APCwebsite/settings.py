@@ -33,7 +33,8 @@ else:
     DEBUG = False
 
 ALLOWED_HOSTS = ['64.227.41.135', 'localhost', 'apcperformance.co.uk',
-                 'www.apcperformance.co.uk', '8000-mattegtr-angliaperforman-785tkk92cqm.ws-eu116.gitpod.io']
+                 'www.apcperformance.co.uk', 
+                 '8000-mattegtr-angliaperforman-785tkk92cqm.ws-eu116.gitpod.io']
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
